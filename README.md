@@ -19,7 +19,7 @@
 ## Demo
 
 The live version of JobSync is here.  
-Visit it here: [https://soon.com](https://soon.com)
+Visit it here: [https://jobsyncc.netlify.app](https://jobsyncc.netlify.app)
 
 ### Screenshot
 ![JobSync Screenshot](https://res.cloudinary.com/dcf0cpuqf/image/upload/v1738695543/Screenshot_2025-02-02_181936_qpdcqu.png)

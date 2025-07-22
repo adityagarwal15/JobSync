@@ -1,3 +1,15 @@
+@font-face {
+  font-family: "PP Object Sans";
+  src: url("../assets/fonts/pp-object-sans.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Druk Wide Trial";
+  src: url("../assets/fonts/druk-wide-trial.woff2") format("woff2");
+  font-display: swap;
+}
+
 :root {
   --font-primary: "PP Object Sans";
   --font-secondary: "Druk Wide Trial";
@@ -17,7 +29,12 @@
   box-sizing: border-box;
 }
 
-html,
+/* Replace with these two blocks */
+html {
+  overflow-x: hidden;
+  overflow-y: hidden; /* Hides the main browser scrollbar */
+}
+
 body {
   width: 100%;
   height: 100%;
@@ -84,4 +101,27 @@ img {
   background-color: rgba(255, 255, 255, 0.125);
   border-radius: 12px;
   margin-bottom: 2em;
+}
+
+/* ===== ADAPTIVE SCROLLBAR ===== */
+/* Changes color automatically to contrast with the background */
+
+/* For WebKit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: white; /* Set to solid white for the blend mode to work correctly */
+  mix-blend-mode: difference; /* This makes it adapt to the background */
+  border-radius: 4px;
+}
+
+body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
 }

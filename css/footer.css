@@ -88,23 +88,64 @@ footer {
   color: rgba(255, 255, 255, 0.5);
 }
 
+/* --- Animated Glow Background for Footer Form --- */
+.footer-form-glow {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  animation: footerGlowFloat 8s infinite alternate ease-in-out;
+}
+.footer-form-glow.glow1 {
+  width: 220px;
+  height: 220px;
+  top: 10%;
+  left: 5%;
+  background: rgba(255, 107, 0, 0.35);
+  animation-delay: 0s;
+}
+.footer-form-glow.glow2 {
+  width: 180px;
+  height: 180px;
+  bottom: 10%;
+  right: 10%;
+  background: rgba(252, 0, 45, 0.25);
+  animation-delay: 2s;
+}
+@keyframes footerGlowFloat {
+  0% { transform: translateY(-10px) scale(1); }
+  100% { transform: translateY(20px) scale(1.1); }
+}
+
 .footer-form {
+  position: relative;
   width: 100%;
-  padding: 0 1.5em;
+  padding: 2.5em 1.5em 2.5em 1.5em;
   display: flex;
-  gap: 0.5em;
+  gap: 1.5em;
+  z-index: 1;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  background: rgba(20, 20, 20, 0.55);
+  backdrop-filter: blur(18px);
+  overflow: visible;
 }
 
 .form-col:nth-child(1) {
   flex: 4;
   width: 100%;
-  padding: 0.25em;
+  padding: 1.5em 1em;
   display: flex;
   flex-direction: column;
-  gap: 0.25em;
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
+  gap: 0; /* Remove gap, use margin on .form-row for uniformity */
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(252,0,45,0.04);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 2;
 }
 
 .form-col:nth-child(2) {
@@ -114,21 +155,50 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ff6b00;
-  background: linear-gradient(to right, #fc002d, #ff6b00);
-  border-radius: 8px;
+  background: linear-gradient(135deg, #fc002d 0%, #ff6b00 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 32px rgba(252,0,45,0.10);
+  z-index: 2;
 }
 
+.submit-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: box-shadow 0.3s, transform 0.3s;
+  border-radius: 12px;
+  background: none;
+  position: relative;
+}
 .submit-btn h3 {
   font-family: var(--font-secondary);
-  font-size: 3vw;
+  font-size: 2.5vw;
   color: var(--color-text);
   text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+  padding: 1.2em 2.5em;
+  background: linear-gradient(135deg, #fc002d 0%, #ff6b00 100%);
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(252,0,45,0.10);
+  transition: box-shadow 0.3s, transform 0.3s;
+  position: relative;
+  z-index: 2;
+}
+.submit-btn:hover h3 {
+  box-shadow: 0 0 32px 0 rgba(252,0,45,0.25), 0 0 64px 0 rgba(255,107,0,0.18);
+  transform: translateY(-2px) scale(1.04);
 }
 
 .form-row {
   display: flex;
-  gap: 0.25em;
+  gap: 1em;
+  margin-bottom: 1.5em; /* Uniform vertical space below every row */
+}
+.form-row:last-child {
+  margin-bottom: 0; /* No extra space after last row */
 }
 
 input,
@@ -137,17 +207,23 @@ textarea {
   border: none;
   outline: none;
   text-transform: uppercase;
-  padding: 1.5em 1em;
-  border-radius: 6px;
-  transition: 0.3s;
+  padding: 1.5em 1.2em; /* More padding for luxury feel */
+  border-radius: 8px;
+  font-size: 1.1em;
+  background: rgba(255,255,255,0.18);
+  color: #222;
+  box-shadow: 0 1px 8px rgba(252,0,45,0.04);
   outline: 1.5px solid var(--color-text-secondary);
-  background: var(--color-text-secondary);
+  transition: outline 0.3s, box-shadow 0.3s, background 0.3s;
+  backdrop-filter: blur(4px);
+}
+input:focus, textarea:focus {
+  outline: 2px solid #ff6b00;
+  background: rgba(255,255,255,0.28);
+  box-shadow: 0 0 12px 0 rgba(255,107,0,0.10);
 }
 
-input:focus {
-  outline: 1.5px solid #ff6b00;
-}
-
+/* Responsive improvements */
 @media (max-width: 900px) {
   .footer-sub-header h2 {
     font-size: 3vw;
@@ -163,16 +239,21 @@ input:focus {
 
   .footer-form {
     flex-direction: column;
+    gap: 1em;
+    padding: 1.5em 0.5em 1.5em 0.5em;
   }
-
+  .form-col:nth-child(1), .form-col:nth-child(2) {
+    border-radius: 12px;
+    padding: 1em 0.5em;
+  }
   .form-row {
     flex-direction: column;
+    gap: 0.5em;
   }
-
-  .submit-btn {
-    padding: 3em 0;
+  .submit-btn h3 {
+    font-size: 5vw;
+    padding: 1em 0;
   }
-
   .footer-copyright {
     padding: 0.5em 1.5em 15em 1.5em;
   }

@@ -81,3 +81,8 @@ We’re excited to expand JOBSYNC with more features! If you find this useful, d
 Aditya Agarwal  
 Email: [adityaagarwal0081@gmail.com](mailto:adityaagarwal0081@gmail.com)  
 Portfolio: [https://adityagarwal.netlify.app](https://adityagarwal.netlify.app)
+
+### Contributers
+
+Ramakant Pandey
+Github: [github.com/RAM9122] (https://github.com/RAM9122)

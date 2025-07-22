@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = localStorage.getItem("username") || "Guest";
     const email = localStorage.getItem("email") || "guest@example.com";
     const resumeFile = localStorage.getItem("resume");
+    const fileInput = document.getElementById('resume-upload');
+const fileNameDisplay = document.getElementById('file-name-display');
+
 
     document.getElementById("username").textContent = username;
     document.getElementById("email").textContent = email;
@@ -18,6 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem("resume", fileURL);
             document.getElementById("resume-placeholder").innerHTML = 
                 `<a href="${fileURL}" target="_blank" class="resume-link">View Resume</a>`;
+        }
+    });
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (file) {
+            fileNameDisplay.textContent = `📄 ${file.name} selected`;
+        } else {
+            fileNameDisplay.textContent = 'No file chosen';
         }
     });
 

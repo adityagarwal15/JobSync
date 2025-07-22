@@ -23,12 +23,18 @@
 
         <section class="resume-section">
             <h2>Uploaded Resume</h2>
-            <div id="resume-placeholder">
-                <p>No resume uploaded.</p>
+            <div id="resume-placeholder" class="placeholder">
+                📄 <p>No resume uploaded.</p>
             </div>
-            <input type="file" id="resume-upload" accept=".pdf" />
+        
+            <label for="resume-upload" class="custom-file-label">Choose Resume</label>
+            <input type="file" id="resume-upload" accept=".pdf" hidden />
+            
             <button id="upload-btn">Upload Resume</button>
+            <div id="file-name-display" class="file-name">No file chosen</div>
+</section>
         </section>
+        
     </div>
 
     <script src="js/profile.js"></script>

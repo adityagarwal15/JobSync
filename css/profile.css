@@ -264,3 +264,54 @@ header h1, .profile-details, .resume-section {
         font-size: 1.2rem;
     }
 }
+
+/* Style the resume placeholder */
+.placeholder {
+    border: 2px dashed #ff7a59;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 16px;
+    font-size: 16px;
+    color: #f9f9f9;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Custom file input styling */
+.custom-file-label {
+    display: inline-block;
+    background-color: #ff7a59;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+    margin-bottom: 12px;
+}
+
+.custom-file-label:hover {
+    background-color: #ff5a36;
+}
+
+/* Responsive layout */
+@media (max-width: 600px) {
+    .profile-container {
+        width: 90%;
+        margin: 20px auto;
+        padding: 16px;
+    }
+
+    h1, h2 {
+        font-size: 22px;
+    }
+
+    #logout-btn, #upload-btn, .custom-file-label {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    .resume-section {
+        text-align: center;
+    }
+}

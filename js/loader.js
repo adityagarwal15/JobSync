@@ -47,3 +47,24 @@ gsap.to(".progress-bar", {
     });
   },
 });
+document.querySelector(".skip").addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const loader = document.querySelector(".loader");
+
+  // Allow scrolling immediately
+  const container = document.querySelector(".container");
+  container.style.height = "100%";
+  container.style.overflow = "scroll";
+
+  // Scroll to hero right away
+  document.querySelector("#hero").scrollIntoView({ behavior: "smooth" });
+
+  // Fade out loader
+  loader.style.transition = "opacity 0.5s ease";
+  loader.style.opacity = 0;
+
+  setTimeout(() => {
+    loader.style.display = "none";
+  }, 500);
+});

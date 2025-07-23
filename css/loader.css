@@ -8,6 +8,36 @@
   z-index: 1000;
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
+/* adding skip intro */
+.skip {
+  background: linear-gradient(to right, #fc002d, #ff6b00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  top: 30px;
+  font-size: 16px;
+  left: 1320px;
+  position: relative;
+  display: inline-block;
+}
+
+.skip::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(1);
+  width: 10px;
+  height: 2px;
+  background: linear-gradient(to right, #fc002d, #ff6b00);
+  border-radius: 2px;
+  transform-origin: center;
+  transition: transform 0.4s ease;
+}
+
+.skip:hover::after {
+  transform: translateX(-50%) scaleX(8);
+}
 
 .progress-bar {
   position: absolute;

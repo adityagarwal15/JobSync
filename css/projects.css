@@ -47,6 +47,9 @@ section.card {
 
 .project-header p {
   padding: 0 !important;
+  width: 40px;
+  position: relative;
+  top: 12px;
 }
 
 .project-copy p {

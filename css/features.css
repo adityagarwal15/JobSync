@@ -38,6 +38,10 @@
   border-radius: 8px;
 }
 
+.features-icon:hover{
+  transform: scale(1.1);
+}
+
 .features-icon {
   position: relative;
   top: -10%;

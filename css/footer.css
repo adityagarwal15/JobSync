@@ -11,6 +11,7 @@ footer {
   top: -20%;
   left: 0;
   transform: rotate(180deg);
+  z-index: 0; /* set background to lowest */
 }
 
 .footer-header {
@@ -88,11 +89,17 @@ footer {
   color: rgba(255, 255, 255, 0.5);
 }
 
+
 .footer-form {
-  width: 100%;
-  padding: 0 1.5em;
-  display: flex;
-  gap: 0.5em;
+  position: relative;
+  z-index: 2; /* make form appear on top */
+}
+
+.form-col,
+input,
+textarea {
+  position: relative;
+  z-index: 2;
 }
 
 .form-col:nth-child(1) {
@@ -136,8 +143,9 @@ textarea {
   flex: 1;
   border: none;
   outline: none;
-  text-transform: uppercase;
+  text-transform: none; 
   padding: 1.5em 1em;
+  
   border-radius: 6px;
   transition: 0.3s;
   outline: 1.5px solid var(--color-text-secondary);
@@ -145,7 +153,7 @@ textarea {
 }
 
 input:focus {
-  outline: 1.5px solid #ff6b00;
+  outline: 1.5px solid #e2cbba;
 }
 
 @media (max-width: 900px) {

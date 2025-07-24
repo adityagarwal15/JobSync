@@ -22,16 +22,26 @@
   flex: 4;
 }
 
+.callout {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
 .about-col h2 {
   width: 85%;
   color: rgba(255, 255, 255, 0.125);
   transition: color 0.3s;
+  margin-top: 75px;
+  margin-left: 40px;
 }
+.about-col img {
+  height:600px;
+}
+
 
 .about-copy {
   width: 50%;
   padding: 10em 1em 5em 1em;
-  text-transform: uppercase;
+  text-transform: uppercase; 
 }
 
 @media (max-width: 900px) {

@@ -7,6 +7,8 @@
      JobSync
     </title>
     <meta name="author" content="JobSync" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
 
     <!-- global styles -->
     <link rel="stylesheet" href="./css/global.css" />
@@ -26,6 +28,7 @@
     <link rel="stylesheet" href="./css/prices.css" />
     <link rel="stylesheet" href="./css/features.css" />
     <link rel="stylesheet" href="./css/footer.css" />
+
 
     <!-- icons -->
     <script
@@ -581,5 +584,38 @@
         });
       });
     </script>
+    <script>
+  const typedText = document.getElementById("typedText");
+  const descText = "Since 2025, JobSync has been revolutionizing the job search experience, leveraging AI-driven matching, real-time mentorship, and smart career insights to connect job seekers with their ideal opportunities effortlessly.";
+  let index = 0;
+
+  function typeText() {
+    if (index < descText.length) {
+      typedText.innerHTML += descText.charAt(index);
+      index++;
+      setTimeout(typeText, 20); // Fast typing speed
+    }
+  }
+
+  window.onload = typeText;
+</script>
+<script>
+  const callout = document.querySelector('.callout');
+
+  function handleScroll() {
+    const top = callout.getBoundingClientRect().top;
+    const height = window.innerHeight;
+
+    if (top < height - 100) {
+      callout.classList.add('visible');
+    } else {
+      callout.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+</script>
+
   </body>
 </html>

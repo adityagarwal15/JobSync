@@ -3,12 +3,11 @@
   width: 100vw;
   min-height: 100vh;
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   overflow: hidden;
-  margin: 0;
-  padding: 0;
-  padding-top: 40px; /* reduced from 160px */
+  padding: 40px 20px 0 20px;
 }
 
 .hero-img {
@@ -24,142 +23,90 @@
 
 .hero-img img {
   transform: scale(1.25);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .hero-header {
   position: relative;
   width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: flex-start;
-  padding: 1em;
+  max-width: 1100px;
+  text-align: center;
   z-index: 1;
-}
-
-.hero-col:nth-child(1) {
-  flex: 6;
-}
-
-.hero-col:nth-child(2) {
-  flex: 2;
-  padding: 0.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-header h1 {
-  text-transform: uppercase;
   font-family: var(--font-secondary);
-  font-size: 13vw;
-  color: var(--color-text);
+  font-size: 12vw;
+  text-transform: uppercase;
+  color: #ffffff;
+  animation: dropIn 1.2s ease-out forwards;
+  filter: drop-shadow(0 0 0.75rem rgba(255, 255, 255, 0.25));
+  transition: all 0.3s ease;
+}
+
+.hero-header h1:hover {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+  filter: brightness(1.1);
+}
+
+@keyframes dropIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 p#site-intro {
-  text-indent: 10em;
-  margin-top: 2em;
-  text-transform: uppercase;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #ffffff;
+  margin-top: 1.5em;
+  max-width: 900px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+p#site-intro span.typing {
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  border-right: 2px solid rgba(255, 255, 255, 0.6);
+  animation: typingEffect 4s steps(20, end), blinkCursor 0.75s step-end infinite;
+}
+
+@keyframes typingEffect {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blinkCursor {
+  50% {
+    border-color: transparent;
+  }
 }
 
 @media (max-width: 900px) {
-  .hero-header {
-    position: absolute;
-    bottom: 20%;
-    flex-direction: column;
+  .hero-header h1 {
+    font-size: 15vw;
   }
 
   p#site-intro {
-    margin-top: 0;
-    text-indent: 0;
-  }
-
-  .hero-img {
-    transform: rotate(-170deg);
-  }
-
-  .resume-upload {
-    width: 80%;
-  }
-
-  .job-recommendations {
-    width: 95%;
-    top: 60px; /* Adjust for smaller navbar on mobile */
-  }
-    
-  .hero {
-    padding-top: 120px; /* Adjust for smaller job recommendations height on mobile */
+    font-size: 1.1rem;
+    padding: 0 1em;
   }
 }
-
-.resume-upload {
-  text-align: center;
-  margin-top: 0;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  width: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  backdrop-filter: blur(10px);
-  z-index: 2;
-}
-
-.upload-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 18px;
-  color: white;
-  gap: 8px;
-}
-
-.upload-label ion-icon {
-  font-size: 24px;
-}
-
-#resumeInput {
-  display: none;
-}
-
-#upload-status {
-  font-size: 14px;
-  color: gray;
-  margin-top: 5px;
-}
-
-/* REMOVE or COMMENT OUT this block */
-.job-recommendations {
-  text-align: center;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  width: 90%;
-  position: fixed;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  backdrop-filter: blur(10px);
-  z-index: 100;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-}
-
-#job-list {
-  list-style: none;
-  padding: 0;
-  color: white;
-}
-
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: red;
-  color: white;
-  padding: 15px;
-  border-radius: 50%;
-  font-size: 24px;
-  cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
-}
-

@@ -1,34 +1,39 @@
 .loader {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100%;
-  background: #000;
-  z-index: 1000;
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(90deg, #0d0d1e,#440e0e);
+  /* background: linear-gradient(135deg, #0d0d1e, #181c33); */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease;
 }
+
+
+
+
+
 
 .progress-bar {
-  position: absolute;
-  bottom: 0;
   width: 0%;
-  height: 100%;
-  background: #ff6b00;
-  background: linear-gradient(to right, #fc002d, #ff6b00);
-  clip-path: polygon(0% 80%, 100% 80%, 100% 100%, 0% 100%);
+  height: 4px;
+  background: linear-gradient(90deg, #2B2E4A, #E84545);
+  border-radius: 10px;
+  margin-top: 2rem;
+  transition: width 0.5s ease;
 }
-
 #loader-copy-1,
 #loader-copy-2,
 #loader-copy-3 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-transform: uppercase;
-  text-align: center;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
   opacity: 0;
+  text-align: center;
+  margin: 1rem 0;
+  letter-spacing: 1px;
 }
 
 .loader .word {

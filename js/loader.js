@@ -1,48 +1,67 @@
+// Split text into words for animation
 const loaders = ["#loader-copy-1", "#loader-copy-2", "#loader-copy-3"];
 loaders.forEach((loader) => new SplitType(loader, { types: "words" }));
 
-document.querySelector(".container").style.height = "100vh";
-document.querySelector(".container").style.overflow = "hidden";
+// Cache main container and loader
+const container = document.querySelector(".container");
+const loaderElement = document.querySelector(".loader");
 
-gsap.to(loaders.join(", "), { opacity: 1, duration: 0.1 });
+// Set initial styles for container
+container.style.opacity = "0";
+container.style.transform = "scale(0.96)";
+container.style.transition = "all 0.8s ease";
+container.style.height = "100vh";
+container.style.overflow = "hidden";
 
+// Set visibility for all loader text elements
+gsap.set(loaders.join(", "), { opacity: 1 });
+
+// Animate loader text
 setTimeout(() => {
   loaders.forEach((loader, index) => {
-    gsap.to(`${loader} .word`, {
-      opacity: 1,
-      duration: 1,
-      stagger: 0.15,
-      delay: index == 2 ? index * 2.75 : index * 2.5,
-      onComplete: () => {
-        gsap.to(`${loader} .word`, {
-          opacity: 0,
-          duration: 1,
-          stagger: 0.15,
-        });
-      },
-    });
+    gsap.fromTo(
+      `${loader} .word`,
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        delay: index * 1.5,
+        ease: "power2.out",
+        onComplete: () => {
+          gsap.to(`${loader} .word`, {
+            opacity: 0,
+            y: -20,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power1.inOut",
+          });
+        },
+      }
+    );
   });
-}, 1000);
+}, 300);
 
+// Animate progress bar and exit loader
 gsap.to(".progress-bar", {
   width: "100%",
-  duration: 8,
+  duration: 4.2,
+  ease: "power1.out",
   delay: 0.5,
   onComplete: () => {
-    gsap.to(".progress-bar", {
-      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-      duration: 1,
+    gsap.to(loaderElement, {
+      opacity: 0,
+      duration: 0.6,
       ease: "power2.inOut",
       onComplete: () => {
-        gsap.to(".progress-bar, .loader", {
-          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
-          duration: 1,
-          ease: "power2.inOut",
-          onStart: () => {
-            document.querySelector(".container").style.height = "100%";
-            document.querySelector(".container").style.overflow = "scroll";
-          },
-        });
+        loaderElement.style.display = "none";
+
+        // Reveal the main site content with "boom-in"
+        container.style.height = "100%";
+        container.style.overflow = "auto";
+        container.style.opacity = "1";
+        container.style.transform = "scale(1)";
       },
     });
   },

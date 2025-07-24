@@ -1,0 +1,46 @@
+/* Center and style the main title */
+#jobsync-title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  text-align: center;
+  color: #ffffff;
+  letter-spacing: 2px;
+  transition: text-shadow 0.2s ease-in-out;
+}
+
+#jobsync-title:hover {
+  text-shadow:
+    0 0 5px rgba(255, 255, 255, 0.3),
+    0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Typing effect style */
+.animated-desc {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #e6e6e6;
+  margin-top: 1rem;
+  max-width: 800px;
+  margin-inline: auto;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #jobsync-title {
+    font-size: 3rem;
+  }
+  .animated-desc {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #jobsync-title {
+    font-size: 2rem;
+  }
+  .animated-desc {
+    font-size: 1rem;
+  }
+}

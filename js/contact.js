@@ -42,7 +42,7 @@ function resetInputBorders() {
   });
 }
 
-function submitForm() {
+async function submitForm() {
   const name = document.getElementById("name");
   const phone = document.getElementById("phone");
   const email = document.getElementById("email");
@@ -83,8 +83,31 @@ function submitForm() {
 
   // Simulate form submission later
   gsap.to(".footer-form", { opacity: 0.5, duration: 0.3, yoyo: true, repeat: 1 });
-  showToast("Message sent successfully");
+  try {
+    const res = await fetch("http://localhost:5000/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: name.value.trim(),
+        phone: phone.value.trim(),
+        email: email.value.trim(), // can be empty
+        message: message.value.trim()
+      })
+    });
 
+    const data = await res.json();
+
+    if (res.ok) {
+      showToast(data.msg || "Message sent successfully");
+      document.getElementById("contactForm").reset();
+      resetInputBorders();
+    } else {
+      showToast(data.msg || "Failed to send message", false);
+    }
+  } catch (error) {
+    console.error(error);
+    showToast("Server error. Try again later.", false);
+  }
 
   document.getElementById("contactForm").reset();
   resetInputBorders();

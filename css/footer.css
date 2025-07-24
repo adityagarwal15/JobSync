@@ -1,166 +1,72 @@
-footer {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.footer-bg {
-  position: absolute;
-  top: -20%;
-  left: 0;
-  transform: rotate(180deg);
-}
-
-.footer-header {
-  width: 100%;
-  padding: 25em 1.5em 0 1.5em;
-  display: flex;
-  justify-content: space-between;
-}
-
-.footer-header h1 {
-  color: var(--color-text);
-  text-transform: uppercase;
-  font-family: var(--font-secondary);
-  font-size: 9vw;
-  margin: 0;
-}
-
-.footer-sub-header {
-  width: 100%;
-  padding: 0 1.5em 1em 1.5em;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 2px solid var(--color-text);
-  margin-bottom: 10em;
-}
-
-.footer-sub-header h2 {
-  color: var(--color-text);
-  text-transform: uppercase;
-  font-family: var(--font-secondary);
-  font-size: 1.5vw;
-  letter-spacing: 0.025em;
-  margin: 0;
-}
-
-.footer-ctas {
-  width: 100%;
-  padding: 0.5em 1.5em;
-  display: flex;
-  justify-content: space-between;
-  color: var(--color-text);
-}
-
-.footer-cta-icon {
-  display: inline-block;
-  padding: 1em 1.125em 0.75em 1.125em;
-  background: rgba(255, 255, 255, 0.125);
-  border-radius: 12px;
-  transition: 0.5s;
-  cursor: pointer;
-}
-
-.footer-cta-icon:hover {
-  background: rgba(255, 255, 255, 0.175);
-}
-
-.footer-cta-icon ion-icon {
-  font-size: 20px;
-  transition: 0.3s;
-}
-
-.footer-cta-icon:hover ion-icon {
-  color: #ff6b00;
-}
-
-.footer-copyright {
-  width: 100%;
-  padding: 0.5em 1.5em 2em 1.5em;
-  display: flex;
-  justify-content: space-between;
-}
-
-.footer-copyright p {
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
-}
-
 .footer-form {
-  width: 100%;
-  padding: 0 1.5em;
   display: flex;
-  gap: 0.5em;
-}
-
-.form-col:nth-child(1) {
-  flex: 4;
-  width: 100%;
-  padding: 0.25em;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25em;
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.form-col:nth-child(2) {
+  gap: 2rem;
+  padding: 2rem;
+  background: radial-gradient(circle at center, #1a1a1a, #0d0d0d);
   position: relative;
-  flex: 2;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #ff6b00;
-  background: linear-gradient(to right, #fc002d, #ff6b00);
-  border-radius: 8px;
+  z-index: 2;
 }
 
-.submit-btn h3 {
-  font-family: var(--font-secondary);
-  font-size: 3vw;
-  color: var(--color-text);
-  text-transform: uppercase;
+.form-col {
+  flex: 1;
 }
 
 .form-row {
   display: flex;
-  gap: 0.25em;
+  flex-direction: row;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
 }
 
-input,
-textarea {
+.form-row input,
+.form-row textarea {
   flex: 1;
-  border: none;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ccc;
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  padding: 1rem;
+  font-size: 1rem;
+  position: relative;
+  z-index: 2;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 🔥 Hover/Focus effect with glow */
+.form-row input:focus,
+.form-row textarea:focus {
+  border-color: #ff6b00;
+  box-shadow: 0 0 10px #ff6b00;
   outline: none;
-  text-transform: uppercase;
-  padding: 1.5em 1em;
-  border-radius: 6px;
-  transition: 0.3s;
-  outline: 1.5px solid var(--color-text-secondary);
-  background: var(--color-text-secondary);
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
-input:focus {
-  outline: 1.5px solid #ff6b00;
+.form-row textarea {
+  resize: none;
 }
 
-@media (max-width: 900px) {
-  .footer-sub-header h2 {
-    font-size: 3vw;
-  }
+.submit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 
-  .footer-bg {
-    top: 0%;
-  }
+.submit-btn h3 {
+  background: linear-gradient(to right, red, orange);
+  padding: 1.5rem 3rem;
+  color: white;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
 
-  .footer-header {
-    padding: 20em 1.5em 0 1.5em;
-  }
+.submit-btn h3:hover {
+  opacity: 0.9;
+}
 
+@media screen and (max-width: 768px) {
   .footer-form {
     flex-direction: column;
   }
@@ -169,11 +75,8 @@ input:focus {
     flex-direction: column;
   }
 
-  .submit-btn {
-    padding: 3em 0;
-  }
-
-  .footer-copyright {
-    padding: 0.5em 1.5em 15em 1.5em;
+  .submit-btn h3 {
+    width: 100%;
+    text-align: center;
   }
 }

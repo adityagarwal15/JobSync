@@ -44,4 +44,14 @@ document.addEventListener("DOMContentLoaded", () => {
             gsap.to(btn, { scale: 1, boxShadow: "0 12px 50px rgba(0, 0, 0, 0.4)", duration: 0.3 });
         });
     });
+    function updateClock() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString("en-IN", { hour12: false });
+        const clockElement = document.getElementById("currentTime");
+        if (clockElement) {
+            clockElement.textContent = timeString;
+        }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
 });

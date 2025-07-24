@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="css/contact.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+
+  <section class="footer">
+    <div class="footer-header">
+      <h1>Contact</h1>
+      <button onclick="window.location.href='index.html'" aria-label="Go to Home" class="contact-btn back-btn">Home</button>
+    </div>
+
+    <div class="footer-sub-header">
+      <h2>Let's talk — we're just a message away</h2>
+    </div>
+
+    <form class="footer-form" id="contactForm" aria-label="Contact Form">
+      <div class="form-col">
+        <div class="form-row">
+          <input type="text" id="name" name="name" placeholder="Full Name" required aria-label="Full Name" />
+        </div>
+        <div class="form-row">
+          <input type="tel" id="phone" name="phone" placeholder="Phone Number" required aria-label="Phone Number" />
+        </div>
+        <div class="form-row">
+          <input type="email" id="email" name="email" placeholder="Email (Optional)" aria-label="Email" />
+        </div>
+        <div class="form-row">
+          <textarea id="message" name="message" placeholder="Your Message" required aria-label="Message"></textarea>
+        </div>
+      </div>
+
+      <div class="form-col submit-btn" onclick="submitForm()">
+        <h3>Send</h3>
+      </div>
+    </form>
+
+    <div class="footer-ctas">
+      <a href="tel:+919999999999" class="footer-cta-icon" aria-label="Call Us">
+        <ion-icon name="call-outline"></ion-icon>
+      </a>
+      <a href="https://wa.me/919999999999" target="_blank" class="footer-cta-icon" aria-label="WhatsApp Us">
+        <ion-icon name="logo-whatsapp"></ion-icon>
+      </a>
+    </div>
+
+    <div class="footer-copyright">
+      <p>© 2025 JOBSYNC Web</p>
+      <p>All rights reserved</p>
+    </div>
+  </section>
+
+  <script src="js/contact.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.2.1/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.2.1/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

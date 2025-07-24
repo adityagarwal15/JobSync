@@ -1,0 +1,23 @@
+{
+  "name": "jobsync",
+  "version": "1.0.0",
+  "description": "🎯 **AI-driven platform designed to empower job seekers, especially from underprivileged communities, by simplifying the job search process through smart recommendations, mentorship, and skill development programs.**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "mongoose": "^8.16.4",
+    "nodemon": "^3.1.10",
+    "passport": "^0.7.0",
+    "passport-github": "^1.1.0",
+    "passport-google-oauth20": "^2.0.0"
+  }
+}

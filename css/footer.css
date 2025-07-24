@@ -5,11 +5,21 @@ footer {
   flex-direction: column;
 }
 
+:root {
+  --color-bg: black;
+  --color-accent: #ff6b00;
+  --color-text: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.1);
+  --font-primary: 'Segoe UI', sans-serif;
+  --font-secondary: 'Poppins', sans-serif;
+}
+
 .footer-bg {
   position: absolute;
   top: -20%;
   left: 0;
   transform: rotate(180deg);
+  pointer-events: none;
 }
 
 .footer-header {
@@ -87,63 +97,57 @@ footer {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.footer-form {
+.footer-contact-btn {
   width: 100%;
-  padding: 0 1.5em;
-  display: flex;
-  gap: 0.5em;
+  padding: 3em 1.5em;
+  text-align: center;
+  /* background: rgba(255, 255, 255, 0.05); */
+  background: black;
+  border-radius: 10px;
+  margin-bottom: 4em;
 }
 
-.form-col:nth-child(1) {
-  flex: 4;
-  width: 100%;
-  padding: 0.25em;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25em;
-  background: #fff;
-  border-radius: 8px;
-}
-
-.form-col:nth-child(2) {
-  position: relative;
-  flex: 2;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #ff6b00;
-  background: linear-gradient(to right, #fc002d, #ff6b00);
-  border-radius: 8px;
-}
-
-.submit-btn h3 {
-  font-family: var(--font-secondary);
-  font-size: 3vw;
+.footer-contact-btn p {
   color: var(--color-text);
+  font-family: var(--font-secondary);
+  font-size: 1.5rem;
+  margin-bottom: 1em;
+}
+
+.contact-btn {
+  display: inline-block;
+  padding: 0.85em 2.5em;
+  font-size: 1.1rem;
+  font-family: var(--font-secondary);
+  color: var(--color-text);
+  background: linear-gradient(to right, #fc002d, #ff6b00);
   text-transform: uppercase;
-}
-
-.form-row {
-  display: flex;
-  gap: 0.25em;
-}
-
-input,
-textarea {
-  flex: 1;
   border: none;
-  outline: none;
-  text-transform: uppercase;
-  padding: 1.5em 1em;
-  border-radius: 6px;
-  transition: 0.3s;
-  outline: 1.5px solid var(--color-text-secondary);
-  background: var(--color-text-secondary);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 
-input:focus {
-  outline: 1.5px solid #ff6b00;
+.contact-btn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(to right, #ff6b00, #fc002d);
+}
+
+.back-btn {
+  background: transparent;
+  color: var(--color-text);
+  border: 2px solid var(--color-text);
+  padding: 0.4em 1em;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.back-btn:hover {
+  background: var(--color-accent);
+  color: #000;
+  border-color: var(--color-accent);
 }
 
 @media (max-width: 900px) {

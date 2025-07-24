@@ -6,6 +6,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const menuItems = document.querySelectorAll(".menu-item");
   let isMenuOpen = false;
 
+  const menuIcon = document.querySelector('.menu-icon');
+
+  menuIcon.addEventListener('click', () => {
+    menuItemsContainer.classList.toggle('active');
+  });
+
+
   gsap.set(menuItemsContainer, { y: 50, opacity: 0 });
   gsap.set(menuItems, { y: 50, opacity: 0 });
 

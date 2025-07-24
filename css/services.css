@@ -37,10 +37,10 @@
 }
 
 .service-item:hover{
-  border: 2px #fc002d solid;
+  border: 2px orange solid;
   /* aspect-ratio: 2; */
   background-color: black;
-  transform: scale(1.3);
+  transform: scale(1.2);
 }
 
 

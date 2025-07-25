@@ -33,6 +33,12 @@
   flex-direction: column;
   background: rgba(255, 255, 255, 0.125);
   border-radius: 8px;
+  transition: all 0.7s ease;
+}
+.service-item:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to right, #fc002d, #ff6b00);
+  cursor: pointer;
 }
 
 .service-icon {
@@ -51,7 +57,6 @@
   .services {
     flex-direction: column;
   }
-
   .services-row {
     width: 100%;
   }

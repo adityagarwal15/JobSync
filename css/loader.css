@@ -15,8 +15,8 @@
   -webkit-text-fill-color: transparent;
   position: relative;
   top: 30px;
-  font-size: 16px;
-  left: 1320px;
+  font-size: 20px;
+  left: 1780px;
   position: relative;
   display: inline-block;
 }
@@ -36,7 +36,7 @@
 }
 
 .skip:hover::after {
-  transform: translateX(-50%) scaleX(8);
+  transform: translateX(-50%) scaleX(10);
 }
 
 .progress-bar {

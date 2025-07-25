@@ -1,3 +1,4 @@
+<a id="top"></a>
 # 🚀 JOBSYNC – AI-Powered Job Opportunity Finder
 
 ### 🏆 Built at a Hackathon | **Top 5 out of 30+ Teams!**
@@ -375,7 +376,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](./LICENSE
 
 **Made with ❤️ for the open source community**
 
-[⬆ Back to Top](#jobsync--ai-powered-job-opportunity-finder)
+[⬆ Back to Top](#top)
 
 </div>
 ```

@@ -43,7 +43,6 @@
   </head>
   <body>
     <!-- loader -->
-
     <div class="loader">
       <a class="skip" href="#hero">SKIP INTRO</a>
       <div class="loader-copy">
@@ -55,11 +54,10 @@
       </div>
       <div class="progress-bar"></div>
     </div>
-
     <!-- navbar -->
     <nav>
       <div class="logo">
-        <a href="#"><img src="./assets/site-logo.png" alt="" /></a>
+        <a href="#hero"><img src="./assets/site-logo.png" alt="" /></a>
       </div>
 
       <div class="clock">
@@ -542,58 +540,49 @@
         <div class="footer-ctas">
           <div class="footer-ctas-col">
             <div class="footer-cta-icon">
-              <a
-                href="https://www.instagram.com/jobsync_in"
-                target="_blank"
-                aria-label="Instagram"
-              >
+              <a href="https://www.instagram.com/jobsync_in" target="_blank">
                 <ion-icon name="logo-instagram"></ion-icon>
               </a>
             </div>
             <div class="footer-cta-icon">
-              <a
-                href="https://www.youtube.com/@JobSync"
-                target="_blank"
-                aria-label="YouTube"
-              >
+              <a href="https://www.youtube.com/@JobSync" target="_blank">
                 <ion-icon name="logo-youtube"></ion-icon>
               </a>
             </div>
           </div>
           <div class="footer-ctas-col">
             <div class="footer-cta-icon">
-              <a href="#hero" title="Back to top">
-                <ion-icon name="arrow-up-sharp"></ion-icon>
-              </a>
+              <a href="#hero"><ion-icon name="arrow-up-sharp"></ion-icon></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-form">
+          <div class="form-col">
+            <div class="form-row">
+              <input type="text" placeholder="Your Name" />
+              <input type="text" placeholder="Your Role" />
+            </div>
+            <div class="form-row">
+              <input type="text" placeholder="Email" />
+            </div>
+            <div class="form-row">
+              <input type="text" placeholder="Portfolio Link" />
+            </div>
+            <div class="form-row">
+              <textarea name="" rows="4" placeholder="Message" id=""></textarea>
+            </div>
+          </div>
+
+          <div class="form-col">
+            <div class="submit-btn">
+              <h3>Send</h3>
             </div>
           </div>
         </div>
 
-        <div class="footer-form">
-          <form class="form-col">
-            <div class="form-row flex-2-row">
-              <input type="text" placeholder="Your Name" required />
-              <input type="text" placeholder="Your Role" />
-            </div>
-            <div class="form-row">
-              <input type="email" placeholder="Email" required />
-            </div>
-            <div class="form-row">
-              <input type="url" placeholder="Portfolio Link" />
-            </div>
-            <div class="form-row">
-              <textarea placeholder="Message" rows="4"></textarea>
-            </div>
-            <button class="submit-btn" type="submit">
-              <span>Send</span>
-              <ion-icon name="arrow-forward-outline"></ion-icon>
-            </button>
-          </form>
-        </div>
-
         <div class="footer-copyright">
           <p>JOBSYNC Web</p>
-          <a href="#" tabindex="0">Privacy Policy</a>
+          <p>Privacy Policy</p>
         </div>
       </footer>
     </div>

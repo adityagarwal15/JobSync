@@ -64,7 +64,7 @@ const emailRateLimit = rateLimit({
 });
 
 const generalRateLimit = rateLimit({
-  windowMs: 60 * 1000,
+  windowMs: 1 * 60 * 1000,
   max: 100,
   message: {
     success: false,

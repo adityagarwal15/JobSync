@@ -41,8 +41,19 @@
 }
 
 .hero-col:nth-child(2) {
-  flex: 2;
-  padding: 0.5em;
+  color: #fff;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.5); /* More contrast */
+  padding: 12px 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  margin-top: 3em;
+  margin-right: 1em;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease-in-out;
 }
 
 .hero-header h1 {

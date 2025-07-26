@@ -52,20 +52,25 @@ app.get("/user/:id", async (req, res) => {
   }
 });
 
-
 app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
   try {
-    const newUser = new User({ name, email, password });
+    // Hash the password
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Save the user with the hashed password
+    const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
     req.session.user = newUser;
 
     res.redirect(`/user/${newUser._id}`);
   } catch (err) {
-    res.send("Error: " + err.message);
+    res.send(`<script>alert("Account already exists!"); window.location.href = "/login";</script>`);
   }
 });
+
 
 
 

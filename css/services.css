@@ -56,3 +56,56 @@
     width: 100%;
   }
 }
+/* Hover effects */
+.service-item {
+  background-color: #1a1a1a;
+  color: #fff;
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  transition: transform 0.5s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
+.service-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  transition: transform 0.3s ease;
+}
+
+
+ .service-item {
+  background-color: #1e1e1e; /* original dark card background */
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.4s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.service-icon {
+  font-size: 36px;
+  color: #ffffff; /* white icon */
+  transition: color 0.4s ease;
+}
+
+.service-title p {
+  margin-top: 12px;
+  font-size: 16px;
+  color: #ffffff; /* white text */
+  font-weight: 600;
+  transition: color 0.4s ease;
+}
+
+.service-item:hover {
+  background-color: #ff7a00; 
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.service-item:hover .service-icon,
+.service-item:hover .service-title p {
+  color: #ffffff; 
+}

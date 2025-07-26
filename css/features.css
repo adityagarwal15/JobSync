@@ -79,3 +79,9 @@
     transform: scale(0.75);
   }
 }
+.hover-wrapper {
+  margin: 15px; /* add space between cards */
+  display: inline-block;
+  vertical-align: top;
+}
+

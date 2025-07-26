@@ -117,11 +117,100 @@ footer {
   border-radius: 8px;
 }
 
+.submit-btn button {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 2em 3em;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn button:hover {
+  transform: scale(1.02);
+}
+
+.submit-btn button:active {
+  transform: scale(0.98);
+}
+
 .submit-btn h3 {
   font-family: var(--font-secondary);
   font-size: 3vw;
   color: var(--color-text);
   text-transform: uppercase;
+  margin: 0;
+  pointer-events: none;
+  position: relative;
+  z-index: 2;
+}
+
+.submit-btn button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.submit-btn button:hover::before {
+  left: 100%;
+}
+
+.submit-btn button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.submit-btn button:disabled::before {
+  display: none;
+}
+
+.submit-btn button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Loading state */
+.submit-btn button.loading {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.submit-btn button.loading h3::after {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-left: 8px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Success state */
+.submit-btn button.success {
+  background: linear-gradient(to right, #28a745, #20c997) !important;
+}
+
+.submit-btn button.success h3::after {
+  content: ' ✓';
+  animation: none;
+  border: none;
 }
 
 .form-row {
@@ -168,7 +257,16 @@ input:focus {
   }
 
   .submit-btn {
-    padding: 3em 0;
+    padding: 0;
+    min-height: 80px;
+  }
+
+  .submit-btn button {
+    padding: 1.5em 2em;
+  }
+
+  .submit-btn h3 {
+    font-size: 5vw;
   }
 
   .footer-copyright {

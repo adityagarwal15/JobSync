@@ -48,16 +48,16 @@
   -webkit-backdrop-filter: blur(8px);
 
  
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 
  
-  transition: all 0.3s ease-in-out;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 nav.scrolled {
   background-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   transform: scale(0.98);
 }
 @media screen and (max-width: 768px) {
@@ -81,6 +81,15 @@ nav.scrolled {
   background-color: #4f46e5;
   color: white;
   transition: all 0.3s ease;
+}
+.menu-item {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.menu-item:hover {
+  transform: translateX(4px);
+  color: #6366f1; /* Indigo or brand color */
 }
 
 

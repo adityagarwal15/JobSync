@@ -9,6 +9,7 @@ nav {
   align-items: center;
   text-transform: uppercase;
   z-index: 10;
+  background-color: rgba(0, 0, 0, 0.454);
 }
 
 .logo,
@@ -140,4 +141,36 @@ nav {
   .menu.active ion-icon {
     color: var(--color-text);
   }
+}
+
+.auth-button{
+  background: linear-gradient(to right, #fc002d, #ff6b00);
+  border-radius: 8px;
+  text-align: center;
+  padding: 0.6rem 2rem;
+}
+
+.user-auth{
+  display: flex;
+  column-gap: 1em;
+  margin-right: 1em;
+}
+
+.user-auth .button .content {
+  display: flex;
+  column-gap: 4.5rem;
+}
+
+.user-auth .button .content i{
+  color: var(--color-text);
+}
+
+.user-auth .button{
+   transition: opacity 0.4s ease;
+}
+
+.user-auth .button:hover{
+  cursor: pointer;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
 }

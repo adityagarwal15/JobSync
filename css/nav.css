@@ -10,6 +10,7 @@ nav {
   text-transform: uppercase;
   z-index: 10;
   backdrop-filter: blur(4px);
+  background-color: #5c57575e;
 }
 
 .logo,

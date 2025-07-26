@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="css/signup.css">
+    <title>Sign Up Page</title>
+</head>
+
+<body>
+    <div class="glow"></div>
+    <div class="glow"></div>
+
+    <div class="container">
+        <form class="signup-left-panel" action="/login" method="GET">
+            <h1>Hello, Friend!</h1>
+            <p style="font-size: small;">Register with your details</p>
+            <button type="submit" style="margin-top: 2rem;">Sign In</button>
+        </form>
+
+        <div class="signup-form-container">
+            <form method="POST" action="/signup">
+                <h1>Create Account</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your email for registration</span>
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+
+        </div>
+    </div>
+</body>
+
+</html>

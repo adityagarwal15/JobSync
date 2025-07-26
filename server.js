@@ -150,8 +150,8 @@ app.get("/logout", (req, res) => {
 
 // Email transporter
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
+  host: process.env.SMTP_HOST,
+  port: parseInt(process.env.SMTP_PORT) || 587,
   secure: false,
   auth: {
     user: process.env.EMAIL_USER,

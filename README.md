@@ -1,4 +1,4 @@
-<a id="top"></a>
+
 # 🚀 JOBSYNC – AI-Powered Job Opportunity Finder
 
 ### 🏆 Built at a Hackathon | **Top 5 out of 30+ Teams!**

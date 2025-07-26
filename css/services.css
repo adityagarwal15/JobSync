@@ -56,3 +56,14 @@
     width: 100%;
   }
 }
+
+.service-item:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transition: background 0.3s ease-in-out;
+  cursor: pointer;
+  transform: scale(1.05);
+  color: var(--color-primary)
+}
+
+
+

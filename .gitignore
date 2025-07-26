@@ -1,35 +1,35 @@
 # macOS system files
 .DS_Store
 
-# Logs
-*.log
-
-# Dependency directories (if used in future)
-node_modules/
-bower_components/
-
-# Build outputs (if added later)
-dist/
-build/
-
-# Environment files (for backend projects)
-.env
-
-# OS generated files
+# Windows system files
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# IDE/Editor settings
+# Logs
+*.log
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Build outputs
+dist/
+build/
+
+# Environment variables
+.env
+
+# Editor settings
 .vscode/
 .idea/
 *.sublime-workspace
 *.sublime-project
 
-# Backup files
+# Backup and temporary files
 *.bak
 *.tmp
 *.swp
 
-# Git directory backup
+# Git merge conflict backups
 *.orig

@@ -8,6 +8,7 @@ footer {
   padding: 6em 1.5em 3em;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
   overflow: hidden;
+
 }
 
 
@@ -18,7 +19,7 @@ footer {
   transform: rotate(180deg);
   z-index: 0;
   width: 100%;
-  opacity: 0.3;
+  opacity: 0.;
 }
 
 footer::before {
@@ -69,7 +70,7 @@ footer > * {
   font-family: var(--font-secondary);
   color: rgba(255, 255, 255, 0.85);
   text-transform: uppercase;
-  margin: 0;
+  margin: 0px 0px;
   letter-spacing: 1px;
 }
 
@@ -407,7 +408,7 @@ textarea {
   }
 
   .footer-cta-icon {
-    padding: 0.8em;
+    padding: 0.7em;
   }
 
   .footer-cta-icon ion-icon {

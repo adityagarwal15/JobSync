@@ -9,6 +9,7 @@ nav {
   align-items: center;
   text-transform: uppercase;
   z-index: 10;
+  backdrop-filter: blur(4px);
 }
 
 .logo,

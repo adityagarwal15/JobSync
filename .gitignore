@@ -30,6 +30,7 @@ build/
 *.bak
 *.tmp
 *.swp
+app.js
 
 # Git merge conflict backups
 *.orig

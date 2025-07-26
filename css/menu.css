@@ -1,4 +1,4 @@
-/* menu-container */
+
 .menu-container {
   position: fixed;
   top: 46px;
@@ -7,57 +7,72 @@
   padding: 1em;
   display: flex;
   text-transform: uppercase;
-  z-index: 2;
+  z-index: 100;
   opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.menu-container.show {
+  opacity: 1;
 }
 
 .whitespace {
   pointer-events: none;
-}
-
-.whitespace,
-.menu-items {
   flex: 1;
   padding: 0.25em;
 }
 
 .menu-items {
+  flex: 1;
+  padding: 1em;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.25em;
+  gap: 0.5em;
   background: var(--color-text);
-  border-radius: 8px;
+  border-radius: 16px;
   overflow: hidden;
   pointer-events: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   z-index: 0;
 }
 
 .menu-item {
   position: relative;
   width: 100%;
-  padding: 1em;
+  padding: 1em 1.25em;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: var(--color-text-secondary);
-  border-radius: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.menu-item:hover {
+  transform: translateX(5px);
+  background: #3a3a3a; /* or adjust as per theme */
 }
 
 .menu-item span {
   color: var(--color-bg);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
 }
 
 @media (max-width: 900px) {
   .menu-container {
     top: unset;
-    bottom: calc(0px);
-    padding: 0;
+    bottom: 0;
+    padding: 0.5em;
   }
 
   .menu-items {
-    border-radius: 8px 8px 0px 0px;
-    padding-bottom: 100px;
+    border-radius: 16px 16px 0 0;
+    padding-bottom: 2em;
+    padding-top: 1em;
   }
 
   .whitespace {

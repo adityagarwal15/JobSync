@@ -1,13 +1,15 @@
 .about {
   width: 100%;
-  height: max-content;
   background: var(--color-bg);
+  overflow-x: hidden; 
 }
 
 .about-header {
-  width: 100%;
-  padding: 20em 0 10em 0;
   display: flex;
+  flex-wrap: wrap;
+  padding: 16em 2em 8em;
+  gap: 2em;
+  align-items: flex-start;
 }
 
 .about-col {
@@ -15,41 +17,51 @@
 }
 
 .about-col:nth-child(1) {
-  flex: 2;
+  flex: 1 1 30%;
 }
 
 .about-col:nth-child(2) {
-  flex: 4;
+  flex: 1 1 60%;
 }
 
 .about-col h2 {
-  width: 85%;
-  color: rgba(255, 255, 255, 0.125);
-  transition: color 0.3s;
+  width: 90%;
+  font-size: clamp(2rem, 6vw, 5rem);
+  color: rgba(255, 255, 255, 0.1);
+  gap: 0.5em;;
+  transition: color 0.3s ease;
+  line-height: 1.2;
+  word-wrap: break-word;
+}
+.about-col h2 span {
+  display: inline-block;
+  will-change: transform, opacity;
+  gap: 0.5em;
 }
 
 .about-copy {
-  width: 50%;
-  padding: 10em 1em 5em 1em;
+  width: 60%;
+  padding: 6em 1em 4em;
   text-transform: uppercase;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-text);
 }
 
 @media (max-width: 900px) {
-  .about-copy {
-    width: 100%;
-  }
-
   .about-header {
-    padding: 5em 0 5em 0;
     flex-direction: column;
+    padding: 5em 1em 5em;
   }
 
   .about-col h2 {
     width: 100%;
-    font-size: 64px;
+    font-size: clamp(2.5rem, 10vw, 4rem);
   }
 
   .about-copy {
-    padding: 5em 1em 10em 1em;
+    width: 100%;
+    padding: 3em 1em 5em;
+    font-size: 0.9rem;
   }
 }

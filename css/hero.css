@@ -8,7 +8,7 @@
   overflow: hidden;
   margin: 0;
   padding: 0;
-  padding-top: 40px; /* reduced from 160px */
+  padding-top: 40px;
 }
 
 .hero-img {
@@ -50,12 +50,19 @@
   font-family: var(--font-secondary);
   font-size: 13vw;
   color: var(--color-text);
+  line-height: 0.5;
+  margin-bottom:0.5em;
 }
 
 p#site-intro {
-  text-indent: 10em;
-  margin-top: 2em;
+  text-indent: 4em;
+  margin-top: 0.5em;
+  margin-bottom: 3em;
   text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  font-weight: 300;
+  font-size: 1.2em;
 }
 
 @media (max-width: 900px) {
@@ -64,25 +71,25 @@ p#site-intro {
     bottom: 20%;
     flex-direction: column;
   }
-
+  
   p#site-intro {
     margin-top: 0;
     text-indent: 0;
   }
-
+  
   .hero-img {
     transform: rotate(-170deg);
   }
-
+  
   .resume-upload {
     width: 80%;
   }
-
+  
   .job-recommendations {
     width: 95%;
     top: 60px; /* Adjust for smaller navbar on mobile */
   }
-    
+  
   .hero {
     padding-top: 120px; /* Adjust for smaller job recommendations height on mobile */
   }
@@ -108,9 +115,10 @@ p#site-intro {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 20px;
   color: white;
-  gap: 8px;
+  gap: 12px;
+  font-weight: 500;
 }
 
 .upload-label ion-icon {
@@ -122,12 +130,11 @@ p#site-intro {
 }
 
 #upload-status {
-  font-size: 14px;
+  font-size: 16px;
   color: gray;
-  margin-top: 5px;
+  margin-top: 8px;
 }
 
-/* REMOVE or COMMENT OUT this block */
 .job-recommendations {
   text-align: center;
   padding: 20px;
@@ -162,4 +169,3 @@ p#site-intro {
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
 }
-

@@ -600,53 +600,6 @@
       });
     });
 
-  
-  window.addEventListener('DOMContentLoaded', () => {
-    const row = document.getElementById('carousel-row');
-    const items = row.children;
-
-    // Clone all cards
-    for (let i = 0; i < items.length; i++) {
-      const clone = items[i].cloneNode(true);
-      row.appendChild(clone);
-    }
-  });
-
-//Middle card pop up animation
- const row = document.querySelector('.services-row');
-const cards = document.querySelectorAll('.service-item');
-
-function highlightCenterCard() {
-  const center = window.innerWidth / 2;
-  let closestCard = null;
-  let closestDistance = Infinity;
-
-  cards.forEach(card => {
-    const rect = card.getBoundingClientRect();
-    const cardCenter = rect.left + rect.width / 2;
-    const distance = Math.abs(cardCenter - center);
-
-    if (distance < closestDistance) {
-      closestDistance = distance;
-      closestCard = card;
-    }
-  });
-
- 
-  const hovered = Array.from(cards).some(card => card.matches(':hover'));
-
-  cards.forEach(card => {
-    card.classList.remove('centered');
-  });
-
-  if (!hovered && closestCard) {
-    closestCard.classList.add('centered');
-  }
-}
-
-
-setInterval(highlightCenterCard, 100);
-
   </script>
 </body>
 

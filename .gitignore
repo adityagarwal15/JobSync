@@ -1,0 +1,35 @@
+# macOS system files
+.DS_Store
+
+# Logs
+*.log
+
+# Dependency directories (if used in future)
+node_modules/
+bower_components/
+
+# Build outputs (if added later)
+dist/
+build/
+
+# Environment files (for backend projects)
+.env
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE/Editor settings
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Backup files
+*.bak
+*.tmp
+*.swp
+
+# Git directory backup
+*.orig

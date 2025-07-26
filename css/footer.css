@@ -3,7 +3,6 @@ footer {
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .footer-bg {
@@ -104,7 +103,6 @@ footer {
   gap: 0.25em;
   background: #fff;
   border-radius: 8px;
-  overflow: hidden;
 }
 
 .form-col:nth-child(2) {

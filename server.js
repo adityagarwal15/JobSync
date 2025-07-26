@@ -3,10 +3,15 @@ const nodemailer = require("nodemailer");
 const path = require("path");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
+const { connectDB } = require("./config/database");
+const apiRoutes = require("./routes");
 require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Connect to MongoDB
+connectDB();
 
 const corsOptions = {
   origin: [
@@ -77,6 +82,9 @@ const generalRateLimit = rateLimit({
 
 // Apply general rate limiting to all requests
 app.use(generalRateLimit);
+
+// API Routes
+app.use("/api", apiRoutes);
 
 // Serve static files
 app.get("/", (req, res) => {

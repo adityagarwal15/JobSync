@@ -35,6 +35,58 @@
   <!-- spline  -->
   <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
 
+  <style>
+  nav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+
+
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+ 
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+ 
+  transition: all 0.3s ease-in-out;
+}
+nav.scrolled {
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transform: scale(0.98);
+}
+@media screen and (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 20px;
+  }
+
+  .ctas {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .menu {
+    align-self: flex-end;
+  }
+}
+.cta:hover, .submit-btn button:hover {
+  transform: scale(1.05);
+  background-color: #4f46e5;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+
+
+  </style>
+
 </head>
 
 <body>
@@ -585,6 +637,16 @@
   <script src="./js/prices.js"></script>
 
   <script>
+        window.addEventListener("scroll", () => {
+      const nav = document.querySelector("nav");
+
+      if (window.scrollY > 30) {
+        nav.classList.add("scrolled");
+      } else {
+        nav.classList.remove("scrolled");
+      }
+    });
+
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", function (e) {

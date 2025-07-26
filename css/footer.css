@@ -1,4 +1,4 @@
-/* Footer Main Container */
+
 footer {
   position: relative;
   width: 100%;
@@ -10,7 +10,7 @@ footer {
   overflow: hidden;
 }
 
-/* Background Gradient Image */
+
 .footer-bg {
   position: absolute;
   top: -20%;
@@ -41,7 +41,6 @@ footer > * {
   z-index: 2;
 }
 
-/* Centered Header - Keep original size */
 .footer-header {
   margin-bottom: 0.2em;
 }
@@ -59,7 +58,7 @@ footer > * {
   filter: drop-shadow(0 0 20px rgba(255, 107, 0, 0.3));
 }
 
-/* Subheading - Keep original size */
+
 .footer-sub-header {
   text-align: center;
   margin-bottom: 2em;
@@ -74,7 +73,6 @@ footer > * {
   letter-spacing: 1px;
 }
 
-/* Modern Footer Icons */
 .footer-ctas {
   display: flex;
   gap: 1.5em;
@@ -287,7 +285,6 @@ textarea {
   transform: translateY(-1px) scale(1.01);
 }
 
-/* Modern Footer Bottom */
 .footer-copyright {
   margin-top: 2em;
   display: flex;

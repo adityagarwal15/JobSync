@@ -189,8 +189,6 @@
               <p>Training</p>
             </div>
           </div>
-        </div>
-        <div class="services-row">
           <div class="service-item">
             <div class="service-icon">
               <ion-icon name="analytics-sharp"></ion-icon> <!-- Updated Insights Icon -->
@@ -585,24 +583,70 @@
   <script src="./js/prices.js"></script>
 
   <script>
-    // Smooth scroll for anchor links
+    // Smooth scroll 
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
         e.preventDefault();
 
         const targetId = this.getAttribute("href");
 
-        // Use Lenis scroll method for smooth scrolling
         if (window.lenisScrollTo) {
           window.lenisScrollTo(targetId);
         } else {
-          // Fallback to scrollIntoView if Lenis is not available
           document.querySelector(targetId).scrollIntoView({
             behavior: "smooth",
           });
         }
       });
     });
+
+  
+  window.addEventListener('DOMContentLoaded', () => {
+    const row = document.getElementById('carousel-row');
+    const items = row.children;
+
+    // Clone all cards
+    for (let i = 0; i < items.length; i++) {
+      const clone = items[i].cloneNode(true);
+      row.appendChild(clone);
+    }
+  });
+
+//Middle card pop up animation
+ const row = document.querySelector('.services-row');
+const cards = document.querySelectorAll('.service-item');
+
+function highlightCenterCard() {
+  const center = window.innerWidth / 2;
+  let closestCard = null;
+  let closestDistance = Infinity;
+
+  cards.forEach(card => {
+    const rect = card.getBoundingClientRect();
+    const cardCenter = rect.left + rect.width / 2;
+    const distance = Math.abs(cardCenter - center);
+
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closestCard = card;
+    }
+  });
+
+ 
+  const hovered = Array.from(cards).some(card => card.matches(':hover'));
+
+  cards.forEach(card => {
+    card.classList.remove('centered');
+  });
+
+  if (!hovered && closestCard) {
+    closestCard.classList.add('centered');
+  }
+}
+
+
+setInterval(highlightCenterCard, 100);
+
   </script>
 </body>
 

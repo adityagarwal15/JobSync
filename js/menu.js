@@ -67,6 +67,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }
     }
+    menuItemsContainer.classList.toggle('visible');
+    menuItemsContainer.classList.toggle('hidden');
+
   }
 
   menuItems.forEach((menuItem) => {

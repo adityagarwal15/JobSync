@@ -8,7 +8,16 @@
   display: flex;
   text-transform: uppercase;
   z-index: 2;
+}
+
+.menu-container.hidden {
   opacity: 0;
+  pointer-events: none;
+}
+
+.menu-container.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .whitespace {
@@ -42,6 +51,11 @@
   align-items: center;
   background: var(--color-text-secondary);
   border-radius: 5px;
+}
+.menu-item:hover {
+  background: var(--color-text-secondary-hover);
+  cursor: pointer;
+  color: var(--color-primary);
 }
 
 .menu-item span {

@@ -1,6 +1,3 @@
-Here is your **final full corrected `README.md`** with all the fixes implemented:
-
-````markdown
 # 🚀 JOBSYNC – AI-Powered Job Opportunity Finder
 
 ### 🏆 Built at a Hackathon | **Top 5 out of 30+ Teams!**

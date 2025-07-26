@@ -2,20 +2,22 @@
   width: 100%;
   height: max-content;
   background: var(--color-bg-secondary);
-  padding-bottom: 12em;
-  border-radius: 12px;
+  padding-bottom: 8rem;
+  border-radius: 16px;
+  margin: 2rem 0;
 }
 
 .prices-header {
   position: relative;
   width: 100%;
-  padding: 20em 0 10em 0;
+  padding: 12rem 0 8rem 0;
   display: flex;
   z-index: 2;
+  align-items: flex-start;
 }
 
 .prices-col {
-  padding: 1em;
+  padding: 2rem;
 }
 
 .prices-col:nth-child(1) {
@@ -29,59 +31,171 @@
 .prices-col h2 {
   width: 85%;
   color: rgba(255, 255, 255, 0.125);
-  transition: color 0.3s;
-}
-
-.prices-copy {
-  width: 50%;
-  padding: 10em 1em 2em 1em;
+  transition: color 0.3s ease;
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  margin: 0;
   text-transform: uppercase;
 }
 
+.prices-col h2:hover {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.prices-copy {
+  width: 60%;
+  padding: 6rem 2rem 3rem 2rem;
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  letter-spacing: 0.1em;
+  color: var(--color-text);
+  font-weight: 400;
+}
+
+.prices-copy p {
+  margin: 1.5rem 0;
+  font-size: inherit;
+}
+
 .prices-cta {
-  width: 70%;
-  padding: 4em 0;
-  margin: 0 auto;
+  width: 75%;
+  padding: 3rem 2rem;
+  margin: 4rem auto 0;
   background: #ff6b00;
-  background: linear-gradient(to right, #fc002d, #ff6b00);
-  border-radius: 8px;
-  box-shadow: none;
-  transition: 0.3s;
+  background: linear-gradient(135deg, #fc002d, #ff6b00);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(255, 106, 0, 0.3);
+  transition: all 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.prices-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.prices-cta:hover::before {
+  left: 100%;
 }
 
 .prices-cta:hover {
-  -webkit-box-shadow: 0px 0px 300px 0px rgba(255, 106, 0, 0.75);
-  -moz-box-shadow: 0px 0px 300px 0px rgba(255, 106, 0, 0.75);
-  box-shadow: 0px 0px 300px 0px rgba(255, 106, 0, 0.75);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 64px rgba(255, 106, 0, 0.6);
 }
 
 .prices-cta h1 {
   font-family: var(--font-secondary);
-  font-size: 2vw;
+  font-size: 2.5rem;
   text-transform: uppercase;
   text-align: center;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+/* Additional elements styling */
+.prices-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 300;
+}
+
+@media (max-width: 1200px) {
+  .prices-header {
+    padding: 10rem 0 6rem 0;
+  }
+  
+  .prices-col h2 {
+    font-size: 3.5rem;
+  }
+  
+  .prices-copy {
+    font-size: 1.2rem;
+    padding: 5rem 2rem 3rem 2rem;
+  }
+  
+  .prices-cta h1 {
+    font-size: 2.2rem;
+  }
 }
 
 @media (max-width: 900px) {
+  .prices {
+    padding-bottom: 6rem;
+    border-radius: 12px;
+  }
+  
   .prices-copy {
     width: 100%;
+    font-size: 1.1rem;
+    padding: 4rem 1.5rem 3rem 1.5rem;
   }
 
   .prices-header {
-    padding: 5em 0 5em 0;
+    padding: 6rem 0 4rem 0;
     flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .prices-col {
+    padding: 1rem;
+  }
+
+  .prices-cta {
+    width: 90%;
+    padding: 2.5rem 1.5rem;
+    margin: 3rem auto 0;
   }
 
   .prices-cta h1 {
-    font-size: 4vw;
+    font-size: 2rem;
+    letter-spacing: 0.1em;
   }
 
   .prices-col h2 {
     width: 100%;
-    font-size: 64px;
+    font-size: 3rem;
+    line-height: 1.2;
   }
+}
 
+@media (max-width: 600px) {
+  .prices-header {
+    padding: 4rem 0 3rem 0;
+  }
+  
   .prices-copy {
-    padding: 5em 1em 10em 1em;
+    padding: 3rem 1rem 2rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .prices-col h2 {
+    font-size: 2.5rem;
+  }
+  
+  .prices-cta {
+    width: 95%;
+    padding: 2rem 1rem;
+  }
+  
+  .prices-cta h1 {
+    font-size: 1.8rem;
   }
 }

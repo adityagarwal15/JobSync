@@ -2,11 +2,12 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  padding: 1.5em;
+  padding: 3rem 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .promo-bg {
@@ -14,13 +15,21 @@
   top: -25%;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 150%;
   z-index: 0;
+  opacity: 0.8;
+  transition: transform 0.3s ease;
+}
+
+.promo:hover .promo-bg {
+  transform: scale(1.02);
 }
 
 .promo-header {
   position: relative;
   z-index: 1;
+  text-align: center;
+  max-width: 90%;
 }
 
 .promo h1,
@@ -29,31 +38,166 @@
   font-family: var(--font-secondary);
   text-transform: uppercase;
   text-align: center;
-  line-height: 100%;
+  line-height: 0.9;
   margin: 0;
+  font-weight: 800;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 1s ease forwards;
 }
 
 .promo h2 {
-  font-size: 3vw;
-  letter-spacing: 0;
-  line-height: 105%;
+  font-size: 4vw;
+  letter-spacing: 0.15em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+  font-weight: 600;
+  animation-delay: 0.2s;
 }
 
 .promo h1 {
   margin: 0;
-  font-size: 10vw;
+  font-size: 12vw;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, var(--color-text), rgba(255, 255, 255, 0.7));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation-delay: 0.4s;
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+/* Subtitle styling */
+.promo-subtitle {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: none;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  margin-top: 2rem;
+  max-width: 600px;
+  line-height: 1.6;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* CTA Button */
+.promo-cta {
+  margin-top: 3rem;
+  padding: 1.2rem 3rem;
+  background: linear-gradient(135deg, #fc002d, #ff6b00);
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(255, 106, 0, 0.4);
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.8s;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.promo-cta:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(255, 106, 0, 0.6);
+  background: linear-gradient(135deg, #ff6b00, #fc002d);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1200px) {
+  .promo h2 {
+    font-size: 4.5vw;
+  }
+  
+  .promo h1 {
+    font-size: 13vw;
+  }
+  
+  .promo-subtitle {
+    font-size: 1.3rem;
+  }
 }
 
 @media (max-width: 900px) {
   .promo {
-    height: 70vh;
+    height: 80vh;
+    padding: 2rem 1.5rem;
   }
 
   .promo h2 {
-    font-size: 4vw;
+    font-size: 5vw;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.1em;
   }
 
   .promo h1 {
-    font-size: 12vw;
+    font-size: 15vw;
+    line-height: 0.85;
+  }
+  
+  .promo-subtitle {
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    max-width: 90%;
+  }
+  
+  .promo-cta {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    margin-top: 2.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .promo {
+    height: 70vh;
+    padding: 1.5rem 1rem;
+  }
+  
+  .promo h2 {
+    font-size: 6vw;
+    letter-spacing: 0.08em;
+  }
+
+  .promo h1 {
+    font-size: 18vw;
+    line-height: 0.8;
+  }
+  
+  .promo-subtitle {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .promo-cta {
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .promo h1 {
+    font-size: 20vw;
+  }
+  
+  .promo h2 {
+    font-size: 7vw;
   }
 }

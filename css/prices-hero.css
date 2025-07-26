@@ -2,20 +2,36 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  padding: 1.5em;
+  padding: 3rem 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   z-index: 1;
+  overflow: hidden;
 }
 
 .prices-bg {
   position: absolute;
-  z-index: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: -1;
+  opacity: 0.9;
+  transition: transform 0.3s ease;
+}
+
+.prices-hero:hover .prices-bg {
+  transform: scale(1.02);
+}
+
+.prices-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 90%;
+  animation: fadeInUp 1s ease forwards;
 }
 
 .prices-hero h1,
@@ -24,31 +40,252 @@
   font-family: var(--font-secondary);
   text-transform: uppercase;
   text-align: center;
-  line-height: 100%;
   margin: 0;
+  font-weight: 800;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transform: translateY(20px);
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
 }
 
 .prices-hero h3 {
-  font-size: 3vw;
-  letter-spacing: 0;
-  line-height: 105%;
+  font-size: 4vw;
+  letter-spacing: 0.15em;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  animation-delay: 0.2s;
 }
 
 .prices-hero h1 {
-  margin: 0;
-  font-size: 10vw;
+  font-size: 12vw;
+  line-height: 0.9;
+  letter-spacing: 0.03em;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, var(--color-text), rgba(255, 255, 255, 0.7));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation-delay: 0.4s;
+}
+
+/* Subtitle styling */
+.prices-hero-subtitle {
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: none;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  margin-top: 2rem;
+  max-width: 600px;
+  line-height: 1.6;
+  margin: 0 auto;
+  transform: translateY(20px);
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.6s;
+}
+
+/* Decorative elements */
+.prices-hero::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #fc002d, #ff6b00);
+  border-radius: 50%;
+  opacity: 0.1;
+  animation: float 6s ease-in-out infinite;
+  z-index: 0;
+}
+
+.prices-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 30%;
+  right: 15%;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #ff6b00, #fc002d);
+  border-radius: 50%;
+  opacity: 0.1;
+  animation: float 8s ease-in-out infinite reverse;
+  z-index: 0;
+}
+
+/* Price highlight */
+.price-highlight {
+  display: inline-block;
+  background: linear-gradient(135deg, #fc002d, #ff6b00);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-top: 2rem;
+  box-shadow: 0 8px 24px rgba(255, 106, 0, 0.4);
+  transition: all 0.3s ease;
+  transform: translateY(20px);
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.8s;
+}
+
+.price-highlight:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(255, 106, 0, 0.6);
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  animation: bounce 2s infinite;
+}
+
+.scroll-indicator::after {
+  content: '↓';
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+/* Enhanced responsive design */
+@media (max-width: 1200px) {
+  .prices-hero h3 {
+    font-size: 4.5vw;
+  }
+  
+  .prices-hero h1 {
+    font-size: 13vw;
+  }
+  
+  .prices-hero-subtitle {
+    font-size: 1.2rem;
+  }
 }
 
 @media (max-width: 900px) {
   .prices-hero {
-    height: 70vh;
+    height: 80vh;
+    padding: 2rem 1.5rem;
   }
 
-  .prices-hero h2 {
-    font-size: 4vw;
+  .prices-hero h3 {
+    font-size: 5vw;
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
   }
 
   .prices-hero h1 {
-    font-size: 14vw;
+    font-size: 15vw;
+    line-height: 0.85;
+    margin-bottom: 1.5rem;
+  }
+  
+  .prices-hero-subtitle {
+    font-size: 1.1rem;
+    max-width: 90%;
+    margin-top: 1.5rem;
+  }
+  
+  .price-highlight {
+    font-size: 1.1rem;
+    padding: 0.4rem 1.2rem;
+  }
+  
+  .prices-hero::before {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .prices-hero::after {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 600px) {
+  .prices-hero {
+    height: 70vh;
+    padding: 1.5rem 1rem;
+  }
+  
+  .prices-hero h3 {
+    font-size: 6vw;
+    letter-spacing: 0.08em;
+  }
+
+  .prices-hero h1 {
+    font-size: 18vw;
+    line-height: 0.8;
+  }
+  
+  .prices-hero-subtitle {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .price-highlight {
+    font-size: 1rem;
+    padding: 0.3rem 1rem;
+  }
+  
+  .scroll-indicator {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .prices-hero h1 {
+    font-size: 20vw;
+  }
+  
+  .prices-hero h3 {
+    font-size: 7vw;
+  }
+  
+  .prices-hero-subtitle {
+    font-size: 0.9rem;
   }
 }

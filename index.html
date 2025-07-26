@@ -26,6 +26,19 @@
     <link rel="stylesheet" href="./css/prices.css" />
     <link rel="stylesheet" href="./css/features.css" />
     <link rel="stylesheet" href="./css/footer.css" />
+    
+    <!-- Accessibility Helper Style -->
+    <style>
+      .visually-hidden {
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+      }
+    </style>
 
     <!-- icons -->
     <script
@@ -59,7 +72,7 @@
     <!-- navbar -->
     <nav>
       <div class="logo">
-        <a href="#hero"><img src="./assets/site-logo.png" alt="" /></a>
+        <a href="#hero"><img src="./assets/site-logo.png" alt="JobSync Logo" /></a>
       </div>
 
       <div class="clock">
@@ -74,7 +87,7 @@
           <div class="contact-icon">
             <ion-icon name="ellipse-sharp"></ion-icon>
           </div>
-          <a href="" target="_blank">Let's talk</a>
+          <a href="#contact">Let's talk</a>
         </div>
 
         <div class="menu">
@@ -161,7 +174,7 @@
     <div class="services-row">
       <div class="service-item">
         <div class="service-icon">
-          <ion-icon name="bulb-sharp"></ion-icon> <!-- Updated AI Matching Icon -->
+          <ion-icon name="bulb-sharp"></ion-icon>
         </div>
         <div class="service-title">
           <p>AI Matching</p>
@@ -169,7 +182,7 @@
       </div>
       <div class="service-item">
         <div class="service-icon">
-          <ion-icon name="people-sharp"></ion-icon> <!-- Updated Mentorship Icon -->
+          <ion-icon name="people-sharp"></ion-icon>
         </div>
         <div class="service-title">
           <p>Mentorship</p>
@@ -177,7 +190,7 @@
       </div>
       <div class="service-item">
         <div class="service-icon">
-          <ion-icon name="document-text-sharp"></ion-icon> <!-- Updated Resume Analysis Icon -->
+          <ion-icon name="document-text-sharp"></ion-icon>
         </div>
         <div class="service-title">
           <p>Resume Analysis</p>
@@ -185,7 +198,7 @@
       </div>
       <div class="service-item">
         <div class="service-icon">
-          <ion-icon name="school-sharp"></ion-icon> <!-- Updated Training Icon -->
+          <ion-icon name="school-sharp"></ion-icon>
         </div>
         <div class="service-title">
           <p>Training</p>
@@ -195,7 +208,7 @@
     <div class="services-row">
       <div class="service-item">
         <div class="service-icon">
-          <ion-icon name="analytics-sharp"></ion-icon> <!-- Updated Insights Icon -->
+          <ion-icon name="analytics-sharp"></ion-icon>
         </div>
         <div class="service-title">
           <p>Insights</p>
@@ -203,7 +216,7 @@
       </div>
       <div class="service-item">
         <div class="service-icon">
-          <ion-icon name="chatbubbles-sharp"></ion-icon> <!-- Updated Messaging Icon -->
+          <ion-icon name="chatbubbles-sharp"></ion-icon>
         </div>
         <div class="service-title">
           <p>Messaging</p>
@@ -211,7 +224,7 @@
       </div>
       <div class="service-item">
         <div class="service-icon">
-          <ion-icon name="cloud-upload-sharp"></ion-icon> <!-- Updated Cloud Icon -->
+          <ion-icon name="cloud-upload-sharp"></ion-icon>
         </div>
         <div class="service-title">
           <p>Cloud</p>
@@ -219,7 +232,7 @@
       </div>
       <div class="service-item">
         <div class="service-icon">
-          <ion-icon name="lock-closed-sharp"></ion-icon> <!-- Updated Security Icon -->
+          <ion-icon name="lock-closed-sharp"></ion-icon>
         </div>
         <div class="service-title">
           <p>Security</p>
@@ -269,7 +282,7 @@
               </div>
             </div>
             <div class="project-img">
-              <img src="./assets/project-1.jpg" alt="" />
+              <img src="./assets/project-1.jpg" alt="Screenshot of the JobMatch AI interface" />
             </div>
           </div>
         </section>
@@ -294,7 +307,7 @@
               </div>
             </div>
             <div class="project-img">
-              <img src="./assets/project-2.jpg" alt="" />
+              <img src="./assets/project-2.jpg" alt="Professionals collaborating in a Mentorship Hub meeting" />
             </div>
           </div>
         </section>
@@ -319,7 +332,7 @@
               </div>
             </div>
             <div class="project-img">
-              <img src="./assets/project-3.jpg" alt="" />
+              <img src="./assets/project-3.jpg" alt="A user interacting with the Smart Resume analyzer on a laptop" />
             </div>
           </div>
         </section>
@@ -344,7 +357,7 @@
               </div>
             </div>
             <div class="project-img">
-              <img src="./assets/project-4.jpg" alt="" />
+              <img src="./assets/project-4.jpg" alt="Graphs and charts displaying Career Insights data" />
             </div>
           </div>
         </section>
@@ -369,7 +382,7 @@
               </div>
             </div>
             <div class="project-img">
-              <img src="./assets/project-5.jpg" alt="" />
+              <img src="./assets/project-5.jpg" alt="Illustration representing secure JobSync Cloud storage" />
             </div>
           </div>
         </section>
@@ -394,7 +407,7 @@
               </div>
             </div>
             <div class="project-img">
-              <img src="./assets/project-6.jpg" alt="" />
+              <img src="./assets/project-6.jpg" alt="A digital lock symbolizing JobSync's data security" />
             </div>
           </div>
         </section>
@@ -443,7 +456,7 @@
           <div class="features-row">
             <div class="features-item">
               <div class="features-icon">
-                <img src="./assets/feature-1.png" alt="" />
+                <img src="./assets/feature-1.png" alt="Transparent weekly updates icon" />
               </div>
               <div class="features-title">
                 <h2>TRANSPARENT WEEKLY UPDATES</h2>
@@ -456,7 +469,7 @@
             </div>
             <div class="features-item">
               <div class="features-icon">
-                <img src="./assets/feature-2.png" alt="" />
+                <img src="./assets/feature-2.png" alt="Real-time mentorship icon" />
               </div>
               <div class="features-title">
                 <h2>REAL-TIME MENTORSHIP</h2>
@@ -469,7 +482,7 @@
           <div class="features-row">
             <div class="features-item">
               <div class="features-icon">
-                <img src="./assets/feature-3.png" alt="" />
+                <img src="./assets/feature-3.png" alt="Smart career insights icon" />
               </div>
               <div class="features-title">
                 <h2>SMART CAREER INSIGHTS</h2>
@@ -480,7 +493,7 @@
             </div>
             <div class="features-item">
               <div class="features-icon">
-                <img src="./assets/feature-4.png" alt="" />
+                <img src="./assets/feature-4.png" alt="Weekly progress tracking icon" />
               </div>
               <div class="features-title">
                 <h2>WEEKLY PROGRESS TRACKING</h2>
@@ -511,36 +524,41 @@
         <div class="footer-ctas">
           <div class="footer-ctas-col">
             <div class="footer-cta-icon">
-              <a href="https://www.instagram.com/jobsync_in" target="_blank">
+              <a href="https://www.instagram.com/jobsync_in" target="_blank" aria-label="Visit our Instagram page">
                 <ion-icon name="logo-instagram"></ion-icon>
               </a>
             </div>
             <div class="footer-cta-icon">
-              <a href="https://www.youtube.com/@JobSync" target="_blank">
+              <a href="https://www.youtube.com/@JobSync" target="_blank" aria-label="Visit our YouTube channel">
                 <ion-icon name="logo-youtube"></ion-icon>
               </a>
             </div>
           </div>
           <div class="footer-ctas-col">
             <div class="footer-cta-icon">
-              <a href="#hero"><ion-icon name="arrow-up-sharp"></ion-icon></a>
+              <a href="#hero" aria-label="Scroll back to top"><ion-icon name="arrow-up-sharp"></ion-icon></a>
             </div>
           </div>
         </div>
         <div class="footer-form">
           <div class="form-col">
             <div class="form-row">
-              <input type="text" placeholder="Your Name" />
-              <input type="text" placeholder="Your Role" />
+              <label for="user-name" class="visually-hidden">Your Name</label>
+              <input type="text" id="user-name" name="userName" placeholder="Your Name" />
+              <label for="user-role" class="visually-hidden">Your Role</label>
+              <input type="text" id="user-role" name="userRole" placeholder="Your Role" />
             </div>
             <div class="form-row">
-              <input type="text" placeholder="Email" />
+              <label for="user-email" class="visually-hidden">Email</label>
+              <input type="email" id="user-email" name="userEmail" placeholder="Email" />
             </div>
             <div class="form-row">
-              <input type="text" placeholder="Portfolio Link" />
+              <label for="portfolio-link" class="visually-hidden">Portfolio Link</label>
+              <input type="text" id="portfolio-link" name="portfolioLink" placeholder="Portfolio Link" />
             </div>
             <div class="form-row">
-              <textarea name="" rows="4" placeholder="Message" id=""></textarea>
+              <label for="user-message" class="visually-hidden">Message</label>
+              <textarea name="userMessage" id="user-message" rows="4" placeholder="Message"></textarea>
             </div>
           </div>
 
@@ -570,16 +588,5 @@
     <script src="./js/projects.js"></script>
     <script src="./js/prices.js"></script>
 
-    <script>
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-
-          document.querySelector(this.getAttribute("href")).scrollIntoView({
-            behavior: "smooth",
-          });
-        });
-      });
-    </script>
   </body>
 </html>

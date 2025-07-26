@@ -1,6 +1,3 @@
-
-
-
 /* Base Reset */
 * {
     margin: 0;
@@ -10,141 +7,293 @@
 
 body {
     font-family: var(--font-primary);
-    background: linear-gradient(135deg, #ff6a6a, #cc2929);
+    background: linear-gradient(135deg, #ff6a6a 0%, #cc2929 50%, #8b1538 100%);
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    padding: 10px;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding: 20px;
+    position: relative;
+}
+
+/* Animated background elements */
+body::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    animation: rotate 20s linear infinite;
+    z-index: 0;
+}
+
+body::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 106, 0, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 8s ease-in-out infinite;
+    z-index: 0;
 }
 
 .profile-container {
+    position: relative;
     width: 90%;
-    max-width: 700px;
-    background: rgba(0, 0, 0, 0.75);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 3rem;
+    border-radius: 24px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
     text-align: center;
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     opacity: 0;
     transform: translateY(50px);
+    z-index: 1;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 header h1 {
     font-family: var(--font-secondary);
-    font-size: 2.2rem;
-    font-weight: 600;
+    font-size: 2.8rem;
+    font-weight: 700;
     color: white;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 0.15em;
     transition: all 0.3s ease;
+    background: linear-gradient(135deg, #ffffff, #ff6a6a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+header h1:hover {
+    transform: scale(1.05);
 }
 
 button {
-    background: #f44336;
+    background: linear-gradient(135deg, #f44336, #ff5722);
     color: white;
     border: none;
-    padding: 12px 25px;
-    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
     font-family: var(--font-secondary);
+    font-weight: 600;
     cursor: pointer;
-    border-radius: 30px;
+    border-radius: 50px;
     transition: all 0.3s ease;
-    box-shadow: 0 12px 50px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 25px rgba(244, 67, 54, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+button:hover::before {
+    left: 100%;
 }
 
 button:hover {
-    background: #ff5722;
-    box-shadow: 0 15px 60px rgba(0, 0, 0, 0.4);
-    transform: translateY(-5px);
+    background: linear-gradient(135deg, #ff5722, #f44336);
+    box-shadow: 0 12px 35px rgba(244, 67, 54, 0.5);
+    transform: translateY(-3px);
+}
+
+button:active {
+    transform: translateY(-1px);
 }
 
 button:focus {
     outline: none;
+    box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.3);
 }
 
 .profile-details, .resume-section {
-    margin: 30px 0;
+    margin: 2.5rem 0;
     opacity: 0;
     transform: translateY(30px);
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .profile-details h2 {
-    font-size: 1.7rem;
-    font-weight: 500;
+    font-size: 2.2rem;
+    font-weight: 600;
     font-family: var(--font-secondary);
     color: #f2f2f2;
-    margin-bottom: 10px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
 }
 
-.profile-details p {
+.profile-details h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #ff6a6a, #cc2929);
+    border-radius: 2px;
+}
+
+.profile-details p, .resume-section p {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 1rem;
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+.profile-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.info-item {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.info-item:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-5px);
+}
+
+.info-item h3 {
     font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-top: 5px;
+    color: #ff6a6a;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.info-item p {
+    font-size: 1.1rem;
+    margin: 0;
 }
 
 #resume-placeholder {
-    padding: 20px;
+    padding: 2.5rem;
     border: 2px dashed #ff6666;
-    margin-bottom: 20px;
-    margin-top: 10px;
-    font-size: 1.2rem;
+    margin: 1.5rem 0;
+    font-size: 1.4rem;
     color: #f2f2f2;
-    font-weight: 600;
+    font-weight: 500;
+    border-radius: 16px;
+    background: rgba(255, 102, 102, 0.05);
+    transition: all 0.3s ease;
+}
+
+#resume-placeholder:hover {
+    border-color: #ff5722;
+    background: rgba(255, 102, 102, 0.1);
 }
 
 input[type="file"] {
-    background: #ff6f61;
+    background: linear-gradient(135deg, #ff6f61, #ff5722);
     color: white;
-    padding: 12px 20px;
+    padding: 1rem 1.5rem;
     border: none;
-    border-radius: 20px;
-    font-size: 1rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(255, 111, 97, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 input[type="file"]:hover {
-    background: #ff5f4f;
+    background: linear-gradient(135deg, #ff5722, #ff6f61);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 111, 97, 0.4);
 }
 
 .resume-section button {
-    background: #ff6f61;
-    padding: 12px 25px;
-    border-radius: 20px;
+    background: linear-gradient(135deg, #ff6f61, #ff5722);
+    padding: 1rem 2rem;
+    border-radius: 25px;
     font-weight: 600;
+    font-size: 1.2rem;
     color: white;
     transition: all 0.3s ease;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 25px rgba(255, 111, 97, 0.3);
+    margin: 0.5rem;
 }
 
 .resume-section button:hover {
-    background: #ff5f4f;
+    background: linear-gradient(135deg, #ff5722, #ff6f61);
     transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 111, 97, 0.4);
 }
 
-.resume-section button:active {
-    transform: translateY(3px);
+/* Status messages */
+.status-message {
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin: 1rem 0;
+    font-weight: 500;
+    text-align: center;
 }
 
-.resume-section button:focus {
-    outline: none;
+.status-success {
+    background: rgba(76, 175, 80, 0.2);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    color: #81c784;
+}
+
+.status-error {
+    background: rgba(244, 67, 54, 0.2);
+    border: 1px solid rgba(244, 67, 54, 0.3);
+    color: #e57373;
 }
 
 /* Animation: Fade In, Slide In */
 .profile-container.show {
     opacity: 1;
     transform: translateY(0);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 header h1.show, .profile-details.show, .resume-section.show {
@@ -153,82 +302,128 @@ header h1.show, .profile-details.show, .resume-section.show {
 }
 
 header h1, .profile-details, .resume-section {
-    transition: opacity 1s ease, transform 1s ease;
+    transition: opacity 1s ease, transform 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Media Queries for Responsiveness */
+/* Background animations */
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
 
-/* Mobile Devices */
-@media (max-width: 600px) {
+@keyframes float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-30px) scale(1.1); }
+}
+
+/* Enhanced responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
     header {
         flex-direction: column;
         text-align: center;
+        gap: 1.5rem;
     }
 
     header h1 {
-        font-size: 1.8rem;
-        margin-bottom: 10px;
+        font-size: 2.2rem;
+        margin-bottom: 0;
     }
 
     button {
-        padding: 10px 20px;
-        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+        font-size: 1.1rem;
     }
 
     .profile-container {
-        padding: 20px;
-        max-width: 90%;
+        padding: 2rem;
+        max-width: 95%;
+    }
+
+    .profile-details, .resume-section {
+        padding: 1.5rem;
+        margin: 2rem 0;
     }
 
     .profile-details h2 {
-        font-size: 1.4rem;
+        font-size: 1.8rem;
     }
 
-    .profile-details p {
-        font-size: 1rem;
+    .profile-details p, .resume-section p {
+        font-size: 1.1rem;
+    }
+
+    .profile-info-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     #resume-placeholder {
-        font-size: 1rem;
+        font-size: 1.2rem;
+        padding: 2rem;
     }
 
     input[type="file"], .resume-section button {
         font-size: 1rem;
-        padding: 10px 15px;
+        padding: 0.8rem 1.2rem;
     }
 }
 
-/* Tablets (600px - 1024px) */
-@media (min-width: 601px) and (max-width: 1024px) {
-    header {
-        flex-direction: column;
-        text-align: center;
-    }
-
+@media (max-width: 480px) {
     header h1 {
-        font-size: 2rem;
-        margin-bottom: 10px;
+        font-size: 1.8rem;
     }
 
     .profile-container {
-        padding: 30px;
+        padding: 1.5rem;
     }
 
     .profile-details h2 {
         font-size: 1.5rem;
     }
 
-    .profile-details p {
-        font-size: 1.1rem;
+    .profile-details p, .resume-section p {
+        font-size: 1rem;
+    }
+
+    .info-item {
+        padding: 1rem;
     }
 
     #resume-placeholder {
         font-size: 1.1rem;
+        padding: 1.5rem;
     }
 
     input[type="file"], .resume-section button {
-        font-size: 1.1rem;
-        padding: 10px 20px;
+        font-size: 0.9rem;
+        padding: 0.7rem 1rem;
+    }
+}
+
+/* Tablets (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+
+    .profile-container {
+        padding: 2.5rem;
+    }
+
+    .profile-details h2 {
+        font-size: 2rem;
+    }
+
+    .profile-details p, .resume-section p {
+        font-size: 1.2rem;
+    }
+
+    #resume-placeholder {
+        font-size: 1.3rem;
     }
 }
 
@@ -241,23 +436,23 @@ header h1, .profile-details, .resume-section {
     }
 
     header h1 {
-        font-size: 2.2rem;
+        font-size: 2.8rem;
     }
 
     .profile-container {
-        padding: 40px;
+        padding: 3rem;
     }
 
     .profile-details h2 {
-        font-size: 1.7rem;
+        font-size: 2.2rem;
     }
 
-    .profile-details p {
-        font-size: 1.2rem;
+    .profile-details p, .resume-section p {
+        font-size: 1.3rem;
     }
 
     #resume-placeholder {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
 
     input[type="file"], .resume-section button {

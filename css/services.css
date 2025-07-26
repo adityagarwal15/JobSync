@@ -41,7 +41,7 @@
   /* border: 2px linear-gradient(135deg, #fc002d, #ff6b00, #ff8534) solid; */
   border:2px orange solid ;
   /* aspect-ratio: 2; */
-  background-color: black;
+  background:linear-gradient(135deg, #fc002d, #ff6b00, #ff8534);
   transform: scale(1.2);
 }
 

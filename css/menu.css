@@ -45,7 +45,7 @@
 
   border: 0px 2px 4px rgba(0, 0, 0, 5);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: all 0.5s ease;
+  transition: background 0.5s ease, padding 0.5s ease;
 }
 
 .menu-item:hover{

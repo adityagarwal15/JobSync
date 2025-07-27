@@ -10,19 +10,26 @@ document.addEventListener("DOMContentLoaded", function () {
   gsap.set(menuItems, { y: 50, opacity: 0 });
 
   function time() {
-    var d = new Date();
-    var s = d.getSeconds();
-    var m = d.getMinutes();
-    var h = d.getHours();
-    currentTime.textContent =
-      ("0" + h).substr(-2) +
-      ":" +
-      ("0" + m).substr(-2) +
-      ":" +
-      ("0" + s).substr(-2);
-  }
+  const d = new Date();
+  let h = d.getHours();
+  const m = d.getMinutes();
+  const s = d.getSeconds();
+  const ampm = h >= 12 ? "PM" : "AM";
 
-  setInterval(time, 1000);
+  h = h % 12 || 12;
+
+  document.getElementById("currentTime").textContent =
+    ("0" + h).slice(-2) + ":" + ("0" + m).slice(-2) + ":" + ("0" + s).slice(-2);
+  document.getElementById("ampm").textContent = ampm;
+
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById("currentDate").textContent = d.toLocaleDateString("en-US", options);
+}
+
+setInterval(time, 1000);
+time();
+
+
 
   function toggleMenu() {
     if (!isMenuOpen) {

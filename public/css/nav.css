@@ -121,6 +121,22 @@ nav {
 
   .clock {
     text-align: right;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    background: black;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .dot {
+    height: 10px;
+    width: 10px;
+    background-color: #39ff14;
+    border-radius: 50%;
+    animation: blink 1s infinite;
   }
 
   .menu,
@@ -142,14 +158,14 @@ nav {
   }
 }
 
-.auth-button{
+.auth-button {
   background: linear-gradient(to right, #fc002d, #ff6b00);
   border-radius: 8px;
   text-align: center;
   padding: 0.6rem 2rem;
 }
 
-.user-auth{
+.user-auth {
   display: flex;
   column-gap: 1em;
   margin-right: 1em;
@@ -160,15 +176,15 @@ nav {
   column-gap: 4.5rem;
 }
 
-.user-auth .button .content i{
+.user-auth .button .content i {
   color: var(--color-text);
 }
 
-.user-auth .button{
-   transition: opacity 0.4s ease;
+.user-auth .button {
+  transition: opacity 0.4s ease;
 }
 
-.user-auth .button:hover{
+.user-auth .button:hover {
   cursor: pointer;
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);

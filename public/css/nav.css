@@ -9,6 +9,19 @@ nav {
   align-items: center;
   text-transform: uppercase;
   z-index: 10;
+
+  /* Add these styles for blur and transparency */
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); /* Safari support */
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+
+/* Fallback for browsers without backdrop-filter */
+@supports not ((backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px))) {
+  nav {
+    background: rgba(255, 255, 255, 0.85);
+  }
 }
 
 .logo,

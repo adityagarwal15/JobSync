@@ -31,6 +31,15 @@
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
+
+  border: 0px 2px 4px rgba(0, 0, 0, 5);       
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: background 0.5s ease, padding 0.5s ease;
+}
+
+.menu-item:hover{
+  background: linear-gradient(to right, rgb(189, 189, 189), rgb(255, 255, 255));
+  padding: 1.1rem;
 }
 
 .menu-item {

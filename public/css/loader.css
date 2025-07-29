@@ -34,3 +34,28 @@
 .loader .word {
   opacity: 0;
 }
+
+/* ----------- Skip Loading Animation Button Style ----------- */
+#skip-loader-btn {
+  position: absolute;
+  bottom: 20px; 
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 20px;
+  background: #3498db; 
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  z-index: 1010; 
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+#skip-loader-btn:hover,
+#skip-loader-btn:focus {
+  background: #1d6fa5;
+  outline: none;
+}

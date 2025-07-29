@@ -32,15 +32,15 @@
   gap: 1em;
   flex-direction: column;
   background: rgba(255, 255, 255, 0.125);
-  border-radius: 8px;
-  transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer; 
+  border-radius: 8px; 
+   transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+   cursor: pointer;
 }
 
 .service-item:hover {
-  background: linear-gradient(90deg, rgba(255,0,18,1)25%,rgba(255,71,0,1)100%, rgba(255,81,0,1)100%) ;/* gradient hover */
-  transform: scale(1.05); /* zoom effect */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* subtle glow */
+  background: linear-gradient(90deg, rgba(255,0,18,1)25%,rgba(255,71,0,1)100%, rgba(255,82,0,1)100%) ;/* gradient hover */
+  transform: scale(1.04); /* zoom effect */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
 } 
 
 

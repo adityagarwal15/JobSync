@@ -47,3 +47,38 @@ gsap.to(".progress-bar", {
     });
   },
 });
+
+// ----------- Skip button logic ---------------
+
+document.addEventListener('DOMContentLoaded', function () {
+  const skipBtn = document.getElementById('skip-loader-btn');
+  const preloader = document.getElementById('preloader');
+  const container = document.querySelector('.container');
+
+  function skipLoadingAnimation() {
+    // Kill all GSAP tweens related to loader texts, progress bar, and loader container
+    gsap.killTweensOf([
+      ...loaders.map(id => Array.from(document.querySelectorAll(`${id} .word`))).flat(),
+      document.querySelector('.progress-bar'),
+      document.querySelector('.loader'),
+    ]);
+
+    // Animate hiding loader and reveal main content immediately
+    gsap.to('.progress-bar, .loader', {
+      clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
+      duration: 0.6,
+      ease: 'power2.inOut',
+      onStart: () => {
+        container.style.height = '100%';
+        container.style.overflow = 'scroll';
+      },
+      onComplete: () => {
+        if (preloader) preloader.style.display = 'none';
+      },
+    });
+  }
+
+  if (skipBtn) {
+    skipBtn.addEventListener('click', skipLoadingAnimation);
+  }
+});

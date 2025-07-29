@@ -537,80 +537,102 @@
     </section>
 
     <!-- footer  -->
-    <footer id="contact">
-      <div class="footer-bg">
-        <img src="./assets/grad.png" alt="" />
-      </div>
-      <div class="footer-header">
-        <h1>Let's</h1>
-        <h1>Talk</h1>
-      </div>
-      <div class="footer-sub-header">
-        <h2>Fill the form</h2>
-        <h2>and</h2>
-        <h2>Get in touch</h2>
-      </div>
+ <footer id="contact">
+  <div class="footer-header">
+    <h1>Let's Talk</h1>
+  </div>
 
-      <div class="footer-ctas">
-        <div class="footer-ctas-col">
-          <div class="footer-cta-icon">
-            <a href="https://www.instagram.com/jobsync_in" target="_blank">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </div>
-          <div class="footer-cta-icon">
-            <a href="https://www.youtube.com/@JobSync" target="_blank">
-              <ion-icon name="logo-youtube"></ion-icon>
-            </a>
-          </div>
+  <div class="footer-container">
+    <!-- Left: Contact Form -->
+    <div class="footer-form">
+      <form id="contactForm" novalidate>
+        <div class="form-row icon-input">
+          <ion-icon name="person-sharp"></ion-icon>
+          <input type="text" id="name" placeholder=" " />
+          <label for="name">Your Name</label>
+          <span class="error-msg"></span>
         </div>
-        <div class="footer-ctas-col">
-          <div class="footer-cta-icon">
-            <a href="#hero"><ion-icon name="arrow-up-sharp"></ion-icon></a>
-          </div>
-        </div>
-      </div>
-      <form id="contact-form" action="/send-email" method="post">
-        <div class="footer-form">
-          <div class="form-col">
-            <div class="form-row">
-              <input type="text" name="user_name" placeholder="Your Name" required />
-              <input type="text" name="user_role" placeholder="Your Role" required />
-            </div>
-            <div class="form-row">
-              <input type="email" name="user_email" placeholder="Email" required />
-            </div>
-            <div class="form-row">
-              <input type="text" name="portfolio_link" placeholder="Portfolio Link" />
-            </div>
-            <div class="form-row">
-              <textarea name="message" rows="4" placeholder="Message" required></textarea>
-            </div>
-          </div>
 
-          <div class="form-col">
-            <div class="submit-btn">
-              <button type="submit">
-                <h3>Send</h3>
-              </button>
-            </div>
-          </div>
+        <div class="form-row icon-input">
+          <ion-icon name="briefcase-sharp"></ion-icon>
+          <input type="text" id="role" placeholder=" " />
+          <label for="role">Your Role</label>
+          <span class="error-msg"></span>
+        </div>
+
+        <div class="form-row icon-input">
+          <ion-icon name="mail-sharp"></ion-icon>
+          <input type="email" id="email" placeholder=" " />
+          <label for="email">Email</label>
+          <span class="error-msg"></span>
+        </div>
+
+        <div class="form-row icon-input">
+          <ion-icon name="link-sharp"></ion-icon>
+          <input type="url" id="portfolio" />
+          <label for="portfolio">Portfolio Link</label>
+          <span class="error-msg"></span>
+        </div>
+
+        <div class="form-row icon-input">
+          <ion-icon name="chatbox-ellipses-sharp"></ion-icon>
+          <textarea id="message" rows="4"></textarea>
+          <label for="message">Message</label>
+          <span class="error-msg"></span>
+        </div>
+
+        <div class="form-row">
+          <button type="submit" class="submit-btn">Send</button>
         </div>
       </form>
 
-      <div class="footer-copyright">
-        <p>JOBSYNC Web</p>
-        <p>Privacy Policy</p>
-      </div>
-    </footer>
+      <!-- Toast message -->
+      <div id="toast">Message Sent Successfully!</div>
+    </div>
+
+    <!-- Right: Typewriter Text -->
+    <div class="typewriter-box">
+      <div class="typewriter-text" id="typewriter"></div>
+    </div>
   </div>
+
+  <!-- Socials and back to top -->
+  <div class="footer-ctas">
+    <div class="footer-ctas-col">
+      <div class="footer-cta-icon">
+        <a href="https://www.instagram.com/jobsync_in" target="_blank">
+          <ion-icon name="logo-instagram"></ion-icon>
+        </a>
+      </div>
+      <div class="footer-cta-icon">
+        <a href="https://www.youtube.com/@JobSync" target="_blank">
+          <ion-icon name="logo-youtube"></ion-icon>
+        </a>
+      </div>
+    </div>
+    <div class="footer-ctas-col">
+      <div class="footer-cta-icon">
+        <a href="#hero"><ion-icon name="arrow-up-sharp"></ion-icon></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-copyright">
+    <p>JOBSYNC Web</p>
+    <p>Privacy Policy</p>
+  </div>
+</footer>
+
+
+  </div>
+
+
 
   <script src="https://unpkg.com/lenis@1.1.4/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js"></script>
 
-  <script src="./js/form.js"></script>
   <script src="./js/loader.js"></script>
   <script src="./js/lenis.js"></script>
   <script src="./js/menu.js"></script>
@@ -619,25 +641,85 @@
   <script src="./js/prices.js"></script>
 
   <script>
-    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
         e.preventDefault();
 
-        const targetId = this.getAttribute("href");
-
-        // Use Lenis scroll method for smooth scrolling
-        if (window.lenisScrollTo) {
-          window.lenisScrollTo(targetId);
-        } else {
-          // Fallback to scrollIntoView if Lenis is not available
-          document.querySelector(targetId).scrollIntoView({
-            behavior: "smooth",
-          });
-        }
+        document.querySelector(this.getAttribute("href")).scrollIntoView({
+          behavior: "smooth",
+        });
       });
     });
+    
+   
   </script>
+  <script>
+  const texts = ["Fill the form and Get in touch"];
+  let textIndex = 0;
+  let charIndex = 0;
+  let typing = true;
+  const el = document.getElementById("typewriter");
+
+  function typeWriterEffect() {
+    const currentText = texts[textIndex];
+    
+    if (typing) {
+      el.textContent = currentText.substring(0, charIndex + 1);
+      charIndex++;
+
+      if (charIndex === currentText.length) {
+        typing = false;
+        setTimeout(typeWriterEffect, 2000); // Pause before deleting
+        return;
+      }
+    } else {
+      el.textContent = currentText.substring(0, charIndex - 1);
+      charIndex--;
+
+      if (charIndex === 0) {
+        typing = true;
+        setTimeout(typeWriterEffect, 1000); // Pause before retyping
+        return;
+      }
+    }
+
+    setTimeout(typeWriterEffect, 80); // Speed of typing/deleting
+  }
+
+  window.onload = () => {
+    typeWriterEffect();
+  };
+</script>
+<script>
+   const form = document.getElementById('contactForm');
+  const toast = document.getElementById('toast');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    let isValid = true;
+
+    form.querySelectorAll('.form-row').forEach(row => {
+      const input = row.querySelector('input, textarea');
+      const error = row.querySelector('.error-msg');
+      if (input && error) {
+        if (!input.checkValidity()) {
+          isValid = false;
+          error.textContent = input.validationMessage;
+        } else {
+          error.textContent = '';
+        }
+      }
+    });
+
+    if (isValid) {
+      // Show toast
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+      form.reset();
+    }
+  });
+</script>
+    
 </body>
 
 </html>

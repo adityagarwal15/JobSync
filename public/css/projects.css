@@ -88,3 +88,49 @@ section.card {
     font-size: 24px;
   }
 }
+
+@media screen and (max-width: 400px) {
+  .skip-button-wrapper {
+    margin-right: 20px;       /* Reduce side margin */
+    text-align: center;       /* Center the button */
+    z-index: 1;               /* Lower to prevent overlapping */
+    position: relative;
+    
+  }
+}
+.skip-button-wrapper
+{
+  text-align: right;
+  margin-right: 110px;
+  position: relative;
+  z-index: 2;
+}
+
+
+.skip-button {
+  background: linear-gradient(to right, #fc002d, #ff6b00);
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  font-family: var(--font-secondary);
+  text-transform: uppercase;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+
+.skip-button:hover{
+  box-shadow: 0 0 150px 20px rgba(255, 106, 0, 0.75);
+  transform: translateY(-2px);
+   z-index: 2;
+}
+
+@media screen and (max-width: 400px) {
+.skip-button {
+   padding: 10px 10px;
+  }
+}

@@ -1,6 +1,6 @@
 # 👥 Contributors & Performance Tracker
 
-**Last Updated:** July 28, 2025
+**Last Updated:** July 28, 2025 
 
 This file tracks the contributions and points of all contributors based on their merged PRs and resolved issues.
 

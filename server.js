@@ -22,12 +22,14 @@ const PORT = process.env.PORT || 10000;
 app.set('trust proxy', 1); // Important for Render
 
 // === Force HTTPS Redirect (for Render) ===
+if (process.env.NODE_ENV === "production") {
 app.use((req, res, next) => {
   if (req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
     return res.redirect('https://' + req.headers.host + req.url);
   }
   next();
 });
+}
 
 // ========== MONGO DB SETUP ==========
 async function main() {
@@ -166,33 +168,38 @@ app.get('/api/totalusers', async (req, res) => {
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: process.env.SMTP_PORT,
-  secure: true,
+  secure: process.env.SMTP_SECURE === 'true', // false for port 587, true for port 465
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
   },
-  tls: { rejectUnauthorized: false },
+  tls: {
+  rejectUnauthorized: false,
+},
 });
 
 // Contact form submission
+
 app.post('/send-email', emailRateLimit, async (req, res) => {
+  console.log('📩 Incoming form submission:', req.body);
+
+  const { user_name, user_role, user_email, portfolio_link, message } = req.body;
+
+  if (!user_name || !user_role || !user_email || !message) {
+    return res
+      .status(400)
+      .json({ success: false, message: 'Please fill in all required fields.' });
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(user_email)) {
+    return res
+      .status(400)
+      .json({ success: false, message: 'Please enter a valid email address.' });
+  }
+
   try {
-    const { user_name, user_role, user_email, portfolio_link, message } = req.body;
-
-    if (!user_name || !user_role || !user_email || !message) {
-      return res
-        .status(400)
-        .json({ success: false, message: 'Please fill in all required fields.' });
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(user_email)) {
-      return res
-        .status(400)
-        .json({ success: false, message: 'Please enter a valid email address.' });
-    }
-
-    // Save to DB
+    // Save to MongoDB
     await Contact.create({
       userName: user_name,
       userRole: user_role,
@@ -202,8 +209,8 @@ app.post('/send-email', emailRateLimit, async (req, res) => {
     });
 
     const mailOptions = {
-      from: `"${user_name}" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
+      from: `"JobSync Contact Form" <${process.env.SMTP_SENDER}>`,
+      to: process.env.SMTP_SENDER,
       replyTo: user_email,
       subject: `New Contact Form Submission from ${user_name} - JobSync`,
       html: `<p><strong>Name:</strong> ${user_name}<br>
@@ -216,14 +223,22 @@ app.post('/send-email', emailRateLimit, async (req, res) => {
 
     const info = await transporter.sendMail(mailOptions);
     console.log(`✅ Email sent: ${info.messageId}`);
+
     res.json({ success: true, message: 'Email sent successfully!', messageId: info.messageId });
   } catch (error) {
-    console.error('❌ Error sending email:', error);
+    console.error('❌ Error sending email or saving to DB:', error);
     res.status(500).json({ success: false, message: 'Failed to send email.' });
   }
 });
 
+
 // === START SERVER ===
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
+});
+
+
+// 404 handler - keep this as the last middleware
+app.use((req, res, next) => {
+  res.status(404).render('404'); // Use .sendFile if you're not using a template engine
 });

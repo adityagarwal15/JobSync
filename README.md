@@ -3,7 +3,7 @@
 
 ## 🏆 Built at a Hackathon | **Top 5 out of 30+ Teams!**
 
-🎯 **AI-driven platform designed to empower job seekers, especially from underprivileged communities, by simplifying the job search process through smart recommendations, mentorship, and skill development programs.**
+🎯 **AI-driven platform designed to empower job seekers, especially from underprivileged communities, by simplifying the job search process through smart recommendations, mentorship, and skill development programs**
 
 ![License](https://img.shields.io/github/license/adityagarwal15/JobSync)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
@@ -20,8 +20,8 @@
 
 ## 🌐 Live Demo
 
-### 🚀 **Experience JobSync Now:**
-Visit the live platform: **[jobsync-new.onrender.com](jobsync-new.onrender.com)**
+### 🚀 Experience JobSync Now  
+Visit the live platform: [jobsync-new.onrender.com](https://jobsync-new.onrender.com)
 
 ### 📸 **Screenshots**
 ![JobSync Screenshot](https://res.cloudinary.com/dcf0cpuqf/image/upload/v1738695543/Screenshot_2025-02-02_181936_qpdcqu.png)

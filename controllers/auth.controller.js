@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-dotenv.config();
+dotenv.config(); //env
 
 const registerUserController = async (req, res) => {
   const { name, email, password, role } = req.body;
@@ -49,6 +49,7 @@ const registerUserController = async (req, res) => {
     });
 
     console.log('SMTP: ', process.env.SMTP_USER);
+    console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
     const mailOptions = {
       from: `JobSync ${process.env.SMTP_SENDER}`,
       to: newUser.email,
@@ -88,16 +89,17 @@ const verificationController = async (req, res) => {
     user.verificationToken = null;
     await user.save();
 
-    const tkn = jwt.sign({ id: user._id, name: user.name, email: user.email }, process.env.SECRET, {
+    const tkn = jwt.sign({ id: user._id, name: user.name, email: user.email }, process.env.JWT_SECRET, {
       expiresIn: '24h',
     });
 
-    res.cookie('token', tkn, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
-    });
+  res.cookie('token', tkn, {
+  httpOnly: true,
+  secure: true,
+  sameSite: 'None',
+  maxAge: 24 * 60 * 60 * 1000,
+});
+
 
     req.flash('success', 'Email verified successfully! Welcome to JobSync.');
     res.redirect('/');
@@ -134,16 +136,18 @@ const loginController = async (req, res) => {
       return res.redirect('/login');
     }
 
-    const tkn = jwt.sign({ id: user._id, name: user.name, email: user.email }, process.env.SECRET, {
+    const tkn = jwt.sign({ id: user._id, name: user.name, email: user.email }, process.env.JWT_SECRET, {
       expiresIn: '24h',
     });
 
-    res.cookie('token', tkn, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
-    });
+  res.cookie('token', tkn, {
+  httpOnly: true,
+  secure: true,
+  sameSite: 'None',
+  maxAge: 24 * 60 * 60 * 1000,
+});
+
+
 
     req.flash('success', `Welcome back, ${user.name}!`);
     res.redirect('/');
@@ -157,11 +161,11 @@ const loginController = async (req, res) => {
 const logoutController = async (req, res) => {
   try {
     res.cookie('token', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-      maxAge: 0,
-    });
+  httpOnly: true,
+  secure: true,
+  sameSite: 'None',
+  maxAge: 0, // expire cookie
+});
 
     req.flash('info', 'You have been logged out successfully.');
     res.redirect('/');
@@ -226,6 +230,7 @@ const forgetPasswordController = async (req, res) => {
       },
     });
 
+    console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
     const mailOptions = {
       from: `JobSync ${process.env.SMTP_SENDER}`,
       to: user.email,
@@ -318,6 +323,7 @@ const resendVerificationController = async (req, res) => {
       },
     });
 
+    console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
     const mailOptions = {
       from: `JobSync ${process.env.SMTP_SENDER}`,
       to: user.email,

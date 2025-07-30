@@ -87,22 +87,24 @@ footer {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.footer-form {
+  .footer-form {
   width: 100%;
   padding: 0 1.5em;
   display: flex;
   gap: 0.5em;
+  flex-wrap: wrap;
 }
 
 .form-col:nth-child(1) {
   flex: 4;
   width: 100%;
-  padding: 0.25em;
+  padding: 0.75em;
   display: flex;
   flex-direction: column;
-  gap: 0.25em;
+  gap: 0.75em;
   background: #fff;
   border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .form-col:nth-child(2) {
@@ -112,9 +114,9 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ff6b00;
   background: linear-gradient(to right, #fc002d, #ff6b00);
   border-radius: 8px;
+  min-height: 100px;
 }
 
 .submit-btn button {
@@ -128,6 +130,9 @@ footer {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .submit-btn button:hover {
@@ -215,7 +220,8 @@ footer {
 
 .form-row {
   display: flex;
-  gap: 0.25em;
+  gap: 0.75em;
+  flex-wrap: wrap;
 }
 
 input,
@@ -224,17 +230,29 @@ textarea {
   border: none;
   outline: none;
   text-transform: uppercase;
-  padding: 1.5em 1em;
+  padding: 1em 1em;
   border-radius: 6px;
-  transition: 0.3s;
+  transition: border 0.3s, background 0.3s;
   outline: 1.5px solid var(--color-text-secondary);
   background: var(--color-text-secondary);
+  font-size: 1rem;
+  font-family: inherit;
+  color: #222;
 }
 
-input:focus {
-  outline: 1.5px solid #ff6b00;
+input::placeholder,
+textarea::placeholder {
+  color: #666;
+  text-transform: none;
 }
 
+input:focus,
+textarea:focus {
+  outline: 2px solid #ff6b00;
+  background: #fff;
+}
+
+/* Responsive */
 @media (max-width: 900px) {
   .footer-sub-header h2 {
     font-size: 3vw;

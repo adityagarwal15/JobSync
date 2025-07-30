@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>404 - Page Not Found | JOBSYNC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-red: #fc002d;
+      --primary-orange: #ff6b00;
+      --accent-orange: #ff8534;
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #1a0505;
+      --text-primary: #ffffff;
+      --text-secondary: #b8b8b8;
+      --text-muted: #6a6a6a;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --neon-glow: 0 0 20px rgba(252, 0, 45, 0.5);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Advanced background system with particle effects */
+    .background-system {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .gradient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.4;
+      animation: orbFloat 25s ease-in-out infinite;
+    }
+
+    .orb-1 {
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, var(--primary-red) 0%, transparent 70%);
+      top: -30%;
+      right: -20%;
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--primary-orange) 0%, transparent 70%);
+      bottom: -20%;
+      left: -15%;
+      animation-delay: -5s;
+      animation-direction: reverse;
+    }
+
+    .orb-3 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, var(--accent-orange) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation-delay: -10s;
+    }
+
+    .mesh-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(252, 0, 45, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 107, 0, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 40% 70%, rgba(255, 133, 52, 0.08) 0%, transparent 50%);
+      animation: meshMove 15s ease-in-out infinite;
+    }
+
+    .particle-system {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--primary-orange);
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: particleFloat 20s linear infinite;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      25% { transform: translate(60px, -40px) scale(1.1) rotate(90deg); }
+      50% { transform: translate(-40px, 60px) scale(0.9) rotate(180deg); }
+      75% { transform: translate(30px, 30px) scale(1.05) rotate(270deg); }
+    }
+
+    @keyframes meshMove {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.05); }
+    }
+
+    @keyframes particleFloat {
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
+    }
+
+    /* Main container with advanced grid */
+    .error-container {
+      position: relative;
+      max-width: 1400px;
+      width: 100%;
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      min-height: 85vh;
+    }
+
+    /* Visual section with 3D effects */
+    .visual-section {
+      display: flex;
+      flex-direction: column;
+      align-items: first baseline;
+      justify-content: center;
+      position: relative;
+      perspective: 1000px;
+    }
+
+    .error-number-container {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .error-number {
+      font-family: 'SF Pro Display', sans-serif;
+      font-size: clamp(10rem, 15vw, 20rem);
+      font-weight: 800;
+      line-height: 0.75;
+      background: linear-gradient(135deg, 
+        var(--primary-red) 0%, 
+        var(--primary-orange) 30%, 
+        var(--accent-orange) 60%, 
+        var(--primary-red) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      letter-spacing: -0.08em;
+      transform-style: preserve-3d;
+      animation: numberPulse 4s ease-in-out infinite;
+    }
+
+    .error-number::before {
+      content: '404';
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      background: linear-gradient(135deg, var(--primary-red), var(--primary-orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: blur(20px);
+      opacity: 0.5;
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+
+    .error-number::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        var(--primary-red), 
+        var(--primary-orange), 
+        var(--accent-orange), 
+        transparent);
+      border-radius: 3px;
+      animation: underlineFlow 2s ease-in-out infinite;
+    }
+
+    .visual-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 3rem;
+      opacity: 0.9;
+      position: relative;
+    }
+
+    .visual-subtitle::before {
+      content: '';
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      width: 20px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-red), var(--primary-orange));
+      transform: translateY(-50%);
+    }
+
+    .floating-elements {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .floating-card {
+      position: absolute;
+      background: var(--glass-bg);
+      backdrop-filter: blur(30px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: var(--glass-shadow);
+      animation: floatCard 12s ease-in-out infinite;
+    }
+
+    .floating-card-1 {
+      top: 20%;
+      right: -10%;
+      width: 120px;
+      height: 80px;
+      animation-delay: 0s;
+    }
+
+    .floating-card-2 {
+      bottom: 30%;
+      left: -15%;
+      width: 100px;
+      height: 100px;
+      animation-delay: -4s;
+    }
+
+    @keyframes numberPulse {
+      0%, 100% { transform: scale(1) rotateX(0deg); }
+      50% { transform: scale(1.02) rotateX(5deg); }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.05); }
+    }
+
+    @keyframes underlineFlow {
+      0%, 100% { transform: translateX(-100%); opacity: 0; }
+      50% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-20px) rotate(5deg); }
+      75% { transform: translateY(20px) rotate(-5deg); }
+    }
+
+    /* Content section with advanced glassmorphism */
+    .content-section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3rem;
+    }
+
+    .content-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(40px);
+      border: 1px solid var(--glass-border);
+      border-radius: 32px;
+      padding: 4rem;
+      box-shadow: 
+        var(--glass-shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .content-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.3), 
+        transparent);
+    }
+
+    .error-title {
+      font-family: 'SF Pro Display', sans-serif;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+      letter-spacing: -0.03em;
+      position: relative;
+    }
+
+    .error-description {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.25rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+      font-weight: 400;
+    }
+
+    .error-code {
+      display: inline-block;
+      background: rgba(252, 0, 45, 0.1);
+      color: var(--primary-red);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-family: 'SF Mono', monospace;
+      font-size: 0.9rem;
+      margin: 0 0.25rem;
+    }
+
+    /* Advanced action buttons */
+    .action-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 3rem;
+      border-radius: 20px;
+      font-family: 'SF Pro Display', sans-serif;
+      font-weight: 700;
+      font-size: 1.125rem;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      border: none;
+      cursor: pointer;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      position: relative;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent);
+      transition: left 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, 
+        var(--primary-red), 
+        var(--primary-orange), 
+        var(--accent-orange));
+      color: white;
+      box-shadow: 
+        0 20px 60px rgba(252, 0, 45, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-6px) scale(1.05);
+      box-shadow: 
+        0 30px 80px rgba(252, 0, 45, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-primary);
+      box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 107, 0, 0.4);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-icon {
+      margin-left: 0.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover .btn-icon {
+      transform: translateX(5px);
+    }
+
+    /* Enhanced help section with glassmorphism */
+    .help-section {
+      grid-column: 1 / -1;
+      margin-top: 4rem;
+    }
+
+    .help-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .help-title {
+      font-family: 'SF Pro Display', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .help-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .help-link {
+      display: flex;
+      align-items: center;
+      padding: 1.25rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      text-decoration: none;
+      color: var(--text-secondary);
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      backdrop-filter: blur(10px);
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+    }
+
+    .help-link:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 107, 0, 0.25);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255, 107, 0, 0.1);
+    }
+
+    .help-icon {
+      width: 22px;
+      height: 22px;
+      margin-right: 1rem;
+      opacity: 0.8;
+      transition: all 0.3s ease;
+    }
+
+    .help-link:hover .help-icon {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+      
+
+    /* Ultra-responsive design */
+    
+    /* Ultra-wide screens (1920px+) */
+    @media (min-width: 1920px) {
+      .error-container {
+        max-width: 1800px;
+        gap: 10rem;
+        padding: 5rem;
+      }
+      
+      .content-card {
+        padding: 5rem;
+      }
+      
+      .help-card {
+        padding: 4rem;
+      }
+    }
+
+    /* Large Desktop (1440px - 1919px) */
+    @media (min-width: 1440px) and (max-width: 1919px) {
+      .error-container {
+        gap: 8rem;
+        padding: 4rem;
+      }
+    }
+
+    /* Desktop (1200px - 1439px) */
+    @media (min-width: 1200px) and (max-width: 1439px) {
+      .error-container {
+        gap: 6rem;
+        padding: 3rem;
+      }
+    }
+
+    /* Small Desktop (1024px - 1199px) */
+    @media (min-width: 1024px) and (max-width: 1199px) {
+      .error-container {
+        gap: 4rem;
+        padding: 2.5rem;
+      }
+      
+      .content-card {
+        padding: 3rem;
+      }
+    }
+
+    /* Tablet Landscape (768px - 1023px) */
+    @media (max-width: 1023px) and (min-width: 768px) {
+      .error-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        text-align: center;
+        padding: 2rem;
+        max-width: 900px;
+      }
+
+      .visual-section {
+        align-items: center;
+        order: 1;
+      }
+
+      .content-section {
+        order: 2;
+      }
+
+      .help-section {
+        order: 3;
+        margin-top: 3rem;
+      }
+
+      .floating-elements {
+        display: none;
+      }
+
+      .error-number {
+        font-size: clamp(8rem, 25vw, 12rem);
+      }
+
+      .help-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    /* Tablet Portrait (601px - 767px) */
+    @media (max-width: 767px) and (min-width: 601px) {
+      body {
+        padding: 1rem 0;
+      }
+
+      .error-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 1.5rem;
+        text-align: center;
+        min-height: auto;
+      }
+
+      .visual-section {
+        align-items: center;
+      }
+
+      .error-number {
+        font-size: clamp(6rem, 30vw, 9rem);
+        margin-bottom: 1rem;
+      }
+
+      .visual-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+      }
+
+      .content-card {
+        padding: 2.5rem;
+        border-radius: 24px;
+      }
+
+      .error-title {
+        font-size: clamp(2.2rem, 7vw, 3rem);
+      }
+
+      .error-description {
+        font-size: 1.1rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .btn {
+        padding: 1.2rem 2.5rem;
+        font-size: 1rem;
+      }
+
+      .help-card {
+        padding: 2.5rem;
+      }
+
+      .help-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .floating-elements {
+        display: none;
+      }
+    }
+
+    /* Mobile Large (481px - 600px) */
+    @media (max-width: 600px) and (min-width: 481px) {
+      body {
+        padding: 0.5rem 0;
+      }
+
+      .error-container {
+        gap: 2.5rem;
+        padding: 1rem;
+        text-align: center;
+        min-height: 100vh;
+      }
+
+      .error-number {
+        font-size: clamp(5rem, 35vw, 7rem);
+        margin-bottom: 0.5rem;
+      }
+
+      .error-number::after {
+        height: 4px;
+        bottom: -10px;
+      }
+
+      .visual-subtitle {
+        font-size: 1rem;
+        letter-spacing: 0.2em;
+        margin-bottom: 1.5rem;
+      }
+
+      .content-card {
+        padding: 2rem;
+        border-radius: 20px;
+      }
+
+      .error-title {
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+        margin-bottom: 1rem;
+      }
+
+      .error-description {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+      }
+
+      .action-group {
+        gap: 1rem;
+      }
+
+      .btn {
+        padding: 1rem 2rem;
+        font-size: 0.95rem;
+        border-radius: 16px;
+      }
+
+      .help-section {
+        margin-top: 2rem;
+      }
+
+      .help-card {
+        padding: 2rem;
+        border-radius: 20px;
+      }
+
+      .help-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .help-grid {
+        gap: 1rem;
+      }
+
+      .help-link{
+        padding: 2rem;
+        border-radius: 16px;
+      }
+
+      .floating-elements {
+        display: none;
+      }
+    }
+
+    /* Mobile Medium (376px - 480px) */
+    @media (max-width: 480px) and (min-width: 376px) {
+      body {
+        padding: 0.25rem 0;
+      }
+
+      .error-container {
+        gap: 2rem;
+        padding: 0.75rem;
+        min-height: 100vh;
+      }
+
+      .error-number {
+        font-size: clamp(4rem, 40vw, 6rem);
+        margin-bottom: 0.5rem;
+      }
+
+      .error-number::after {
+        height: 3px;
+        bottom: -8px;
+      }
+
+      .visual-subtitle {
+        font-size: 0.9rem;
+        letter-spacing: 0.15em;
+        margin-bottom: 1rem;
+      }
+
+      .content-card {
+        padding: 1.5rem;
+        border-radius: 16px;
+      }
+
+      .error-title {
+        font-size: clamp(1.6rem, 9vw, 2.2rem);
+        margin-bottom: 0.75rem;
+        line-height: 1.2;
+      }
+
+      .error-description {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.9rem 1.8rem;
+        font-size: 0.9rem;
+        border-radius: 14px;
+      }
+
+      .help-card {
+        padding: 1.5rem;
+        border-radius: 16px;
+      }
+
+      .help-title {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      .help-link {
+        padding: 1.25rem;
+        border-radius: 14px;
+      }
+
+      .help-icon {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    /* Mobile Small (320px - 375px) */
+    @media (max-width: 375px) {
+      body {
+        padding: 0.125rem 0;
+      }
+
+      .error-container {
+        gap: 1.5rem;
+        padding: 0.5rem;
+        min-height: 100vh;
+      }
+
+      .error-number {
+        font-size: clamp(3.5rem, 45vw, 5rem);
+        margin-bottom: 0.25rem;
+      }
+
+      .error-number::after {
+        height: 2px;
+        bottom: -6px;
+      }
+
+      .visual-subtitle {
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.75rem;
+      }
+
+      .content-card {
+        padding: 1.25rem;
+        border-radius: 14px;
+      }
+
+      .error-title {
+        font-size: clamp(1.4rem, 10vw, 2rem);
+        margin-bottom: 0.5rem;
+      }
+
+      .error-description {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 1.25rem;
+      }
+
+      .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.85rem;
+        border-radius: 12px;
+      }
+
+      .help-section {
+        margin-top: 1.5rem;
+      }
+
+      .help-card {
+        padding: 1.25rem;
+        border-radius: 14px;
+      }
+
+      .help-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .help-link {
+        padding: 1rem;
+        border-radius: 12px;
+      }
+
+      .help-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.75rem;
+      }
+    }
+
+    /* Ultra-small devices (below 320px) */
+    @media (max-width: 319px) {
+      .error-container {
+        gap: 1rem;
+        padding: 0.25rem;
+      }
+
+      .error-number {
+        font-size: clamp(3rem, 50vw, 4rem);
+      }
+
+      .content-card,
+      .help-card {
+        padding: 1rem;
+        border-radius: 12px;
+      }
+
+      .error-title {
+        font-size: clamp(1.2rem, 12vw, 1.8rem);
+      }
+
+      .error-description {
+        font-size: 0.85rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Foldable devices */
+    @media (max-width: 280px) {
+      .error-container {
+        padding: 0.125rem;
+      }
+
+      .error-number {
+        font-size: clamp(2.5rem, 55vw, 3.5rem);
+      }
+
+      .content-card {
+        padding: 0.75rem;
+      }
+
+      .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.75rem;
+      }
+    }
+
+
+.help-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 20px;
+}
+
+
+    /* Landscape orientation optimizations */
+    @media (max-height: 600px) and (orientation: landscape) {
+      body {
+        padding: 0;
+      }
+
+      .error-container {
+        min-height: auto;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        padding: 1rem;
+      }
+
+      .visual-section {
+        text-align: left;
+        align-items: flex-start;
+      }
+
+      .error-number {
+        font-size: clamp(4rem, 15vw, 6rem);
+        margin-bottom: 0.5rem;
+      }
+
+      .content-card {
+        padding: 1.5rem;
+      }
+
+      .help-section {
+        grid-column: 1 / -1;
+        margin-top: 1rem;
+      }
+
+      .help-card {
+        padding: 1.5rem;
+      }
+
+      .help-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+
+      .floating-elements {
+        display: none;
+      }
+    }
+
+    /* High DPI displays optimizations */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .error-number,
+      .btn,
+      .help-link {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+    }
+
+    /* Accessibility improvements */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    .btn:focus-visible,
+    .help-link:focus-visible {
+      outline: 2px solid var(--primary-orange);
+      outline-offset: 3px;
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #1a0505;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      .background-system,
+      .floating-elements,
+      .particle-system {
+        display: none;
+      }
+      
+      body {
+        background: white;
+        color: black;
+      }
+      
+      .error-number {
+        color: black;
+        -webkit-text-fill-color: black;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background-system">
+    <div class="mesh-gradient"></div>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="particle-system" id="particleSystem"></div>
+  </div>
+
+  <main class="error-container">
+    <section class="visual-section">
+      <div class="floating-elements">
+        <div class="floating-card floating-card-1"></div>
+        <div class="floating-card floating-card-2"></div>
+      </div>
+      
+      <div class="error-number-container">
+        <div class="error-number" id="errorNumber">404</div>
+      </div>
+      <div class="visual-subtitle" id="visualSubtitle">Connection Lost</div>
+    </section>
+
+    <section class="content-section">
+      <div class="content-card" id="contentCard">
+        <h1 class="error-title" id="errorTitle">Page Not Found</h1>
+        <p class="error-description" id="errorDescription">
+          The page you're looking for has been moved, deleted, or doesn't exist. 
+          This might happen when URLs change or when you follow an outdated link.
+          <br><br>
+          Error code: <span class="error-code">404_NOT_FOUND</span>
+        </p>
+
+        <div class="action-group">
+          <a href="/" class="btn btn-primary" id="homeButton">
+            Return to Dashboard
+            <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9,22 9,12 15,12 15,22"/>
+            </svg>
+          </a>
+          <a href="/search" class="btn btn-secondary" id="searchButton">
+            Search Jobs
+            <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+     <section class="help-section">
+      <div class="help-card" id="helpCard">
+        <h2 class="help-title">Need assistance?</h2>
+        <div class="help-links">
+          <a href="/contact" class="help-link" data-help="contact">
+            <svg class="help-icon" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+            </svg>
+            Contact Support
+          </a>
+          <a href="/sitemap" class="help-link" data-help="sitemap">
+            <svg class="help-icon" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M9 3L5 6.99h3V14h2V6.99h3L9 3zm7 14.01V10h-2v7.01h-3L15 21l4-3.99h-3z"/>
+            </svg>
+            Browse Sitemap
+          </a>
+          <a href="/jobs" class="help-link" data-help="jobs">
+            <svg class="help-icon" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20 6h-2.5l-1.5-1.5h-5L9.5 6H7c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/>
+            </svg>
+            Latest Jobs
+          </a>
+        </div>
+      </div>
+    </section>
+    
+
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script>
+    // Register ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Create particle system
+    function createParticles() {
+      const particleSystem = document.getElementById('particleSystem');
+      const particleCount = window.innerWidth > 768 ? 50 : 25;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particleSystem.appendChild(particle);
+      }
+    }
+
+    // Advanced entrance sequence
+    function initAnimations() {
+      // Set initial states
+      gsap.set([
+        '.error-number',
+        '.visual-subtitle',
+        '.floating-card',
+        '.content-card',
+        '.help-card',
+        '.help-item'
+      ], { 
+        opacity: 0, 
+        y: 100,
+        scale: 0.8
+      });
+
+      // Create master timeline
+      const masterTL = gsap.timeline({
+        defaults: { ease: "power4.out" }
+      });
+
+      // Staggered entrance animation
+      masterTL
+        .to('.error-number', {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1.5,
+          ease: "elastic.out(1, 0.5)"
+        })
+        .to('.visual-subtitle', {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8
+        }, "-=1")
+        .to('.floating-card-1', {
+          opacity: 0.6,
+          y: 0,
+          scale: 1,
+          duration: 1,
+          rotation: 5
+        }, "-=0.8")
+        .to('.floating-card-2', {
+          opacity: 0.6,
+          y: 0,
+          scale: 1,
+          duration: 1,
+          rotation: -5
+        }, "-=0.8")
+        .to('.content-card', {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1.2
+        }, "-=0.6")
+        .to('.help-card', {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1
+        }, "-=0.4")
+        .from('.help-item', {
+          opacity: 0,
+          y: 50,
+          scale: 0.9,
+          duration: 0.6,
+          stagger: 0.1
+        }, "-=0.5");
+
+      // Advanced hover effects
+      document.querySelectorAll('.btn').forEach(btn => {
+        const tl = gsap.timeline({ paused: true });
+        
+        tl.to(btn, {
+          scale: 1.08,
+          y: -8,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+
+        btn.addEventListener('mouseenter', () => tl.play());
+        btn.addEventListener('mouseleave', () => tl.reverse());
+        
+        // Click effect
+        btn.addEventListener('click', () => {
+          gsap.to(btn, {
+            scale: 0.95,
+            duration: 0.1,
+            yoyo: true,
+            repeat: 1,
+            ease: "power2.inOut"
+          });
+        });
+      });
+
+      // Help items hover effects
+      document.querySelectorAll('.help-link').forEach(item => {
+        const tl = gsap.timeline({ paused: true });
+        
+        tl.to(link, {
+          scale: 1.05,
+          y: -10,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+
+        item.addEventListener('mouseenter', () => tl.play());
+        item.addEventListener('mouseleave', () => tl.reverse());
+      });
+
+      // Parallax mouse movement
+      if (window.innerWidth > 1024) {
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+          mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+          mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        gsap.ticker.add(() => {
+          targetX += (mouseX - targetX) * 0.05;
+          targetY += (mouseY - targetY) * 0.05;
+
+          gsap.set('.orb-1', {
+            x: targetX * 50,
+            y: targetY * 50
+          });
+
+          gsap.set('.orb-2', {
+            x: targetX * -30,
+            y: targetY * -30
+          });
+
+          gsap.set('.orb-3', {
+            x: targetX * 20,
+            y: targetY * 20
+          });
+
+          gsap.set('.floating-card-1', {
+            x: targetX * 25,
+            y: targetY * 25,
+            rotation: targetX * 10
+          });
+
+          gsap.set('.floating-card-2', {
+            x: targetX * -15,
+            y: targetY * -15,
+            rotation: targetX * -8
+          });
+        });
+      }
+
+      // Scroll-triggered animations
+      ScrollTrigger.create({
+        trigger: '.help-section',
+        start: 'top 95%',
+        end: 'bottom 60%',
+        animation: gsap.to('.help-link', {
+          y: -20,
+          stagger: 0.1,
+          ease: "none"
+        }),
+        scrub: 1
+      });
+
+      // Continuous subtle animations
+      gsap.to('.orb-1', {
+        rotation: 360,
+        duration: 60,
+        ease: "none",
+        repeat: -1
+      });
+
+      gsap.to('.orb-2', {
+        rotation: -360,
+        duration: 80,
+        ease: "none",
+        repeat: -1
+      });
+
+      gsap.to('.orb-3', {
+        scale: 1.1,
+        duration: 10,
+        ease: "power2.inOut",
+        yoyo: true,
+        repeat: -1
+      });
+    }
+
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      initAnimations();
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      const particleSystem = document.getElementById('particleSystem');
+      particleSystem.innerHTML = '';
+      createParticles();
+    });
+  </script>
+  </body>
+</html>

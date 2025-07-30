@@ -11,6 +11,13 @@ nav {
   z-index: 10;
 }
 
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 1000;
+}
+
 .logo,
 .clock,
 .ctas {
@@ -121,6 +128,7 @@ nav {
 
   .clock {
     text-align: right;
+    padding-right: 15px;
   }
 
   .menu,
@@ -172,4 +180,16 @@ nav {
   cursor: pointer;
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+}
+
+
+/* Responsive */
+@media (max-width: 800px) {
+  .hamburger {
+    display: block;
+    background-color: none;
+  }
+  .desktop-auth {
+    display: none;
+  }
 }

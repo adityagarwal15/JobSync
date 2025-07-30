@@ -1,0 +1,79 @@
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100px;
+  height: 150px;
+  background-color: #fff;
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease-in-out;
+  z-index: 9999;
+  padding: 1rem;
+  padding-top: 19px;
+  margin-top: 19px;
+  border-radius: 10px;
+}
+
+.sidebar.open {
+  right: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  height: 40px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+   align-self: flex-end;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0px 0;
+  margin: 0px 0;
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+  flex-grow: 1;
+}
+
+.sidebar-link {
+  padding-bottom: 0.75rem ;
+  margin-bottom: 0.75rem;
+  text-decoration: none;
+  color: #cb1b18;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.sidebar-link:hover {
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 17px
+  ;
+}
+
+.sidebar {
+  background-color: rgba(246, 102, 102, 0.1); /* Transparent white */
+  backdrop-filter: blur(10px); /* Optional: gives a frosted glass effect */
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(125, 27, 27, 0.1);
+  transition: all 0.3s ease;
+}
+
+@media screen and (min-width: 800px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+

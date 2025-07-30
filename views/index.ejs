@@ -24,6 +24,7 @@
   <!-- Navigation & Menu -->
   <link rel="stylesheet" href="/css/nav.css" />
   <link rel="stylesheet" href="/css/menu.css" />
+  <link rel="stylesheet" href="/css/sidebar.css" />
 
   <!-- Sections -->
   <link rel="stylesheet" href="/css/hero.css" />
@@ -52,6 +53,7 @@
 
   <!-- Spline Viewer -->
   <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
+
 
   <style>
     .cursor {
@@ -304,9 +306,9 @@
 
       <!-- navbar -->
       <nav class="<% if (typeof user !== 'undefined' && user && !user.isVerified) { %>nav-with-banner<% } %>">
-        <div class="logo">
-          <a href="#hero"><img src="./assets/site-logo.png" alt="" /></a>
-        </div>
+          <div class="logo">
+            <a href="#hero"><img src="./assets/site-logo.png" alt="" /></a>
+          </div>
 
         <div class="clock">
           <p>
@@ -315,7 +317,27 @@
           </p>
         </div>
 
-        <div class="user-auth">
+      
+    <!-- Hamburger Toggle Button -->
+<div class="hamburger" onclick="toggleSidebar()" aria-label="Toggle menu">
+  <i class="fa-solid fa-bars fa-xs" style="color: #cb1b18;"></i>
+</div>
+
+<!-- Sidebar Drawer -->
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <button class="close-btn" onclick="toggleSidebar()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <ul class="sidebar-menu">
+    <li><a href="/login" class="sidebar-link">Login</a></li>
+    <li><a href="/signup" class="sidebar-link">Signup</a></li>
+  </ul>
+</div>
+
+
+        <div class="user-auth desktop-auth">
           <% if (typeof user !=='undefined' && user) { %>
             <div style="display: flex; gap: 0.5rem;">
               <% if (user.isVerified) { %>
@@ -349,7 +371,7 @@
             </div>
             <p>Menu</p>
           </div>
-        </div>
+        </div>        
       </nav>
 
       <!-- menu links -->
@@ -878,6 +900,14 @@
       <script src="./js/about.js"></script>
       <script src="./js/projects.js"></script>
       <script src="./js/prices.js"></script>
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('open');
+  }
+</script>
+
+
 
       <script>
         // Auto-hide flash messages after 5 seconds

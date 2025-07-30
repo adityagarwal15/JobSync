@@ -39,7 +39,7 @@
   text-transform: uppercase;
   text-align: center;
   opacity: 0;
-  color: white; /* ensure text is visible */
+  color: white; 
   font-weight: 600;
   letter-spacing: 2px;
   font-size: 1.5rem;
@@ -50,38 +50,30 @@
 }
 
 /* ----------- Skip Loading Button Style ----------- */
-#skip-button-container {
+#skip-loader-btn {
+  font-family: var(--font-primary);
   position: absolute;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
-  z-index: 1010;
-}
-
-#skip-button-container button#skip-btn,
-#skip-btn,
-#skip-button {
-  cursor: pointer;
-  display: inline-block;
-  background-color: #3498db;
-  color: #fff;
-  font-weight: bold;
+  bottom: 20px; 
+  left: 50%;
+  transform: translateX(-50%);
   padding: 8px 20px;
+  background: linear-gradient(to right, #fc002d, #ff6b00);
+  color: white;
+  font-weight: bold;
   font-size: 1rem;
   border-radius: 4px;
   border: none;
+  cursor: pointer;
   user-select: none;
+  z-index: 1010; 
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   outline: none;
 }
 
-#skip-button-container button#skip-btn:hover,
-#skip-btn:hover,
-#skip-button:hover,
-#skip-button:focus,
-#skip-btn:focus {
-  background-color: #1d6fa5;
-  box-shadow: 0 0 8px rgb(29 111 165 / 0.7);
+#skip-loader-btn:hover,
+#skip-loader-btn:focus {
+  background-color: #ff6b00;
+  box-shadow: 0 0 8px #ffaa00d2;
   outline-offset: 2px;
-  outline: 2px solid #1d6fa5;
+  outline: 2px solid #ff6b00;
 }

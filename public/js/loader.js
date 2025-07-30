@@ -53,24 +53,17 @@ gsap.to(".progress-bar", {
 
 // ----------- Skip button logic ---------------
 document.addEventListener("DOMContentLoaded", function () {
-  const loaders = ["#loader-copy-1", "#loader-copy-2", "#loader-copy-3"];
-  const skipBtn = document.getElementById("skip-btn") || document.getElementById("skipBtn") || document.getElementById("skip-button") || document.getElementById("skip-button-btn") || document.getElementById("skip-button");
+  const skipBtn = document.getElementById("skip-loader-btn"); // <-- Correct ID here
   const preloader = document.getElementById("preloader") || document.querySelector(".loader");
   const container = document.querySelector(".container");
 
   function skipLoadingAnimation() {
-    // Stop all active GSAP tweens for loader texts, progress bar, and loader container
     gsap.killTweensOf([
-      ...loaders
-        .map((id) =>
-          Array.from(document.querySelectorAll(`${id} .word`))
-        )
-        .flat(),
+      ...loaders.flatMap(id => Array.from(document.querySelectorAll(`${id} .word`))),
       document.querySelector(".progress-bar"),
       document.querySelector(".loader"),
     ]);
 
-    // Animate hiding of the loader and progress bar
     gsap.to(".progress-bar, .loader", {
       clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
       duration: 0.6,
@@ -89,7 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Attach event listener if the button is present in DOM
   if (skipBtn) {
     skipBtn.addEventListener("click", skipLoadingAnimation);
   }

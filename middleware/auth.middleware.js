@@ -10,7 +10,7 @@ const authenticateToken = async (req, res, next) => {
       return res.redirect('/login');
     }
 
-    const decoded = jwt.verify(token, process.env.SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id).select('-password');
 
     if (!user) {
@@ -41,7 +41,7 @@ const redirectIfAuthenticated = (req, res, next) => {
 
   if (token) {
     try {
-      jwt.verify(token, process.env.SECRET);
+      jwt.verify(token, process.env.JWT_SECRET);
       return res.redirect('/dashboard');
     } catch (error) {
       // Token is invalid, continue to login/signup
@@ -55,7 +55,7 @@ const optionalAuth = async (req, res, next) => {
     const token = req.cookies.token;
 
     if (token) {
-      const decoded = jwt.verify(token, process.env.SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await User.findById(decoded.id).select('-password');
 
       if (user) {

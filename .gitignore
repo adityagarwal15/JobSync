@@ -34,5 +34,6 @@ build/
 # Git merge conflict backups
 *.orig
 
+# Prettier configuration
 .prettierrc
 .env.example

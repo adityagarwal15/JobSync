@@ -43,6 +43,14 @@
   background: var(--color-text-secondary);
   border-radius: 5px;
 }
+.menu-item:hover {
+  background-color: #ff4d4d;
+  color: #fff;
+  padding-left: 30px;
+  box-shadow:
+    0 0 8px #ff4d4d,
+    0 0 12px #ff4d4d;
+}
 
 .menu-item span {
   color: var(--color-bg);

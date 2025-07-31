@@ -5,6 +5,7 @@ const skipBtn = document.getElementById("skip-loader-btn");
 
 let animations = [];
 let textAnimationTimeout = null;
+
 loaders.forEach(loader => new SplitType(loader, { types: "words" }));
 
 container.style.height = "100vh";
@@ -30,8 +31,23 @@ const runTextAnimations = () => {
     animations.push(anim);
   });
 };
-
 textAnimationTimeout = setTimeout(runTextAnimations, 1000);
+
+const closeLoader = () => {
+  gsap.to(".progress-bar, .loader", {
+    clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+    duration: 1,
+    ease: "power2.inOut",
+    onStart: () => {
+      container.style.height = "100%";
+      container.style.overflow = "scroll";
+    },
+    onComplete: () => {
+      if (loader) loader.style.display = "none";
+      if (skipBtn) skipBtn.style.display = "none";
+    }
+  });
+};
 
 const progressBarAnimation = gsap.to(".progress-bar", {
   width: "100%",
@@ -42,53 +58,29 @@ const progressBarAnimation = gsap.to(".progress-bar", {
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
       duration: 1,
       ease: "power2.inOut",
-      onComplete: () => {
-        gsap.to(".progress-bar, .loader", {
-          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
-          duration: 1,
-          ease: "power2.inOut",
-          onStart: () => {
-            container.style.height = "100%";
-            container.style.overflow = "scroll";
-          },
-          onComplete: () => {
-            if (loader) loader.style.display = "none";
-            if (skipBtn) skipBtn.style.display = "none";
-          }
-        });
-      },
+      onComplete: closeLoader
     });
-  },
+  }
 });
 animations.push(progressBarAnimation);
 
 if (skipBtn) {
   skipBtn.addEventListener("click", () => {
-    clearTimeout(textAnimationTimeout);
-
+    clearTimeout(textAnimationTimeout); 
     animations.forEach(anim => {
       if (anim && anim.kill) anim.kill();
     });
-
     gsap.to(".progress-bar", {
-      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-      duration: 1,
-      ease: "power2.inOut",
+      width: "100%",
+      duration: 0.5,
       onComplete: () => {
-        gsap.to(".progress-bar, .loader", {
-          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+        gsap.to(".progress-bar", {
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
           duration: 1,
           ease: "power2.inOut",
-          onStart: () => {
-            container.style.height = "100%";
-            container.style.overflow = "scroll";
-          },
-          onComplete: () => {
-            if (loader) loader.style.display = "none";
-            if (skipBtn) skipBtn.style.display = "none";
-          },
+          onComplete: closeLoader
         });
-      },
+      }
     });
   });
 }

@@ -1,4 +1,4 @@
- .loader {
+.loader {
   position: absolute;
   top: 0;
   left: 0;
@@ -42,7 +42,6 @@
   background-color: #ff6b00;
   color: white;
   font-weight: 600;
-  /* Use site font variable or set the same font as the loader/header */
   font-family: var(--font-primary, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif);
   font-size: 0.9rem;
   border: none;

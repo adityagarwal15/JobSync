@@ -64,22 +64,22 @@ document.addEventListener("DOMContentLoaded", function () {
       document.querySelector(".loader"),
     ]);
 
-    gsap.to(".progress-bar, .loader", {
-      clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
+    gsap.to('.progress-bar, .loader', {
+      clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
       duration: 0.6,
-      ease: "power2.inOut",
+      ease: 'power2.inOut',
       onStart: () => {
         if (container) {
-          container.style.height = "auto";
-          container.style.overflow = "auto";
+          container.style.height = 'auto';
+          container.style.overflow = 'auto';
         }
       },
       onComplete: () => {
         if (preloader) {
-          preloader.style.display = "none";
+          preloader.style.display = 'none';
         }
-      },
-    });
+      }
+    }); 
   }
 
   if (skipBtn) {

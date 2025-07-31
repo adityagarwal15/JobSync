@@ -53,9 +53,8 @@
 #skip-loader-btn {
   font-family: var(--font-primary);
   position: absolute;
-  bottom: 20px; 
-  left: 50%;
-  transform: translateX(-50%);
+  top: 24px;
+  right: 20px;
   padding: 8px 20px;
   background: linear-gradient(to right, #fc002d, #ff6b00);
   color: white;
@@ -65,7 +64,7 @@
   border: none;
   cursor: pointer;
   user-select: none;
-  z-index: 1010; 
+  z-index: 1010;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   outline: none;
 }
@@ -77,3 +76,4 @@
   outline-offset: 2px;
   outline: 2px solid #ff6b00;
 }
+

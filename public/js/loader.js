@@ -1,49 +1,59 @@
+const container = document.querySelector(".container");
+const loader = document.querySelector(".loader");
+
 const loaders = ["#loader-copy-1", "#loader-copy-2", "#loader-copy-3"];
-loaders.forEach((loader) => new SplitType(loader, { types: "words" }));
 
-// Initially lock scroll and fix container height for the loader screen
-document.querySelector(".container").style.height = "100vh";
-document.querySelector(".container").style.overflow = "hidden";
+let animations = [];
+let textAnimationTimeout = null;
 
-// Fade in loader text wrappers
+loaders.forEach((loaderSel) => new SplitType(loaderSel, { types: "words" }));
+
+container.style.height = "100vh";
+container.style.overflow = "hidden";
+
 gsap.to(loaders.join(", "), { opacity: 1, duration: 0.1 });
 
-setTimeout(() => {
-  loaders.forEach((loader, index) => {
-    gsap.to(`${loader} .word`, {
+const runTextAnimations = () => {
+  loaders.forEach((loaderSel, index) => {
+    const animation = gsap.to(`${loaderSel} .word`, {
       opacity: 1,
       duration: 1,
       stagger: 0.15,
       delay: index === 2 ? index * 2.75 : index * 2.5,
       onComplete: () => {
-        gsap.to(`${loader} .word`, {
+        gsap.to(`${loaderSel} .word`, {
           opacity: 0,
           duration: 1,
           stagger: 0.15,
         });
       },
     });
+    animations.push(animation);
   });
-}, 1000);
+};
 
-// Animate the progress bar filling and the loader fade out after completion
-gsap.to(".progress-bar", {
+textAnimationTimeout = setTimeout(runTextAnimations, 1000);
+
+const progressBarAnimation = gsap.to(".progress-bar", {
   width: "100%",
   duration: 8,
   delay: 0.5,
   onComplete: () => {
     gsap.to(".progress-bar", {
-      clipPath: "polygon(0% 0, 100% 0, 100% 100%, 0 100%)",
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
       duration: 1,
       ease: "power2.inOut",
       onComplete: () => {
         gsap.to(".progress-bar, .loader", {
-          clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
           duration: 1,
           ease: "power2.inOut",
           onStart: () => {
-            document.querySelector(".container").style.height = "auto";
-            document.querySelector(".container").style.overflow = "auto";
+            container.style.height = "100%";
+            container.style.overflow = "scroll";
+          },
+          onComplete: () => {
+            if (loader) loader.style.display = "none";
           },
         });
       },
@@ -51,38 +61,33 @@ gsap.to(".progress-bar", {
   },
 });
 
-// ----------- Skip button logic ---------------
-document.addEventListener("DOMContentLoaded", function () {
-  const skipBtn = document.getElementById("skip-loader-btn"); // <-- Correct ID here
-  const preloader = document.getElementById("preloader") || document.querySelector(".loader");
-  const container = document.querySelector(".container");
+animations.push(progressBarAnimation);
 
-  function skipLoadingAnimation() {
-    gsap.killTweensOf([
-      ...loaders.flatMap(id => Array.from(document.querySelectorAll(`${id} .word`))),
-      document.querySelector(".progress-bar"),
-      document.querySelector(".loader"),
-    ]);
+document.getElementById("skip-loader-btn").addEventListener("click", () => {
+  clearTimeout(textAnimationTimeout);
+  animations.forEach((anim) => {
+    if (anim && anim.kill) anim.kill();
+  });
 
-    gsap.to('.progress-bar, .loader', {
-      clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
-      duration: 0.6,
-      ease: 'power2.inOut',
-      onStart: () => {
-        if (container) {
-          container.style.height = 'auto';
-          container.style.overflow = 'auto';
-        }
-      },
-      onComplete: () => {
-        if (preloader) {
-          preloader.style.display = 'none';
-        }
-      }
-    }); 
-  }
-
-  if (skipBtn) {
-    skipBtn.addEventListener("click", skipLoadingAnimation);
-  }
+  gsap.to(".progress-bar", {
+    clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+    duration: 1,
+    ease: "power2.inOut",
+    onComplete: () => {
+      gsap.to(".progress-bar, .loader", {
+        clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+        duration: 1,
+        ease: "power2.inOut",
+        onStart: () => {
+          container.style.height = "100%";
+          container.style.overflow = "scroll";
+        },
+        onComplete: () => {
+          if (loader) loader.style.display = "none";
+          const skipBtn = document.getElementById("skip-loader-btn");
+          if (skipBtn) skipBtn.style.display = "none";
+        },
+      });
+    },
+  });
 });

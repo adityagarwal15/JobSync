@@ -61,17 +61,20 @@ const progressAnim = gsap.to(".progress-bar", {
 if (skipBtn) {
   skipBtn.addEventListener("click", () => {
     clearTimeout(textAnimationTimeout);
-    progressAnim.kill(); 
-    gsap.to(".progress-bar", {
-      width: "100%",
-      duration: 0.5,
+    progressAnim.kill();
+    gsap.killTweensOf(loaders.join(", ")); 
+    gsap.set(".progress-bar", { width: "100%" });
+    gsap.to(".progress-bar, .loader", {
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+      duration: 0.8,
+      ease: "power2.inOut",
+      onStart: () => {
+        container.style.height = "100%";
+        container.style.overflow = "scroll";
+      },
       onComplete: () => {
-        gsap.to(".progress-bar", {
-          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-          duration: 1,
-          ease: "power2.inOut",
-          onComplete: closeLoader,
-        });
+        if (loader) loader.style.display = "none";
+        if (skipBtn) skipBtn.style.display = "none";
       },
     });
   });

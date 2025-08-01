@@ -1,0 +1,71 @@
+/* Custom Cursor Animation - Optimized */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(45deg, #00ff88, #00ccff, #ff0088);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+  will-change: transform;
+  transition: all 0.15s ease-out;
+}
+
+.cursor-trail {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(45deg, #00ff88, #00ccff);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.6;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  transition: all 0.2s ease-out;
+}
+
+/* Hover effects */
+.custom-cursor.hover {
+  transform: translate(-50%, -50%) scale(1.8);
+  background: linear-gradient(45deg, #ff0088, #00ff88, #00ccff);
+  box-shadow: 0 0 25px rgba(255, 0, 136, 0.8);
+  border-radius: 3px;
+}
+
+.custom-cursor.click {
+  transform: translate(-50%, -50%) scale(0.7);
+  background: linear-gradient(45deg, #ff6600, #ff0088);
+  box-shadow: 0 0 30px rgba(255, 102, 0, 0.9);
+}
+
+/* Text selection effect */
+.custom-cursor.text-select {
+  background: linear-gradient(45deg, #ff6600, #ff0088);
+  transform: translate(-50%, -50%) scale(1.3);
+  box-shadow: 0 0 25px rgba(255, 102, 0, 0.8);
+}
+
+/* Hide cursor on mobile devices */
+@media (max-width: 768px) {
+  .custom-cursor,
+  .cursor-trail {
+    display: none !important;
+  }
+}
+
+/* Smooth hover effects for interactive elements */
+a:hover ~ .custom-cursor,
+button:hover ~ .custom-cursor,
+input:hover ~ .custom-cursor,
+textarea:hover ~ .custom-cursor,
+select:hover ~ .custom-cursor {
+  transform: translate(-50%, -50%) scale(1.5);
+  background: linear-gradient(45deg, #00ccff, #ff0088, #00ff88);
+  box-shadow: 0 0 20px rgba(0, 204, 255, 0.7);
+} 

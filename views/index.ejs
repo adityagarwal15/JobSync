@@ -297,16 +297,21 @@
     <% } %>
 
       <!-- loader -->
+      
       <div class="loader">
         <div class="loader-copy">
           <p id="loader-copy-1">Loading in progress</p>
-
           <p id="loader-copy-2">A few seconds please</p>
-
           <p id="loader-copy-3">Almost done</p>
         </div>
         <div class="progress-bar"></div>
+
+        <!-- Skip Loading Animation Button -->
+        <button id="skip-loader-btn" class="skip-loader-btn">
+          Skip
+        </button>
       </div>
+
 
       <!-- navbar -->
       <nav class="<% if (typeof user !== 'undefined' && user && !user.isVerified) { %>nav-with-banner<% } %>">

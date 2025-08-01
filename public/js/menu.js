@@ -46,6 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
           ease: "power2.out",
           onComplete: () => {
             isMenuOpen = true;
+            // Ensure cursor is visible when menu is fully opened
+            if (window.customCursor) {
+              window.customCursor.showCursor();
+            }
           },
         },
         "<"
@@ -63,6 +67,10 @@ document.addEventListener("DOMContentLoaded", function () {
             gsap.set(menuItemsContainer, { y: 50, opacity: 0 });
             gsap.set(menuItems, { y: 50, opacity: 0, pointerEvents: "none" });
             isMenuOpen = false;
+            // Ensure cursor remains visible after menu closes
+            if (window.customCursor) {
+              window.customCursor.showCursor();
+            }
           },
         });
       }

@@ -1,6 +1,6 @@
 :root {
-  --font-primary: "PP Object Sans";
-  --font-secondary: "Druk Wide Trial";
+  --font-primary: "PP Object Sans", sans-serif;
+  --font-secondary: "Druk Wide Trial", sans-serif;
 
   --color-text: #fff;
   --color-text-secondary: #eaeaea;
@@ -75,7 +75,7 @@ img {
   width: 100%;
   height: 100%;
   background: var(--color-bg);
-  overflow: hidden !important;
+  overflow: hidden;
 }
 
 .callout {

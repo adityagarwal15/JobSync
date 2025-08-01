@@ -18,7 +18,9 @@ nav {
 }
 
 .logo img {
-  width: 100px;
+  width: 80px;
+  margin-left: -20px;
+  margin-top: -10px;
 }
 
 .ctas {

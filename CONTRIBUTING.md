@@ -42,12 +42,44 @@ cd jobsync
 npm install
 ```
 
+
+
+> Add the following environment variables to your `.env` file:
+
 ```bash
-# Create your environment variables
-cp .env.example .env
+# Server Configuration
+PORT=3000
+NODE_ENV=development
+
+# Database Configuration
+MONGODB_URI=your_mongodb_connection_string
+
+# Authentication Secrets
+JWT_SECRET=your_jwt_secret_key
+SESSION_SECRET=your_session_secret
+
+# SMTP Email Configuration (Required for contact form and notifications)
+SMTP_HOST=smtp-relay.brevo.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your_brevo_smtp_user@smtp-brevo.com
+SMTP_PASS=your_brevo_smtp_password
+SMTP_SENDER=your_verified_sender_email@gmail.com / the email you used to create you brevo account
+
+# Frontend Configuration
+FRONTEND_URL=http://localhost:3000
 ```
 
-> Fill in your MongoDB Atlas connection string and other required variables
+### 📧 SMTP Setup (Required for Email Features)
+
+For testing email functionality (contact form, user verification), you'll need SMTP credentials:
+
+**Brevo**
+
+1. Create free account at [Brevo](https://www.brevo.com/)
+2. Go to SMTP & API → SMTP settings
+3. Generate SMTP credentials
+4. Use the credentials in your `.env` file
 
 ```bash
 # Start the development server
@@ -65,10 +97,10 @@ git checkout -b fix/issue-description
 
 ### 4. Make Your Changes ✨
 
-* Write clean, readable code
-* Follow existing code style and conventions
-* Test your changes thoroughly
-* Add comments for complex logic
+- Write clean, readable code
+- Follow existing code style and conventions
+- Test your changes thoroughly
+- Add comments for complex logic
 
 ### 5. Commit Your Changes
 
@@ -93,39 +125,39 @@ Then create a Pull Request from your fork to the main repository.
 
 ### 🎨 Frontend Improvements
 
-* UI/UX enhancements
-* Responsive design fixes
-* GSAP animations and micro-interactions
-* Accessibility improvements
-* Cross-browser compatibility
+- UI/UX enhancements
+- Responsive design fixes
+- GSAP animations and micro-interactions
+- Accessibility improvements
+- Cross-browser compatibility
 
 ### ⚙️ Backend Development
 
-* API endpoint optimization
-* Database query improvements
-* Authentication and security features
-* Performance enhancements
+- API endpoint optimization
+- Database query improvements
+- Authentication and security features
+- Performance enhancements
 
 ### 🤖 AI & Data Features
 
-* Gemini AI chatbot improvements
-* Web scraping enhancements
-* Job recommendation algorithms
-* Data processing optimizations
+- Gemini AI chatbot improvements
+- Web scraping enhancements
+- Job recommendation algorithms
+- Data processing optimizations
 
 ### 📝 Documentation & Testing
 
-* Code documentation
-* API documentation
-* Unit and integration tests
-* User guides and tutorials
+- Code documentation
+- API documentation
+- Unit and integration tests
+- User guides and tutorials
 
 ### 🐛 Bug Fixes
 
-* Frontend bugs
-* Backend issues
-* Database problems
-* Performance bottlenecks
+- Frontend bugs
+- Backend issues
+- Database problems
+- Performance bottlenecks
 
 ---
 
@@ -133,19 +165,19 @@ Then create a Pull Request from your fork to the main repository.
 
 ### Code Standards
 
-* Use meaningful variable and function names
-* Follow consistent indentation (2 or 4 spaces - we recommend using Prettier for formatting)
-* Add comments for complex logic
-* Ensure code is properly formatted
+- Use meaningful variable and function names
+- Follow consistent indentation (2 or 4 spaces - we recommend using Prettier for formatting)
+- Add comments for complex logic
+- Ensure code is properly formatted
 
 ### Pull Request Rules
 
-* **One PR per issue** - keep changes focused
-* Link your PR to the related issue number
-* 📝 Please use the [Pull Request Template](./.github/pull_request_template.md) when submitting a PR
-* Provide clear description of changes made
-* Add screenshots for UI changes
-* Test your changes before submitting
+- **One PR per issue** - keep changes focused
+- Link your PR to the related issue number
+- 📝 Please use the [Pull Request Template](./.github/pull_request_template.md) when submitting a PR
+- Provide clear description of changes made
+- Add screenshots for UI changes
+- Test your changes before submitting
 
 ### Commit Message Format
 
@@ -187,10 +219,10 @@ refactor/description-of-refactor
 
 ## 🙌 Need Help?
 
-* 💬 **Discussions Tab**: Ask questions and share ideas
-* 🐛 **Issues Tab**: Report bugs or request features
-* 📧 **Contact Maintainers**: Tag project admins on issues
-* 📖 **Documentation**: Check existing docs for guidance
+- 💬 **Discussions Tab**: Ask questions and share ideas
+- 🐛 **Issues Tab**: Report bugs or request features
+- 📧 **Contact Maintainers**: Tag project admins on issues
+- 📖 **Documentation**: Check existing docs for guidance
 
 ---
 
@@ -198,10 +230,10 @@ refactor/description-of-refactor
 
 All contributors will be:
 
-* Listed in our contributors section
-* Acknowledged in release notes
-* Given proper credit for their work
-* Part of our amazing open source community!
+- Listed in our contributors section
+- Acknowledged in release notes
+- Given proper credit for their work
+- Part of our amazing open source community!
 
 ---
 

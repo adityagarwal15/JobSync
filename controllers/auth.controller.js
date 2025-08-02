@@ -28,6 +28,7 @@ const registerUserController = async (req, res) => {
       password,
       role: role || 'user',
     });
+    console.log('newUser: ', newUser);
 
     if (!newUser) {
       req.flash('error', 'Something went wrong!');

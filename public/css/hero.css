@@ -1,165 +1,187 @@
 .hero {
-  position: relative;
-  width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  padding-top: 40px; /* reduced from 160px */
+    position: relative;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    padding-top: 40px; /* reduced from 160px */
 }
 
 .hero-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  transform: rotate(-165deg);
-  object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    transform: rotate(-165deg);
+    object-fit: cover;
 }
 
 .hero-img img {
-  transform: scale(1.25);
+    transform: scale(1.25);
 }
 
 .hero-header {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: flex-start;
-  padding: 1em;
-  z-index: 1;
+    position: relative;
+    width: 100%;
+    min-height: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2em;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 1em;
+    margin: 2em auto;
 }
 
 .hero-col:nth-child(1) {
-  flex: 6;
+    flex: 6;
 }
 
 .hero-col:nth-child(2) {
-  flex: 2;
-  padding: 0.5em;
+    flex: 2;
+    padding: 0.5em;
 }
 
 .hero-header h1 {
-  text-transform: uppercase;
-  font-family: var(--font-secondary);
-  font-size: 13vw;
-  color: var(--color-text);
+    text-transform: uppercase;
+    font-family: var(--font-secondary);
+    font-size: clamp(3rem, 10vw, 8rem); 
+    color: var(--color-text);
+    margin: 0.2em 0;
+}
+
+.hero-header p,
+#site-intro {
+    max-width: 700px;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-top: 1rem;
+    color: var(--color-text);
+}
+
+.hero-header {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 1em;
 }
 
 p#site-intro {
-  text-indent: 10em;
-  margin-top: 2em;
-  text-transform: uppercase;
+    text-indent: 0;
+    margin-top: 1em;
+    font-size: 1.1rem;
+    max-width: 800px;
+    color: var(--color-text);
 }
 
 @media (max-width: 900px) {
-  .hero-header {
-    position: absolute;
-    bottom: 20%;
-    flex-direction: column;
-  }
+    .hero-header {
+        position: absolute;
+        bottom: 20%;
+        flex-direction: column;
+    }
 
-  p#site-intro {
-    margin-top: 0;
-    text-indent: 0;
-  }
+    p#site-intro {
+        margin-top: 0;
+        text-indent: 0;
+    }
 
-  .hero-img {
-    transform: rotate(-170deg);
-  }
+    .hero-img {
+        transform: rotate(-170deg);
+    }
 
-  .resume-upload {
-    width: 80%;
-  }
+    .resume-upload {
+        width: 80%;
+    }
 
-  .job-recommendations {
-    width: 95%;
-    top: 60px; /* Adjust for smaller navbar on mobile */
-  }
-    
-  .hero {
-    padding-top: 120px; /* Adjust for smaller job recommendations height on mobile */
-  }
+    .job-recommendations {
+        width: 95%;
+        top: 60px; /* Adjust for smaller navbar on mobile */
+    }
+
+    .hero {
+        padding-top: 120px; /* Adjust for smaller job recommendations height on mobile */
+    }
 }
 
 .resume-upload {
-  text-align: center;
-  margin-top: 0;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  width: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  backdrop-filter: blur(10px);
-  z-index: 2;
+    text-align: center;
+    margin-top: 0;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    backdrop-filter: blur(10px);
+    z-index: 2;
 }
 
 .upload-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 18px;
-  color: white;
-  gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    color: white;
+    gap: 8px;
 }
 
 .upload-label ion-icon {
-  font-size: 24px;
+    font-size: 24px;
 }
 
 #resumeInput {
-  display: none;
+    display: none;
 }
 
 #upload-status {
-  font-size: 14px;
-  color: gray;
-  margin-top: 5px;
+    font-size: 14px;
+    color: gray;
+    margin-top: 5px;
 }
 
 /* REMOVE or COMMENT OUT this block */
 .job-recommendations {
-  text-align: center;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  width: 90%;
-  position: fixed;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  backdrop-filter: blur(10px);
-  z-index: 100;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    width: 90%;
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
 }
 
 #job-list {
-  list-style: none;
-  padding: 0;
-  color: white;
+    list-style: none;
+    padding: 0;
+    color: white;
 }
 
 .chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: red;
-  color: white;
-  padding: 15px;
-  border-radius: 50%;
-  font-size: 24px;
-  cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: red;
+    color: white;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
 }
-

@@ -15,6 +15,7 @@ const User = require('./models/user.js');
 const Contact = require('./models/contact.js');
 const authRouter = require('./routes/auth.routes.js');
 const { optionalAuth } = require('./middleware/auth.middleware.js');
+const { csrfProtection, exposeCsrfToken, csrfErrorHandler } = require('./middleware/csrf.middleware.js');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -102,6 +103,10 @@ app.use((req, res, next) => {
   next();
 });
 
+// CSRF Protection - Add after session and before routes
+app.use(csrfProtection);
+app.use(exposeCsrfToken);
+
 // === RATE LIMITING ===
 const emailRateLimit = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -180,7 +185,7 @@ const transporter = nodemailer.createTransport({
 
 // Contact form submission
 
-app.post('/send-email', emailRateLimit, async (req, res) => {
+app.post('/send-email', emailRateLimit, csrfProtection, async (req, res) => {
   console.log('📩 Incoming form submission:', req.body);
 
   const { user_name, user_role, user_email, portfolio_link, message } = req.body;
@@ -237,6 +242,9 @@ app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
 
+
+// CSRF Error Handler - Add before 404 handler
+app.use(csrfErrorHandler);
 
 // 404 handler - keep this as the last middleware
 app.use((req, res, next) => {

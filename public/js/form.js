@@ -23,11 +23,15 @@ document
         formObject[key] = value;
       }
 
+      // Get CSRF token from the form
+      const csrfToken = form.querySelector('input[name="_csrf"]').value;
+      
       // Send data to server
       const response = await fetch("/send-email", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
+    "CSRF-Token": csrfToken
   },
   body: JSON.stringify(formObject),
 });

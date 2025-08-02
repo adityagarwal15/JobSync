@@ -33,4 +33,77 @@
 
 .loader .word {
   opacity: 0;
+} 
+#skip-loader-btn {
+  position: absolute;
+  top: 24px;
+  right: 20px;
+  padding: 10px 18px;
+  background-color: #ff6b00;
+  color: white;
+  font-weight: 600;
+  font-family: var(--font-secondary);
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  z-index: 1010;
+  box-shadow: 0 2px 8px rgba(255, 107, 0, 0.3);
+  transition: background-color 0.25s, box-shadow 0.25s, transform 0.15s;
+}
+
+#skip-loader-btn:hover {
+  background-color: #e65c00;
+  box-shadow: 0 4px 14px rgba(230, 92, 0, 0.45);
+  transform: translateY(-2px);
+}
+
+#skip-loader-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.5);
+}
+
+#skip-loader-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 7px rgba(255, 107, 0, 0.4);
+}
+@media (max-width: 768px) {
+  #loader-copy-1,
+  #loader-copy-2,
+  #loader-copy-3 {
+    font-size: 1.2rem;
+    padding: 0 10px; 
+  }
+
+  #skip-loader-btn {
+    top: 16px;
+    right: 12px;
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+  }
+
+  .progress-bar {
+    clip-path: polygon(0% 85%, 100% 85%, 100% 100%, 0% 100%); /* thinner bar */
+  }
+}
+
+@media (max-width: 480px) {
+  #loader-copy-1,
+  #loader-copy-2,
+  #loader-copy-3 {
+    font-size: 1rem; 
+  }
+
+  #skip-loader-btn {
+    top: 12px;
+    right: 10px;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  .progress-bar {
+    clip-path: polygon(0% 88%, 100% 88%, 100% 100%, 0% 100%); /* adjust shape for very small screens */
+  }
 }

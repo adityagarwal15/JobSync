@@ -20,7 +20,7 @@
             min-height: 100vh;
             font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 2rem;
             color: white !important;
         }
 
@@ -132,7 +132,9 @@
         }
 
         .profile-container .action-btn {
-            padding: 0.75rem 1.5rem;
+            width: 180px;
+            height: 48px;
+            padding: 0.75rem 1rem;
             border: none;
             border-radius: 8px;
             text-decoration: none;
@@ -141,8 +143,11 @@
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             color: white !important;
+            font-size: 1rem;
+            text-align: center;
         }
 
         .profile-container .action-btn.primary {
@@ -262,6 +267,7 @@
             .profile-container {
                 margin: 1rem;
                 padding: 1.5rem;
+                box-sizing: border-box;
             }
 
             .profile-info {
@@ -276,6 +282,7 @@
 
             .profile-details p {
                 font-size: 1rem;
+                justify-content: center;
             }
 
             .profile-actions {
@@ -284,8 +291,9 @@
             }
 
             .action-btn {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
+                width: 100% !important;
+                padding: 0.75rem 1rem;
+                font-size: 1rem;
             }
         }
     </style>

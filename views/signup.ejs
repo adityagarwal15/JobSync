@@ -108,6 +108,7 @@
 
         <div class="signup-form-container">
             <form method="POST" action="/signup">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <h1>Create Account</h1>
                 <!-- <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>

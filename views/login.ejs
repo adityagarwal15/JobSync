@@ -97,6 +97,7 @@
   <div class="container" id="container">
     <div class="form-container sign-in">
       <form method="POST" action="/login">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <h1>Sign In</h1>
         <!-- <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
@@ -136,6 +137,7 @@
       style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 10px; width: 90%; max-width: 400px;">
       <h2 style="margin-bottom: 1rem; color: #333;">Reset Password</h2>
       <form action="/forgot-password" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <input type="email" name="email" placeholder="Enter your email" required
           style="width: 100%; padding: 12px; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 5px;">
         <div style="display: flex; gap: 1rem;">

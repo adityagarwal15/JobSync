@@ -394,6 +394,7 @@
               <% if (typeof user !=='undefined' && user) { %>
                 <!-- Logout - Only for logged in users -->
                 <form action="/logout" method="post">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <button class="menu-item cursor user-menu-item logout-menu-item">
                     <span>05</span>
                     <span><i class="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Logout</span>
@@ -849,6 +850,7 @@
             </div>
           </div>
           <form id="contact-form">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div class="footer-form">
               <div class="form-col">
                 <div class="form-row">

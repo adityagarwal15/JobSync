@@ -375,6 +375,7 @@
                             <h3>Email Not Verified</h3>
                             <p>Please verify your email address to access all features.</p>
                             <form action="/resend-verification" method="POST" style="display: inline;">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <button type="submit" class="resend-btn">
                                     <i class="fas fa-paper-plane"></i> Resend Verification Email
                                 </button>
@@ -398,6 +399,7 @@
                                 <i class="fas fa-tachometer-alt"></i> Dashboard
                             </a>
                             <form action="/logout" method="POST" style="display: inline;">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <button type="submit" class="action-btn danger">
                                     <i class="fas fa-sign-out-alt"></i> Logout
                                 </button>

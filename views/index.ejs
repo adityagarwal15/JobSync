@@ -241,6 +241,60 @@
         font-size: 0.9rem;
       }
     }
+
+    /* Floating Chatbot Button Styles */
+    .floating-chatbot-btn {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 9999;
+      background: linear-gradient(135deg, #7877c6, #ff77c6);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      box-shadow: 0 4px 16px rgba(120, 119, 198, 0.25);
+      padding: 16px 28px 16px 20px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+
+    .floating-chatbot-btn:hover {
+      box-shadow: 0 8px 32px rgba(120, 119, 198, 0.35);
+      transform: translateY(-2px) scale(1.04);
+      background: linear-gradient(135deg, #ff77c6, #7877c6);
+    }
+
+    .floating-chatbot-btn i {
+      font-size: 1.3em;
+    }
+
+    @media (max-width: 600px) {
+      .floating-chatbot-btn {
+        bottom: 80px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.6em;
+        box-shadow: 0 4px 16px rgba(120, 119, 198, 0.25);
+      }
+      .floating-chatbot-btn i {
+        font-size: 2em;
+        margin: 0;
+      }
+      .floating-chatbot-btn .chatbot-btn-text {
+        display: none;
+      }
+    }
   </style>
 </head>
 
@@ -882,6 +936,11 @@
           </div>
         </footer>
       </div>
+
+      <!-- Floating Chatbot Button -->
+      <a href="/chatbot" class="floating-chatbot-btn" title="Chat with AI">
+        <i class="fa-solid fa-robot"></i><span class="chatbot-btn-text"> Chatbot</span>
+      </a>
 
       <script src="https://unpkg.com/lenis@1.1.4/dist/lenis.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

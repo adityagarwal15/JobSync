@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Chatbot</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <style>
+        /*--------------------
+        Mixins converted to regular CSS
+        --------------------*/
+        
+        /*--------------------
+        Body
+        --------------------*/
+        *,
+        *::before,
+        *::after {
+          box-sizing: border-box;
+        }
+
+        html,
+        body {
+          height: 100%;
+        }
+
+        body {
+          background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #2d2d30);
+          background-size: 400% 400%;
+          animation: gradientShift 8s ease infinite;
+          font-family: 'Open Sans', sans-serif;
+          font-size: 12px;
+          line-height: 1.3;
+          overflow: hidden;
+          margin: 0;
+          padding: 0;
+        }
+
+        .bg {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 1;
+          background: 
+            radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(120, 119, 255, 0.05) 0%, transparent 50%);
+          filter: blur(40px);
+        }
+
+        /*--------------------
+        Chat
+        --------------------*/
+        .chat {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 380px;
+          height: 85vh;
+          max-height: 600px;
+          z-index: 2;
+          overflow: hidden;
+          box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          background: rgba(15, 15, 15, 0.85);
+          backdrop-filter: blur(20px);
+          border-radius: 24px;
+          display: flex;
+          justify-content: space-between;
+          flex-direction: column;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /*--------------------
+        Chat Title
+        --------------------*/
+        .chat-title {
+          flex: 0 1 60px;
+          position: relative;
+          z-index: 2;
+          background: linear-gradient(135deg, rgba(25, 25, 25, 0.9), rgba(35, 35, 35, 0.8));
+          color: #fff;
+          text-align: left;
+          padding: 15px 15px 15px 65px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .chat-title h1, .chat-title h2 {
+          font-weight: normal;
+          margin: 0;
+          padding: 0;
+        }
+        
+        .chat-title h1 {
+          font-size: 14px;
+          font-weight: 600;
+          color: #ffffff;
+          letter-spacing: 0.5px;
+        }
+        
+        .chat-title h2 {
+          color: rgba(255, 255, 255, .6);
+          font-size: 10px;
+          letter-spacing: 1px;
+          margin-top: 2px;
+          text-transform: uppercase;
+        }
+        
+        .chat-title .avatar {
+          position: absolute;
+          z-index: 1;
+          top: 12px;
+          left: 15px;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          overflow: hidden;
+          margin: 0;
+          padding: 0;
+          border: 2px solid rgba(120, 119, 198, 0.3);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+          background: linear-gradient(135deg, #7877c6, #ff77c6);
+        }
+          
+        .chat-title .avatar img {
+          width: 100%;
+          height: auto;
+        }
+
+        /*--------------------
+        Messages
+        --------------------*/
+        .messages {
+          flex: 1 1 auto;
+          color: rgba(255, 255, 255, .8);
+          overflow-y: auto;
+          position: relative;
+          width: 100%;
+          padding: 20px;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(120, 119, 198, 0.5) transparent;
+        }
+
+        .messages::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .messages::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        .messages::-webkit-scrollbar-thumb {
+          background: rgba(120, 119, 198, 0.5);
+          border-radius: 3px;
+        }
+
+        .messages::-webkit-scrollbar-thumb:hover {
+          background: rgba(120, 119, 198, 0.7);
+        }
+
+        .messages-content {
+          width: 100%;
+        }
+        
+        .message {
+          clear: both;
+          float: left;
+          padding: 12px 16px;
+          border-radius: 18px 18px 18px 4px;
+          background: rgba(25, 25, 25, 0.8);
+          backdrop-filter: blur(10px);
+          margin: 12px 0;
+          font-size: 12px;
+          line-height: 1.5;
+          margin-left: 50px;
+          position: relative;
+          max-width: 75%;
+          word-wrap: break-word;
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .message .timestamp {
+          position: absolute;
+          bottom: -20px;
+          font-size: 9px;
+          color: rgba(255, 255, 255, .4);
+        }
+        
+        .message::before {
+          content: '';
+          position: absolute;
+          bottom: -6px;
+          border-top: 6px solid rgba(25, 25, 25, 0.8);
+          left: 0;
+          border-right: 7px solid transparent;
+        }
+        
+        .message .avatar {
+          position: absolute;
+          z-index: 1;
+          bottom: -20px;
+          left: -50px;
+          border-radius: 50%;
+          width: 35px;
+          height: 35px;
+          overflow: hidden;
+          margin: 0;
+          padding: 0;
+          border: 2px solid rgba(120, 119, 198, 0.3);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+          background: linear-gradient(135deg, #7877c6, #ff77c6);
+        }
+
+        .message .avatar img {
+          width: 100%;
+          height: auto;
+        }
+        
+        .message.message-personal {
+          float: right;
+          color: #fff;
+          text-align: right;
+          background: linear-gradient(135deg, #7877c6, #ff77c6);
+          backdrop-filter: blur(10px);
+          border-radius: 18px 18px 4px 18px;
+          margin-left: 0;
+          margin-right: 0;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          box-shadow: 0 6px 20px rgba(120, 119, 198, 0.3);
+        }
+        
+        .message.message-personal::before {
+          left: auto;
+          right: 0;
+          border-right: none;
+          border-left: 5px solid transparent;
+          border-top: 4px solid #ff77c6;
+          bottom: -4px;
+        }
+        
+        .message:last-child {
+          margin-bottom: 30px;
+        }
+        
+        .message.new {
+          transform: scale(0);
+          transform-origin: 0 0;
+          animation: bounce 500ms linear both;
+        }
+        
+        .message.loading span {
+          display: block;
+          font-size: 0;
+          width: 20px;
+          height: 10px;
+          position: relative;
+        }
+
+        .message.loading span::before,
+        .message.loading span::after,
+        .message.loading::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          display: block;
+          width: 3px;
+          height: 3px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, .5);
+          z-index: 2;
+          margin-top: 4px;
+          animation: ball .45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
+        }
+
+        .message.loading::before {
+          border: none;
+          animation-delay: .15s;
+        }
+
+        .message.loading span::before {
+          margin-left: -7px;
+        }
+
+        .message.loading span::after {
+          margin-left: 7px;
+          animation-delay: .3s;
+        }
+
+        /*--------------------
+        Message Box
+        --------------------*/
+        .message-box {
+          flex: 0 1 70px;
+          width: 100%;
+          background: rgba(20, 20, 20, 0.8);
+          backdrop-filter: blur(10px);
+          padding: 15px;
+          position: relative;
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .message-input {
+          background: rgba(30, 30, 30, 0.8);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          outline: none!important;
+          resize: none;
+          color: rgba(255, 255, 255, .9);
+          font-size: 12px;
+          height: 40px;
+          margin: 0;
+          padding: 12px 80px 12px 16px;
+          width: 100%;
+          border-radius: 20px;
+          backdrop-filter: blur(10px);
+          transition: all 0.3s ease;
+        }
+
+        .message-input:focus {
+          border-color: rgba(120, 119, 198, 0.5);
+          box-shadow: 0 0 0 2px rgba(120, 119, 198, 0.1);
+          background: rgba(35, 35, 35, 0.9);
+        }
+        
+        .message-input::placeholder {
+          color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .message-input:focus::placeholder {
+          color: transparent;
+        }
+        
+        .message-submit {
+          position: absolute;
+          z-index: 1;
+          top: 48%;
+          right: 18px;
+          transform: translateY(-50%);
+          color: #fff;
+          border: none;
+          background: linear-gradient(135deg, #7877c6, #ff77c6);
+          font-size: 11px;
+          font-weight: 600;
+          text-transform: uppercase;
+          line-height: 1;
+          padding: 12px 20px; 
+          border-radius: 16px;
+          outline: none!important;
+          transition: all 0.3s ease;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(120, 119, 198, 0.4);
+        }
+        
+        .message-submit:hover {
+          transform: translateY(-50%) translateY(-2px);
+          box-shadow: 0 6px 20px rgba(120, 119, 198, 0.6);
+        }
+
+        .message-submit:disabled {
+          background: rgba(60, 60, 60, 0.8);
+          cursor: not-allowed;
+          box-shadow: none;
+          transform: translateY(-50%);
+        }
+
+        .error-message {
+          background: rgba(255, 50, 50, 0.2) !important;
+          color: #ffcccc;
+          border: 1px solid rgba(255, 50, 50, 0.3) !important;
+        }
+
+        /*--------------------
+        Animations
+        --------------------*/
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes bounce { 
+          0% { transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+          4.7% { transform: matrix3d(0.45, 0, 0, 0, 0, 0.45, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+          9.41% { transform: matrix3d(0.883, 0, 0, 0, 0, 0.883, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+          14.11% { transform: matrix3d(1.141, 0, 0, 0, 0, 1.141, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+          18.72% { transform: matrix3d(1.212, 0, 0, 0, 0, 1.212, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+          24.32% { transform: matrix3d(1.151, 0, 0, 0, 0, 1.151, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+          29.93% { transform: matrix3d(1.048, 0, 0, 0, 0, 1.048, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+          35.54% { transform: matrix3d(0.979, 0, 0, 0, 0, 0.979, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+          41.04% { transform: matrix3d(0.961, 0, 0, 0, 0, 0.961, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+          52.15% { transform: matrix3d(0.991, 0, 0, 0, 0, 0.991, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+          63.26% { transform: matrix3d(1.007, 0, 0, 0, 0, 1.007, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+          85.49% { transform: matrix3d(0.999, 0, 0, 0, 0, 0.999, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+          100% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); } 
+        }
+
+        @keyframes ball { 
+          from {
+            transform: translateY(0) scaleY(.8);
+          }
+          to {
+            transform: translateY(-10px);
+          }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat">
+        <div class="chat-title">
+            <h1>Aditya Agarwal</h1>
+            <h2>AI Assistant</h2>
+            <figure class="avatar">
+                <img src="https://res.cloudinary.com/dcf0cpuqf/image/upload/v1748343989/Screenshot_2025-05-27_163609_zq6kzu.png" />
+            </figure>
+        </div>
+        <div class="messages">
+            <div class="messages-content"></div>
+        </div>
+        <div class="message-box">
+            <textarea class="message-input" placeholder="Type message..."></textarea>
+            <button type="submit" class="message-submit">Send</button>
+        </div>
+    </div>
+    <div class="bg"></div>
+
+    <script>
+        // Chat variables
+        let conversationHistory = [];
+        const messagesContent = document.querySelector('.messages-content');
+        const messageInput = document.querySelector('.message-input');
+        const messageSubmit = document.querySelector('.message-submit');
+
+        // Initialize chat
+        function initChat() {
+            addMessage("Hello! I'm your Gemini AI assistant. How can I help you today?", false);
+        }
+
+        // Add message to chat
+        function addMessage(text, isUser = true, isError = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'message-personal' : ''} ${isError ? 'error-message' : ''} new`;
+            
+            if (!isUser) {
+                messageDiv.innerHTML = `
+                    <figure class="avatar">
+                        <img src="https://res.cloudinary.com/dcf0cpuqf/image/upload/v1748343989/Screenshot_2025-05-27_163609_zq6kzu.png" />
+                    </figure>
+                    ${text}
+                `;
+            } else {
+                messageDiv.textContent = text;
+            }
+
+            messagesContent.appendChild(messageDiv);
+            setTimestamp(messageDiv);
+            scrollToBottom();
+        }
+
+        // Add loading message
+        function addLoadingMessage() {
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message loading new';
+            loadingDiv.innerHTML = `
+                <figure class="avatar">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" />
+                </figure>
+                <span></span>
+            `;
+            messagesContent.appendChild(loadingDiv);
+            scrollToBottom();
+            return loadingDiv;
+        }
+
+        // Remove loading message
+        function removeLoadingMessage(loadingElement) {
+            if (loadingElement && loadingElement.parentNode) {
+                loadingElement.parentNode.removeChild(loadingElement);
+            }
+        }
+
+        // Set timestamp
+        function setTimestamp(messageElement) {
+            const now = new Date();
+            const timestamp = document.createElement('div');
+            timestamp.className = 'timestamp';
+            timestamp.textContent = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+            messageElement.appendChild(timestamp);
+        }
+
+        // Scroll to bottom
+        function scrollToBottom() {
+            const messages = document.querySelector('.messages');
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        // Send message to backend API (instead of directly to Gemini)
+        async function sendMessage(message) {
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.response;
+
+            } catch (error) {
+                console.error('Error sending message:', error);
+                throw error;
+            }
+        }
+
+        // Handle message sending
+        async function handleSendMessage() {
+            const message = messageInput.value.trim();
+            if (!message) return;
+
+            // Disable send button
+            messageSubmit.disabled = true;
+            messageSubmit.textContent = 'Sending...';
+
+            // Add user message
+            addMessage(message, true);
+            conversationHistory.push({role: 'user', content: message});
+
+            // Clear input
+            messageInput.value = '';
+
+            // Show loading
+            const loadingElement = addLoadingMessage();
+
+            try {
+                // Send to backend API
+                const response = await sendMessage(message);
+                
+                // Remove loading and add response
+                removeLoadingMessage(loadingElement);
+                addMessage(response, false);
+                conversationHistory.push({role: 'assistant', content: response});
+
+            } catch (error) {
+                // Remove loading and show error
+                removeLoadingMessage(loadingElement);
+                addMessage('Sorry, I encountered an error. Please try again.', false, true);
+                console.error('Chat error:', error);
+            }
+
+            // Re-enable send button
+            messageSubmit.disabled = false;
+            messageSubmit.textContent = 'Send';
+            messageInput.focus();
+        }
+
+        // Event listeners
+        messageSubmit.addEventListener('click', handleSendMessage);
+
+        messageInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage();
+            }
+        });
+
+        // Initialize chat when page loads
+        document.addEventListener('DOMContentLoaded', initChat);
+    </script>
+</body>
+</html>

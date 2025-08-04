@@ -73,7 +73,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Session configuration with MongoStore and flash messages
+//Session configuration with MongoStore and flash messages
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -89,7 +89,6 @@ app.use(
     },
   })
 );
-
 // Initialize flash middleware
 app.use(flash());
 
@@ -145,6 +144,11 @@ app.use(generalRateLimit);
 // Homepage
 app.get('/', optionalAuth, (req, res) => {
   res.render('index.ejs');
+});
+
+// Serve chatbot static HTML
+app.get('/chatbot', (req, res) => {
+  res.sendFile(path.join(__dirname, 'ml', 'chatbot', 'templates', 'index.html'));
 });
 
 // Auth routes from auth.routes.js

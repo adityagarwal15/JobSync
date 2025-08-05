@@ -89,6 +89,19 @@ app.use(
     },
   })
 );
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//     // Remove the store: MongoStore.create({ ... }) line
+//     cookie: {
+//       maxAge: 1000 * 60 * 60 * 24, // 1 day
+//       secure: process.env.NODE_ENV === 'production',
+//       sameSite: 'lax',
+//     },
+//   })
+// );
 // Initialize flash middleware
 app.use(flash());
 

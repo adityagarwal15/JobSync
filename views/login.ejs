@@ -55,7 +55,7 @@
   </style>
 </head>
 
-<body>
+<body class= "absolute m-auto w-screen h-screen flex justify-center items-center bg-gradient-to-br from-[#A71F1F] via-[#AB7C1F] to-[#AB7C1F] auth-body">
   <!-- Flash Messages -->
   <div class="flash-messages">
     <% if (success && success.length> 0) { %>
@@ -94,42 +94,48 @@
                                 <% }); %>
                                   <% } %>
   </div>
-  <div class="container" id="container">
-    <div class="form-container sign-in">
-      <form method="POST" action="/login">
-        <h1>Sign In</h1>
-        <!-- <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
-
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div> -->
-        <!-- <span>or use your email password</span> -->
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <a href="#" onclick="showForgotPassword()">Forget Your Password?</a>
-        <button type="submit">Sign In</button>
-      </form>
-    </div>
-    <div class="toggle-container">
-      <div class="toggle">
-        <div class="toggle-panel toggle-left">
-          <h1>Welcome Back!</h1>
-          <p>Enter your details to access site</p>
-          <button class="hidden" id="signin">Sign In</button>
+  <!-- Login Form -->
+  <div class="outer-container">
+    <div class="container">
+      <!-- left panel -->
+      <div class="left-panel">
+        <div class="welcome-heading">
+          <h2>Welcome Back !</h2>
         </div>
-        <div class="toggle-panel toggle-right">
-          <h1>Hello, Friend!</h1>
-          <p>Register with your details</p>
-          <a href="/signup" class="hidden"
-            style="background: transparent; border: 1px solid white; padding: 12px 45px; border-radius: 8px; color: white; text-decoration: none; font-weight: 600;">Sign
-            Up</a>
-        </div>
+        <span class="left-panel-para">
+          <p>Don't have an account yet ?</p> 
+          <p>Sign up and join Us now.</p>
+        </span>
+        <a href="/signup"><button class="switch-btn">Sign Up</button>
+        </a>
+      </div>
+      <!-- right panel -->
+      <div class="right-panel">
+        <h2>Sign In to Your Account</h2>
+        <div class="login-form">
+          <form action="/login">
+            <label for="emailOrUsername">Email or Username</label>
+            <input type="text" name="emailOrUsername" id="emailOrUsername" placeholder="Enter your email or username" required>
+            <label for="password">Password</label>
+            <input type="text" name="password" id="password" placeholder="Enter your password" required>
+            <span class="remember-me">   
+                <a href="Reset link" style=" margin: 0px 0px 0px 15px; padding-left: 30px; padding-right: 5px;">Forget the password ?</a>
+            </span>
+            <button type="submit">Sign In</button>
+            <div class="or-sign-up-with"><span>OR SIGN UP WITH</span> </div>
+            <div class="social-login">
+              <div class="social-icons">
+                <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+              </div>
+            </div>
+          </form>
       </div>
     </div>
   </div>
 
-  <!-- Forgot Password Modal -->
+  <!-- Forgot Password Model -->
   <div id="forgotPasswordModal"
     style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000;">
     <div
@@ -149,6 +155,11 @@
     </div>
   </div>
 
+
+  <!-- /Toggle -->
+
+    
+
   <script src="js/login.js"></script>
   <script>
     // Auto-hide flash messages after 5 seconds
@@ -167,4 +178,5 @@
     function hideForgotPassword() {
       document.getElementById('forgotPasswordModal').style.display = 'none';
     }
-  </script>
+  </script>  
+</body>

@@ -96,39 +96,87 @@
 </div>
 
 
-    <div class="glow"></div>
-    <div class="glow"></div>
+  <div class="glow"></div>
+  <div class="glow"></div>
 
+  <div class="outer-container" > 
     <div class="container">
-        <form class="signup-left-panel" action="/login" method="GET">
-            <h1>Hello, Friend!</h1>
-            <p style="font-size: small;">Already have an account?</p>
-            <button type="submit" style="margin-top: 2rem;">Sign In</button>
+      <!-- left-panel -->
+      <div class="left-panel">
+        <form action="/login" method="GET">
+          <img src="/public/assets/favicon-512x512.png" alt="" class="login-logo">
+          <h1>Welcome to JobSync!</h1>
+          <p style="font-size: small; margin-bottom: 2px">Your career, streamlined. Designed for success.</p>
+          <p style="font-size: small; margin-bottom: 2px">Already have an account?</p>
+          <button type="submit" style="margin-top: 2rem;" class="button">Sign In</button>
         </form>
-
-        <div class="signup-form-container">
-            <form method="POST" action="/signup">
-                <h1>Create Account</h1>
-                <!-- <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email for registration</span> -->
-                <input type="text" name="name" placeholder="Name" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required minlength="6">
+      </div>
+      
+      <!-- right-panel -->
+      <div class="right-panel">
+          <form method="POST" action="/signup">
+            <h1>Create Your JobSync Account</h1>
+            <p>Enter your details below to get started.</p>
+            <label for="name">Username</label>
+            <div class="input-group">
+              <input type="text" name="name"id="name" placeholder="Your username" required>
+            </div>
+            <label for="email">Email</label>
+            <div class="input-group">
+              <input type="email" name="email" id="email" placeholder="your.email@example.com" required>
+            </div>
+            <div class="input-group">
                 <select name="role"
-                    style="width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; background: white;">
-                    <option value="user">Job Seeker</option>
-                    <option value="admin">Employer</option>
-                </select>
-                <button type="submit">Sign Up</button>
-            </form>
-        </div>
-    </div>
+                style="width: 80%; height: -20%; padding: 12px; margin: 8px 0px 8px 5px; border: 1px solid #ddd; border-radius: 8px; background: white;">
+                <option value="" disabled selected>Select your role</option>
+                <option value="user">Job Seeker</option>
+                <option value="admin">Employer</option>
+              </select>
+            </div>
+            <div class="password">
+              <div class="password-div">
+                <label for="password">Password:</label>
+                <div class="input-group">
+                  <i class="fas fa-check-circle" id="passwordMatchIcon" style="display: none;"></i>
+                  <input type="password" name="password" id="password" placeholder="enter password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required minlength="8">
+                </div>
+              </div>
+              <div class="confirmpassword-div">
+                <label for="confirmPassword">Confirm Password:</label>
+                <div class="input-group">
+                  <i class="fas fa-check-circle" id="passwordMatchIcon" style="display: none;"></i>
+                  <input type="password" id="confirmPassword" name="confirmPassword"placeholder="Repeat"  required>
+                  <span id="passwordMatchMessage"></span>
+                </div>
+              </div>
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" id="termsCheckbox" name="termsCheckbox" required>
+              <label for="termsCheckbox">I have read and agree to the <a href="/terms" target="_blank"> JobSync Privacy Policy</a> and <a href="/terms" target="_blank"> Terms and Conditions.</a></label> <br>
+            </div>
+            <p class="protected-para" style="opacity: 0.8;">This site is protected by Google Privacy Policy and Terms of Service apply.</p>
+            <button type="submit" class="submit-button">Create Account</button>
+          </form>
+          <div class="OR"> <span>Or continue with</span></div>
+            <div class="social-login">
 
-    <script>
+              <div class="social-icons">
+                <div class="google-icon">
+                  <a href="#" class="icon"><i class="fa-brands fa-google" style="margin-right: 1rem;"></i>Sign up with Google</a>
+                </div>
+                <div class="github-icon">
+                  <a href="#" class="icon"><i class="fa-brands fa-github" style="margin-right: 0.9rem; margin-left:-0.2rem"></i>Sign up with GitHub</a>
+                </div>
+              </div> 
+            </div>
+            <div class="already-have-account">
+              <p style="font-size: 1rem;">Already have an account? <a href="/login" style="text-decoration:none; color:#dc3545; margin-left: 2px">Sign In</a></p>
+            </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js">
         // Auto-hide flash messages after 5 seconds
         setTimeout(() => {
             const flashMessages = document.querySelectorAll('.flash-message');
@@ -137,7 +185,27 @@
                 setTimeout(() => msg.remove(), 300);
             });
         }, 5000);
+  </script>
+  <script src="js/signup.js"></script>
+    <script>
+        // Password match validation
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+        const passwordMatchIcon = document.getElementById('passwordMatchIcon');
+
+        confirmPassword.addEventListener('input', function () {
+            if (password.value === confirmPassword.value) {
+                passwordMatchMessage.textContent = 'Passwords match';
+                passwordMatchMessage.style.color = 'green';
+                passwordMatchIcon.style.display = 'inline';
+            } else {
+                passwordMatchMessage.textContent = 'Passwords do not match';
+                passwordMatchMessage.style.color = 'red';
+                passwordMatchIcon.style.display = 'none';
+            }
+        });
     </script>
 </body>
-
 </html>
+      

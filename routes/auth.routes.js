@@ -21,11 +21,11 @@ const authRouter = express.Router();
 
 // Public routes (redirect to dashboard if already authenticated)
 authRouter.get('/login', redirectIfAuthenticated, (req, res) => {
-  res.render('login.ejs');
+  res.render('auth.ejs');
 });
 
 authRouter.get('/signup', redirectIfAuthenticated, (req, res) => {
-  res.render('signup.ejs');
+  res.render('auth.ejs');
 });
 
 // Auth actions

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/auth.css" />
+    <title>JOBSYNC | Welcome</title>
+</head>
+
+<body>
+    <!-- Flash Messages (Preserved your EJS logic) -->
+    <div class="flash-messages">
+        <% if (typeof success !== 'undefined' && success && success.length > 0) { %>
+            <% success.forEach(function(msg) { %>
+                <div class="flash-message flash-success"><i class="fas fa-check-circle"></i> <%= msg %></div>
+            <% }); %>
+        <% } %>
+        <% if (typeof error !== 'undefined' && error && error.length > 0) { %>
+            <% error.forEach(function(msg) { %>
+                <div class="flash-message flash-error"><i class="fas fa-exclamation-circle"></i> <%= msg %></div>
+            <% }); %>
+        <% } %>
+    </div>
+    
+    <div class="auth-container" id="auth-container">
+        <!-- Left Brand Panel -->
+        <div class="brand-panel">
+            <div class="logo">JOBSYNC</div>
+            <div class="animation-wrapper">
+                <h2>Empowering Your Career with <span class="animated-text"></span></h2>
+            </div>
+            <p class="footer-text">&copy; <%= new Date().getFullYear() %> JOBSYNC. All rights reserved.</p>
+        </div>
+
+        <!-- Right Form Panel -->
+        <div class="form-panel">
+            <div class="form-wrapper">
+                <!-- Sign In Form -->
+                <div class="form-section active" id="sign-in-form">
+                    <h1>Sign In</h1>
+                    <p>Welcome back! Please enter your details.</p>
+                    
+                    <a href="/auth/google" class="google-btn">
+                        <i class="fab fa-google"></i>
+                        <span>Sign in with Google</span>
+                    </a>
+
+                    <div class="divider">OR</div>
+
+                    <form method="POST" action="/login">
+                        <input type="email" name="email" placeholder="Email" required>
+                        <div class="password-wrapper">
+                            <input type="password" name="password" placeholder="Password" required>
+                            <i class="fas fa-eye-slash toggle-password"></i>
+                        </div>
+                        <div class="form-footer">
+                            <a href="#" onclick="showForgotPassword()">Forgot Password?</a>
+                        </div>
+                        <button type="submit">Sign In</button>
+                    </form>
+                    <p style="text-align: center; margin-top: 1.5rem;">
+                        Don't have an account? <a href="#" class="toggle-link" data-target="sign-up-form">Sign Up</a>
+                    </p>
+                </div>
+
+                <!-- Sign Up Form -->
+                <div class="form-section" id="sign-up-form">
+                     <h1>Create Account</h1>
+                    <p>Join our community of professionals.</p>
+
+                    <a href="/auth/google" class="google-btn">
+                        <i class="fab fa-google"></i>
+                        <span>Sign up with Google</span>
+                    </a>
+
+                    <div class="divider">OR</div>
+                    
+                    <form method="POST" action="/signup">
+                        <input type="text" name="name" placeholder="Name" required>
+                        <input type="email" name="email" placeholder="Email" required>
+                        <div class="password-wrapper">
+                            <input type="password" name="password" placeholder="Password" required minlength="6">
+                            <i class="fas fa-eye-slash toggle-password"></i>
+                        </div>
+                        
+                        <!-- Role Selector -->
+                        <div class="role-selector">
+                           <input type="radio" id="role-user" name="role" value="user" checked>
+                           <label for="role-user">Job Seeker</label>
+                           
+                           <input type="radio" id="role-admin" name="role" value="admin">
+                           <label for="role-admin">Employer</label>
+                        </div>
+                        
+                        <button type="submit">Create Account</button>
+                    </form>
+                     <p style="text-align: center; margin-top: 1.5rem;">
+                        Already have an account? <a href="#" class="toggle-link" data-target="sign-in-form">Sign In</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal (Restyled) -->
+    <div id="forgotPasswordModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Reset Password</h2>
+            <form action="/forgot-password" method="POST">
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <div class="modal-buttons">
+                    <button type="button" class="cancel-btn" onclick="hideForgotPassword()">Cancel</button>
+                    <button type="submit" class="submit-btn">Send Reset Link</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- GSAP Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(TextPlugin);
+
+        const formToggleLinks = document.querySelectorAll('.toggle-link');
+        const signInForm = document.getElementById('sign-in-form');
+        const signUpForm = document.getElementById('sign-up-form');
+
+        // Text Animation for the Brand Panel
+        const words = ["AI-Driven Matching.", "Smart Recommendations.", "Skill Development.", "Empowering Communities."];
+        let mainTimeline = gsap.timeline({ repeat: -1 });
+
+        words.forEach(word => {
+            let tl = gsap.timeline({ repeat: 1, yoyo: true, repeatDelay: 1 });
+            tl.to(".animated-text", { duration: 1, text: word });
+            mainTimeline.add(tl);
+        });
+
+        // Form Toggling Logic
+        formToggleLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = e.target.getAttribute('data-target');
+                
+                const currentForm = document.querySelector('.form-section.active');
+                const nextForm = document.getElementById(targetId);
+                
+                const newUrl = (targetId === 'sign-up-form') ? '/signup' : '/login';
+
+                // Use simple display toggle for mobile
+                if (window.innerWidth <= 900) {
+                    currentForm.style.display = 'none';
+                    nextForm.style.display = 'block';
+                    currentForm.classList.remove('active');
+                    nextForm.classList.add('active');
+                    history.pushState({ form: targetId }, '', newUrl);
+                    return;
+                }
+
+                // GSAP animation for desktop
+                gsap.timeline({
+                    onComplete: () => {
+                        // Update the URL after the animation completes
+                        history.pushState({ form: targetId }, '', newUrl);
+                    }
+                })
+                    .to(currentForm, { autoAlpha: 0, y: -10, duration: 0.3, ease: 'power2.in', onComplete: () => {
+                        currentForm.classList.remove('active');
+                    }})
+                    .set(nextForm, { autoAlpha: 0, y: 10 })
+                    .to(nextForm, { autoAlpha: 1, y: 0, duration: 0.3, ease: 'power2.out', onComplete: () => {
+                        nextForm.classList.add('active');
+                    }});
+            });
+        });
+
+        // Password visibility toggle logic
+        const togglePasswordIcons = document.querySelectorAll('.toggle-password');
+        togglePasswordIcons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                const passwordInput = icon.previousElementSibling;
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                }
+            });
+        });
+
+
+        // Page Load Animation & Route Handling
+        window.addEventListener('load', () => {
+            gsap.to("#auth-container", { duration: 0.8, autoAlpha: 1, y: 0, ease: 'power2.out' });
+
+            // Check if the current URL path is for signup
+            if (window.location.pathname.includes('/signup')) {
+                const currentForm = document.querySelector('.form-section.active');
+                const nextForm = document.getElementById('sign-up-form');
+                
+                if (currentForm !== nextForm) {
+                    if (window.innerWidth <= 900) {
+                        currentForm.style.display = 'none';
+                        nextForm.style.display = 'block';
+                    } else {
+                        currentForm.classList.remove('active');
+                        nextForm.classList.add('active');
+                        gsap.set(currentForm, { autoAlpha: 0 });
+                        gsap.set(nextForm, { autoAlpha: 1 });
+                    }
+                }
+            }
+        });
+
+        // Flash Messages & Modal Functions with GSAP
+        setTimeout(() => {
+            document.querySelectorAll('.flash-message').forEach(msg => {
+                gsap.to(msg, { duration: 0.5, x: '110%', autoAlpha: 0, ease: 'power2.in', onComplete: () => msg.remove() });
+            });
+        }, 5000);
+
+        const modal = document.getElementById('forgotPasswordModal');
+        function showForgotPassword() {
+            gsap.fromTo(modal, { autoAlpha: 0 }, { display: 'flex', autoAlpha: 1, duration: 0.3 });
+        }
+        function hideForgotPassword() {
+            gsap.to(modal, { autoAlpha: 0, duration: 0.3, onComplete: () => modal.style.display = 'none' });
+        }
+    </script>
+</body>
+</html>

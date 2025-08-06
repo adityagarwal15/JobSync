@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini Chatbot</title>
+    <title>JobSync AI Chatbot</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <style>
         /*--------------------
@@ -130,6 +130,41 @@
         .chat-title .avatar img {
           width: 100%;
           height: auto;
+        }
+
+        /*--------------------
+        Status Indicator
+        --------------------*/
+        .status-indicator {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #4CAF50;
+          opacity: 0;
+          transition: all 0.3s ease;
+        }
+
+        .status-indicator.online {
+          opacity: 1;
+        }
+
+        .status-indicator.thinking {
+          background: #FF9800;
+          opacity: 1;
+          animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .status-indicator.error {
+          background: #f44336;
+          opacity: 1;
+        }
+
+        @keyframes pulse {
+          0%, 100% { opacity: 0.3; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.2); }
         }
 
         /*--------------------
@@ -294,6 +329,37 @@
           animation-delay: .3s;
         }
 
+        /* Error message styling */
+        .message.error-message {
+          background: rgba(244, 67, 54, 0.2) !important;
+          color: #ffcccc !important;
+          border: 1px solid rgba(244, 67, 54, 0.3) !important;
+        }
+
+        .message.error-message::before {
+          border-top-color: rgba(244, 67, 54, 0.2) !important;
+        }
+
+        /* System message styling */
+        .message.system-message {
+          background: rgba(76, 175, 80, 0.15) !important;
+          color: #c8e6c9 !important;
+          border: 1px solid rgba(76, 175, 80, 0.3) !important;
+          text-align: center;
+          margin-left: 0;
+          margin-right: 0;
+          font-style: italic;
+          font-size: 11px;
+        }
+
+        .message.system-message::before {
+          display: none;
+        }
+
+        .message.system-message .avatar {
+          display: none;
+        }
+
         /*--------------------
         Message Box
         --------------------*/
@@ -328,6 +394,13 @@
           box-shadow: 0 0 0 2px rgba(120, 119, 198, 0.1);
           background: rgba(35, 35, 35, 0.9);
         }
+
+        .message-input:disabled {
+          background: rgba(20, 20, 20, 0.5);
+          color: rgba(255, 255, 255, 0.4);
+          cursor: not-allowed;
+          border-color: rgba(255, 255, 255, 0.05);
+        }
         
         .message-input::placeholder {
           color: rgba(255, 255, 255, 0.4);
@@ -335,6 +408,10 @@
         
         .message-input:focus::placeholder {
           color: transparent;
+        }
+
+        .message-input:disabled::placeholder {
+          color: rgba(255, 255, 255, 0.2);
         }
         
         .message-submit {
@@ -356,9 +433,14 @@
           transition: all 0.3s ease;
           cursor: pointer;
           box-shadow: 0 4px 12px rgba(120, 119, 198, 0.4);
+          min-width: 64px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
         }
         
-        .message-submit:hover {
+        .message-submit:hover:not(:disabled) {
           transform: translateY(-50%) translateY(-2px);
           box-shadow: 0 6px 20px rgba(120, 119, 198, 0.6);
         }
@@ -368,12 +450,75 @@
           cursor: not-allowed;
           box-shadow: none;
           transform: translateY(-50%);
+          opacity: 0.6;
         }
 
-        .error-message {
-          background: rgba(255, 50, 50, 0.2) !important;
-          color: #ffcccc;
-          border: 1px solid rgba(255, 50, 50, 0.3) !important;
+        /* Loading spinner for submit button */
+        .loading-spinner {
+          width: 12px;
+          height: 12px;
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          border-top: 2px solid #ffffff;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        /* Connection status banner */
+        .connection-status {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          background: rgba(244, 67, 54, 0.9);
+          color: white;
+          text-align: center;
+          padding: 8px;
+          font-size: 11px;
+          transform: translateY(-100%);
+          transition: transform 0.3s ease;
+          z-index: 10;
+          border-radius: 24px 24px 0 0;
+        }
+
+        .connection-status.show {
+          transform: translateY(0);
+        }
+
+        .connection-status.reconnected {
+          background: rgba(76, 175, 80, 0.9);
+        }
+
+        /*--------------------
+        Responsive Design
+        --------------------*/
+        @media (max-width: 480px) {
+          .chat {
+            width: 95vw;
+            height: 95vh;
+            max-height: none;
+            border-radius: 16px;
+          }
+
+          .message {
+            max-width: 85%;
+            font-size: 11px;
+          }
+
+          .message-input {
+            font-size: 11px;
+            padding-right: 70px;
+          }
+
+          .message-submit {
+            padding: 10px 16px;
+            font-size: 10px;
+            min-width: 56px;
+          }
         }
 
         /*--------------------
@@ -411,20 +556,27 @@
     </style>
 </head>
 <body>
+    <div class="connection-status" id="connectionStatus">
+        Connection lost - Attempting to reconnect...
+    </div>
+    
     <div class="chat">
         <div class="chat-title">
-            <h1>Sample Bot</h1>
-            <h2>AI Assistant</h2>
+            <h1>JobSync AI</h1>
+            <h2>Career Assistant</h2>
             <figure class="avatar">
                 <img src="https://res.cloudinary.com/dcf0cpuqf/image/upload/v1748343989/Screenshot_2025-05-27_163609_zq6kzu.png" />
             </figure>
+            <div class="status-indicator online" id="statusIndicator"></div>
         </div>
         <div class="messages">
-            <div class="messages-content"></div>
+            <div class="messages-content" id="messagesContent"></div>
         </div>
         <div class="message-box">
-            <textarea class="message-input" placeholder="Type message..."></textarea>
-            <button type="submit" class="message-submit">Send</button>
+            <textarea class="message-input" id="messageInput" placeholder="Ask me about jobs, careers, or interview tips..."></textarea>
+            <button type="submit" class="message-submit" id="messageSubmit">
+                <span class="submit-text">Send</span>
+            </button>
         </div>
     </div>
     <div class="bg"></div>
@@ -432,21 +584,57 @@
     <script>
         // Chat variables
         let conversationHistory = [];
-        const messagesContent = document.querySelector('.messages-content');
-        const messageInput = document.querySelector('.message-input');
-        const messageSubmit = document.querySelector('.message-submit');
+        let isLoading = false;
+        let retryCount = 0;
+        const maxRetries = 3;
+        const sessionId = 'session_' + Math.random().toString(36).substring(2, 15);
+        
+        // DOM elements
+        const messagesContent = document.getElementById('messagesContent');
+        const messageInput = document.getElementById('messageInput');
+        const messageSubmit = document.getElementById('messageSubmit');
+        const statusIndicator = document.getElementById('statusIndicator');
+        const connectionStatus = document.getElementById('connectionStatus');
 
         // Initialize chat
         function initChat() {
-            addMessage("Hello! I'm your Gemini AI assistant. How can I help you today?", false);
+            addMessage("Hello! I'm JobSync AI, your career assistant. I can help you with job searches, resume tips, interview preparation, and career advice. How can I assist you today?", false);
+            setStatus('online');
+        }
+
+        // Set status indicator
+        function setStatus(status) {
+            statusIndicator.className = `status-indicator ${status}`;
+        }
+
+        // Show/hide connection status
+        function showConnectionStatus(message, isError = true) {
+            connectionStatus.textContent = message;
+            connectionStatus.className = `connection-status show ${isError ? '' : 'reconnected'}`;
+            
+            if (!isError) {
+                setTimeout(() => {
+                    connectionStatus.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        function hideConnectionStatus() {
+            connectionStatus.classList.remove('show');
         }
 
         // Add message to chat
-        function addMessage(text, isUser = true, isError = false) {
+        function addMessage(text, isUser = true, isError = false, isSystem = false) {
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'message-personal' : ''} ${isError ? 'error-message' : ''} new`;
+            let messageClass = 'message new';
             
-            if (!isUser) {
+            if (isUser) messageClass += ' message-personal';
+            if (isError) messageClass += ' error-message';
+            if (isSystem) messageClass += ' system-message';
+            
+            messageDiv.className = messageClass;
+            
+            if (!isUser && !isSystem) {
                 messageDiv.innerHTML = `
                     <figure class="avatar">
                         <img src="https://res.cloudinary.com/dcf0cpuqf/image/upload/v1748343989/Screenshot_2025-05-27_163609_zq6kzu.png" />
@@ -454,21 +642,26 @@
                     ${text}
                 `;
             } else {
-                messageDiv.textContent = text;
+                messageDiv.innerHTML = text;
             }
 
             messagesContent.appendChild(messageDiv);
-            setTimestamp(messageDiv);
+            if (!isSystem) {
+                setTimestamp(messageDiv);
+            }
             scrollToBottom();
+            
+            return messageDiv;
         }
 
         // Add loading message
         function addLoadingMessage() {
             const loadingDiv = document.createElement('div');
             loadingDiv.className = 'message loading new';
+            loadingDiv.id = 'loadingMessage';
             loadingDiv.innerHTML = `
                 <figure class="avatar">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" />
+                    <img src="https://res.cloudinary.com/dcf0cpuqf/image/upload/v1748343989/Screenshot_2025-05-27_163609_zq6kzu.png" />
                 </figure>
                 <span></span>
             `;
@@ -478,9 +671,31 @@
         }
 
         // Remove loading message
-        function removeLoadingMessage(loadingElement) {
+        function removeLoadingMessage() {
+            const loadingElement = document.getElementById('loadingMessage');
             if (loadingElement && loadingElement.parentNode) {
                 loadingElement.parentNode.removeChild(loadingElement);
+            }
+        }
+
+        // Set loading state
+        function setLoadingState(loading) {
+            isLoading = loading;
+            messageSubmit.disabled = loading;
+            messageInput.disabled = loading;
+            
+            const submitText = messageSubmit.querySelector('.submit-text');
+            
+            if (loading) {
+                setStatus('thinking');
+                submitText.innerHTML = '<div class="loading-spinner"></div>';
+                messageInput.placeholder = 'Please wait for response...';
+                addLoadingMessage();
+            } else {
+                setStatus('online');
+                submitText.textContent = 'Send';
+                messageInput.placeholder = 'Ask me about jobs, careers, or interview tips...';
+                removeLoadingMessage();
             }
         }
 
@@ -499,27 +714,52 @@
             messages.scrollTop = messages.scrollHeight;
         }
 
-        // Send message to backend API (instead of directly to Gemini)
-        async function sendMessage(message) {
+        // Send message to backend API with retry logic
+        async function sendMessage(message, attempt = 1) {
             try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
+
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-Session-ID': sessionId
                     },
-                    body: JSON.stringify({ message: message })
+                    body: JSON.stringify({ message: message }),
+                    signal: controller.signal
                 });
 
+                clearTimeout(timeoutId);
+
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `Server error: ${response.status}`);
                 }
 
                 const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                hideConnectionStatus();
+                retryCount = 0; // Reset on success
                 return data.response;
 
             } catch (error) {
-                console.error('Error sending message:', error);
+                console.error(`Send message attempt ${attempt}:`, error);
+                
+                if (error.name === 'AbortError') {
+                    throw new Error('Request timed out. Please try again.');
+                }
+                
+                if (attempt < maxRetries && !error.message.includes('rate limit')) {
+                    showConnectionStatus(`Connection issue - Retrying (${attempt}/${maxRetries})...`);
+                    await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+                    return sendMessage(message, attempt + 1);
+                }
+                
                 throw error;
             }
         }
@@ -527,56 +767,59 @@
         // Handle message sending
         async function handleSendMessage() {
             const message = messageInput.value.trim();
-            if (!message) return;
+            if (!message || isLoading) return;
 
-            // Disable send button
-            messageSubmit.disabled = true;
-            messageSubmit.textContent = 'Sending...';
+            // Validate message length
+            if (message.length > 1000) {
+                addMessage('Message too long. Please keep it under 1000 characters.', false, true);
+                return;
+            }
 
             // Add user message
             addMessage(message, true);
             conversationHistory.push({role: 'user', content: message});
 
-            // Clear input
+            // Clear input and set loading state
             messageInput.value = '';
-
-            // Show loading
-            const loadingElement = addLoadingMessage();
+            setLoadingState(true);
 
             try {
                 // Send to backend API
                 const response = await sendMessage(message);
                 
-                // Remove loading and add response
-                removeLoadingMessage(loadingElement);
+                // Add bot response
                 addMessage(response, false);
                 conversationHistory.push({role: 'assistant', content: response});
 
             } catch (error) {
-                // Remove loading and show error
-                removeLoadingMessage(loadingElement);
-                addMessage('Sorry, I encountered an error. Please try again.', false, true);
+                setStatus('error');
                 console.error('Chat error:', error);
+                
+                let errorMessage = 'Sorry, I encountered an error. Please try again.';
+                
+                if (error.message.includes('rate limit')) {
+                    errorMessage = 'You\'re sending messages too quickly. Please wait a moment and try again.';
+                } else if (error.message.includes('AI service')) {
+                    errorMessage = 'AI service is temporarily unavailable. Please try again in a few moments.';
+                } else if (error.message.includes('timed out')) {
+                    errorMessage = 'Request timed out. Please check your connection and try again.';
+                } else if (error.message.includes('Network')) {
+                    showConnectionStatus('Connection lost - Please check your internet connection');
+                    errorMessage = 'Network error. Please check your connection and try again.';
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
+                
+                addMessage(errorMessage, false, true);
+                
+                if (retryCount >= maxRetries) {
+                    addMessage('Multiple connection attempts failed. Please refresh the page or try again later.', false, false, true);
+                }
+            } finally {
+                setLoadingState(false);
+                messageInput.focus();
             }
-
-            // Re-enable send button
-            messageSubmit.disabled = false;
-            messageSubmit.textContent = 'Send';
-            messageInput.focus();
         }
 
         // Event listeners
-        messageSubmit.addEventListener('click', handleSendMessage);
-
-        messageInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSendMessage();
-            }
-        });
-
-        // Initialize chat when page loads
-        document.addEventListener('DOMContentLoaded', initChat);
-    </script>
-</body>
-</html>
+        messageSubmit.addEventListener('

@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
     errorMessage.style.fontSize = "0.85rem";
     errorMessage.style.fontWeight = "bold";
     errorMessage.style.marginTop = "5px";
-    errorMessage.style.backgroundImage = " linear-gradient(45deg, #ff0000, #ff7f7f)";
+    errorMessage.style.backgroundImage = " linear-gradient(45deg, #7b1616ff, #ff7f7f)";
     errorMessage.style.webkitBackgroundClip = "text";
     errorMessage.style.backgroundClip = "text";
     errorMessage.style.color = "transparent";

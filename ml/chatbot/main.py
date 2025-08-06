@@ -5,6 +5,10 @@ import logging
 from dotenv import load_dotenv
 load_dotenv()
 
+# Rate limiting
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -16,12 +20,18 @@ from utils.validators import validate_message, sanitize_message
 # Flask app setup
 app = Flask(__name__)
 # Proper CORS settings
-from flask_cors import CORS
 CORS(app, resources={r"/api/*": {"origins": [
     "https://jobsync-new.onrender.com",
     "https://jobsyncc.netlify.app",
     "http://localhost:3000"
 ]}}, supports_credentials=True)
+
+# Rate limiter setup
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["100 per minute"]
+)
 import threading
 import time
 
@@ -52,6 +62,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/api/chat', methods=['POST'])
+@limiter.limit("10 per minute")  # Limit to 10 requests per minute per IP
 def chat():
     """Handle chat API requests"""
     try:

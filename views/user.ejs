@@ -553,29 +553,42 @@
           </div>
         </div>
       </div>
-      <div class="footer-form">
+      <form class="footer-form" id="contact-form" method="POST" action="/contact">
         <div class="form-col">
           <div class="form-row">
-            <input type="text" placeholder="Your Name" />
-            <input type="text" placeholder="Your Role" />
+            <div style="flex: 1; display: flex; flex-direction: column;">
+              <input type="text" name="user_name" placeholder="Your Name" />
+            </div>
+            <div style="flex: 1; display: flex; flex-direction: column;">
+              <input type="text" name="user_role" placeholder="Your Role" />
+            </div>
           </div>
           <div class="form-row">
-            <input type="text" placeholder="Email" />
+            <div style="flex: 1; display: flex; flex-direction: column;">
+              <input type="email" name="user_email" placeholder="Email" />
+            </div>
           </div>
           <div class="form-row">
-            <input type="text" placeholder="Portfolio Link" />
+            <div style="flex: 1; display: flex; flex-direction: column;">
+              <input type="text" name="portfolio_link" placeholder="Portfolio Link" />
+            </div>
           </div>
           <div class="form-row">
-            <textarea name="" rows="4" placeholder="Message" id=""></textarea>
+            <div style="flex: 1; display: flex; flex-direction: column;">
+              <textarea name="message" rows="4" placeholder="Message"></textarea>
+            </div>
           </div>
         </div>
 
         <div class="form-col">
           <div class="submit-btn">
-            <h3>Send</h3>
+            <button type="submit">
+              <h3>Send</h3>
+            </button>
           </div>
         </div>
-      </div>
+      </form>
+
 
       <div class="footer-copyright">
         <p>JOBSYNC Web</p>
@@ -596,8 +609,10 @@
   <script src="/js/about.js"></script>
   <script src="/js/projects.js"></script>
   <script src="/js/prices.js"></script>
+  <script src="/js/validation.js"></script>
 
   <script>
+
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
         e.preventDefault();

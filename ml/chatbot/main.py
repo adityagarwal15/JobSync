@@ -10,12 +10,41 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Import LLM integration from chat_model.py
-from models.chat_model import get_gemini_response
+from models.chat_model import get_gemini_response, conversation_sessions
 from utils.validators import validate_message, sanitize_message
 
 # Flask app setup
 app = Flask(__name__)
-CORS(app)  # Enable CORS for cross-origin requests
+# Proper CORS settings
+from flask_cors import CORS
+CORS(app, resources={r"/api/*": {"origins": [
+    "https://jobsync-new.onrender.com",
+    "https://jobsyncc.netlify.app",
+    "http://localhost:3000"
+]}}, supports_credentials=True)
+import threading
+import time
+
+# Session cleanup to prevent memory leaks
+SESSION_TIMEOUT = 30 * 60  # 30 minutes
+CLEANUP_INTERVAL = 10 * 60  # 10 minutes
+
+def cleanup_sessions():
+    while True:
+        now = time.time()
+        to_delete = []
+        for session_id, session in list(conversation_sessions.items()):
+            last_active = session[-1]['timestamp'] if session and 'timestamp' in session[-1] else None
+            if last_active and now - last_active > SESSION_TIMEOUT:
+                to_delete.append(session_id)
+        for session_id in to_delete:
+            del conversation_sessions[session_id]
+        logger.info(f"Session cleanup ran. Active sessions: {len(conversation_sessions)}")
+        time.sleep(CLEANUP_INTERVAL)
+
+# Start session cleanup thread
+cleanup_thread = threading.Thread(target=cleanup_sessions, daemon=True)
+cleanup_thread.start()
 
 @app.route('/')
 def index():
@@ -37,7 +66,12 @@ def chat():
         # Get session ID from request (you can implement proper session management)
         session_id = request.headers.get('X-Session-ID', 'default')
         # Get response from Gemini (via chat_model)
+        # Add timestamp to message for session cleanup
+        import time as _time
         response = get_gemini_response(message, session_id)
+        # Add timestamp to last message in session for cleanup
+        if session_id in conversation_sessions and conversation_sessions[session_id]:
+            conversation_sessions[session_id][-1]['timestamp'] = _time.time()
         return jsonify({
             'response': response,
             'status': 'success'

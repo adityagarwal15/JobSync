@@ -68,7 +68,17 @@ def chat():
         # Get response from Gemini (via chat_model)
         # Add timestamp to message for session cleanup
         import time as _time
-        response = get_gemini_response(message, session_id)
+        try:
+            response = get_gemini_response(message, session_id)
+        except Exception as llm_error:
+            logger.error(f"LLM API error: {str(llm_error)}")
+            return jsonify({'error': 'AI service is currently unavailable. Please try again later.'}), 502
+
+        # Validate LLM response
+        if not response or not isinstance(response, str) or response.strip() == "":
+            logger.error(f"Empty or invalid response from LLM for session {session_id}")
+            return jsonify({'error': 'AI did not return a valid response.'}), 502
+
         # Add timestamp to last message in session for cleanup
         if session_id in conversation_sessions and conversation_sessions[session_id]:
             conversation_sessions[session_id][-1]['timestamp'] = _time.time()

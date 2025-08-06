@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 # Import LLM integration from chat_model.py
 from models.chat_model import get_gemini_response
+from utils.validators import validate_message, sanitize_message
 
 # Flask app setup
 app = Flask(__name__)
@@ -28,9 +29,11 @@ def chat():
         data = request.get_json()
         if not data or 'message' not in data:
             return jsonify({'error': 'Message is required'}), 400
-        message = data['message'].strip()
-        if not message:
-            return jsonify({'error': 'Message cannot be empty'}), 400
+        message = data['message']
+        valid, validation_msg = validate_message(message)
+        if not valid:
+            return jsonify({'error': validation_msg}), 400
+        message = sanitize_message(message)
         # Get session ID from request (you can implement proper session management)
         session_id = request.headers.get('X-Session-ID', 'default')
         # Get response from Gemini (via chat_model)

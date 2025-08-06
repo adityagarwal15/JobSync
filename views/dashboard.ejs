@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Your Perfect Career Match - JobSync</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      /* Reddish-Black Theme Colors */
+      --color-text: #f8f9fa;
+      --color-text-secondary: #e9ecef;
+      --color-text-muted: #adb5bd;
+      --color-bg: #0d1117;
+      --color-bg-secondary: #161b22;
+      --color-card: #21262d;
+      --color-accent-red: #dc2626;
+      --color-accent-red-hover: #b91c1c;
+      --color-accent-red-light: #fca5a5;
+      --color-accent-green: #10b981;
+      --color-accent-blue: #3b82f6;
+      --color-border: #30363d;
+      --color-navbar: #161b22;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+      --shadow-red: 0 4px 15px rgba(220, 38, 38, 0.3);
+      --shadow-red-lg: 0 8px 25px rgba(220, 38, 38, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      background: var(--color-bg);
+      background-image: linear-gradient(135deg, var(--color-bg) 0%, #0f1419 100%);
+      background-attachment: fixed;
+      color: var(--color-text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+
+
+    html {
+      background: var(--color-bg);
+    }
+
+    /* Navbar */
+    .navbar {
+      background: var(--color-navbar);
+      padding: 1rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--color-border);
+      backdrop-filter: blur(10px);
+    }
+
+    .navbar-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-accent-red);
+      text-decoration: none;
+      text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+    }
+
+    .navbar-user {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .navbar-user span {
+      color: var(--color-text);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 150px;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-accent-red) 0%, var(--color-accent-red-hover) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-red);
+      border: 2px solid rgba(220, 38, 38, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .user-avatar:hover {
+      box-shadow: var(--shadow-red-lg);
+      transform: scale(1.05);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Header Section */
+    .header-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .main-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 0.5rem;
+    }
+
+    .main-title .highlight {
+      color: var(--color-accent-red);
+      background: linear-gradient(135deg, var(--color-accent-red) 0%, #ef4444 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+    }
+
+    .subtitle {
+      color: var(--color-text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Search Section */
+    .search-section {
+      background: var(--color-card);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--color-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .search-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-accent-red) 0%, #ef4444 100%);
+    }
+
+    .search-form {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+
+    .search-input-container {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      background: var(--color-bg-secondary);
+      border: 2px solid var(--color-border);
+      border-radius: 12px;
+      color: var(--color-text);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-accent-red);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+      background: var(--color-card);
+    }
+
+    .search-input::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-muted);
+      font-size: 1.1rem;
+    }
+
+    .btn-search {
+      background: linear-gradient(135deg, var(--color-accent-red) 0%, var(--color-accent-red-hover) 100%);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      box-shadow: var(--shadow-red);
+    }
+
+    .btn-search:hover {
+      background: linear-gradient(135deg, var(--color-accent-red-hover) 0%, #991b1b 100%);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-red-lg);
+    }
+
+    .btn-search:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* Load More Button Container */
+    .load-more-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 3rem 0;
+      padding: 2rem;
+      width: 100%;
+    }
+
+    /* Load More Button Specific Styles */
+    .load-more-button {
+      background: linear-gradient(135deg, var(--color-accent-red) 0%, var(--color-accent-red-hover) 100%);
+      color: white;
+      border: none;
+      padding: 1.25rem 2.5rem;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      min-width: 200px;
+      box-shadow: var(--shadow-red);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .load-more-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .load-more-button:hover::before {
+      left: 100%;
+    }
+
+    .load-more-button:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--color-accent-red-hover) 0%, #991b1b 100%);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-red-lg);
+    }
+
+    .load-more-button:active {
+      transform: translateY(-1px);
+    }
+
+    .load-more-button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .load-more-button i {
+      font-size: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .load-more-button:hover:not(:disabled) i {
+      transform: rotate(90deg);
+    }
+
+    /* Advanced Filters */
+    .filters-container {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .filters-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--color-accent-red), transparent);
+    }
+
+    .filter-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--color-text-secondary);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 1rem 1.5rem;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      user-select: none;
+    }
+
+    .filter-header:hover {
+      color: var(--color-accent-red);
+      background: rgba(220, 38, 38, 0.05);
+    }
+
+    .filter-header .filter-icon {
+      color: var(--color-text-muted);
+      font-size: 1rem;
+    }
+
+    .filter-header.expanded .filter-icon {
+      color: var(--color-accent-red);
+    }
+
+    .filter-header .chevron {
+      margin-left: auto;
+      transition: transform 0.3s ease;
+      color: var(--color-text-muted);
+    }
+
+    .filter-header.expanded .chevron {
+      transform: rotate(180deg);
+      color: var(--color-accent-red);
+    }
+
+    .filter-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 1.5rem;
+    }
+
+    .filter-content.expanded {
+      max-height: 400px;
+      padding: 1.5rem;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    /* Custom scrollbar for filter content */
+    .filter-content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .filter-content::-webkit-scrollbar-track {
+      background: var(--color-bg);
+      border-radius: 3px;
+    }
+
+    .filter-content::-webkit-scrollbar-thumb {
+      background: var(--color-border);
+      border-radius: 3px;
+    }
+
+    .filter-content::-webkit-scrollbar-thumb:hover {
+      background: var(--color-accent-red);
+    }
+
+    .filter-pills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .filter-pill {
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: center;
+      position: relative;
+    }
+
+    .filter-pill:hover {
+      border-color: var(--color-accent-red);
+      color: var(--color-accent-red);
+      background: rgba(220, 38, 38, 0.05);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .filter-pill.active {
+      background: linear-gradient(135deg, var(--color-accent-red) 0%, var(--color-accent-red-hover) 100%);
+      border-color: var(--color-accent-red);
+      color: white;
+      box-shadow: var(--shadow-red);
+    }
+
+    .filter-pill.active::after {
+      content: '✓';
+      position: absolute;
+      right: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    /* Job Cards */
+    .jobs-section {
+      margin-bottom: 2rem;
+    }
+
+    .section-header {
+      margin: 4.5rem 0 3.5rem 0;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    .jobs-subtitle {
+      color: var(--color-text-secondary);
+      font-size: 1.1rem;
+      text-align: center;
+      margin-bottom: 0;
+      line-height: 1.6;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .jobs-count-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .jobs-count {
+      color: var(--color-text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .job-card {
+      background: var(--color-card);
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid var(--color-border);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 280px;
+      overflow: hidden;
+    }
+
+    .job-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-accent-red) 0%, #ef4444 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .job-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-accent-red);
+    }
+
+    .job-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      flex-shrink: 0;
+    }
+
+    .job-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .job-info h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .job-company {
+      color: var(--color-text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+    }
+
+    .job-location {
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .job-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+      align-items: flex-start;
+      max-width: 120px;
+    }
+
+    .job-tag {
+      background: var(--color-bg);
+      color: var(--color-text-secondary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border: 1px solid var(--color-border);
+    }
+
+    .job-tag.urgent {
+      background: #fee;
+      color: #dc3545;
+      border-color: #dc3545;
+    }
+
+    .job-tag.featured {
+      background: #e8f5e8;
+      color: var(--color-accent-green);
+      border-color: var(--color-accent-green);
+    }
+
+    .job-tag.trending {
+      background: rgba(220, 38, 38, 0.1);
+      color: var(--color-accent-red);
+      border-color: var(--color-accent-red);
+    }
+
+    .job-description {
+      margin: 1rem 0;
+      color: var(--color-text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .job-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--color-border);
+      flex-shrink: 0;
+    }
+
+    .job-source {
+      color: var(--color-text-muted);
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .apply-btn {
+      background: linear-gradient(135deg, var(--color-accent-red) 0%, var(--color-accent-red-hover) 100%);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-red);
+    }
+
+    .apply-btn:hover {
+      background: linear-gradient(135deg, var(--color-accent-red-hover) 0%, #991b1b 100%);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-red-lg);
+    }
+
+    /* Loading and Empty States */
+    .loading-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--color-text-secondary);
+    }
+
+    .loading-spinner {
+      width: 2rem;
+      height: 2rem;
+      border: 2px solid var(--color-border);
+      border-top: 2px solid var(--color-accent-red);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--color-text-secondary);
+      background: var(--color-card);
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      color: var(--color-text-muted);
+      margin-bottom: 1rem;
+    }
+
+    /* Pagination */
+    .pagination-container {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--color-card);
+      border-radius: 16px;
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
+    }
+
+    .pagination-info {
+      text-align: center;
+      color: var(--color-text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .pagination-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .pagination-btn {
+      background: var(--color-bg-secondary);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+
+    .pagination-btn:hover:not(:disabled) {
+      background: var(--color-accent-red);
+      border-color: var(--color-accent-red);
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-red);
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .page-numbers {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .page-number {
+      background: var(--color-bg-secondary);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+      padding: 0.5rem 0.75rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 2.5rem;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .page-number:hover {
+      background: var(--color-accent-red);
+      border-color: var(--color-accent-red);
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    .page-number.active {
+      background: var(--color-accent-red);
+      border-color: var(--color-accent-red);
+      color: white;
+      box-shadow: var(--shadow-red);
+    }
+
+    .page-ellipsis {
+      color: var(--color-text-muted);
+      padding: 0.5rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .navbar-user span {
+        max-width: 120px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .navbar {
+        padding: 1rem;
+      }
+
+      .navbar-user {
+        gap: 0.5rem;
+      }
+
+      .navbar-user span {
+        font-size: 0.85rem;
+        max-width: 100px;
+      }
+
+      .main-title {
+        font-size: 2rem;
+      }
+
+      .search-form {
+        flex-direction: column;
+      }
+
+      .jobs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      .filter-pills {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+      }
+
+      .filter-pill {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.85rem;
+      }
+
+      .jobs-subtitle {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+      }
+
+      .pagination-controls {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .page-numbers {
+        order: -1;
+      }
+
+      .pagination-btn {
+        flex: 1;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .job-card {
+        padding: 1rem;
+      }
+
+      .filter-pills {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-pill {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .jobs-subtitle {
+        font-size: 0.95rem;
+      }
+
+      .navbar-content {
+        padding: 0 0.5rem;
+      }
+
+      .navbar-user span {
+        font-size: 0.8rem;
+        max-width: 80px;
+      }
+
+      .navbar-logo {
+        font-size: 1.25rem;
+      }
+
+      .user-avatar {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="/" class="navbar-logo">JobSync</a>
+      <div class="navbar-user">
+        <% if (typeof user !=='undefined' && user) { %>
+
+          <div class="user-avatar">
+            <a href="/profile" style=" text-decoration: none;">
+              <%= (user.name ? user.name.charAt(0) : user.email.charAt(0)).toUpperCase() %>
+            </a>
+          </div>
+          <% } else { %>
+            <a href="/login" style="color: var(--color-accent-red); text-decoration: none; font-weight: 600;">Sign
+              In</a>
+            <% } %>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Header Section -->
+    <div class="header-section">
+      <h1 class="main-title">Find Your Perfect <span class="highlight">Career Match</span></h1>
+      <p class="subtitle">Discover opportunities that align with your skills and aspirations</p>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-section">
+      <div class="search-form">
+        <div class="search-input-container">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="search" class="search-input" placeholder="Job title, keywords, or company">
+        </div>
+        <div class="search-input-container">
+          <i class="fas fa-map-marker-alt search-icon"></i>
+          <input type="text" id="location" class="search-input" placeholder="City or state">
+        </div>
+        <button id="btn-search" class="btn-search">
+          <i class="fas fa-search"></i>
+          Search Jobs
+        </button>
+      </div>
+    </div>
+
+    <!-- Advanced Filters Section -->
+    <div class="filters-container" id="filters-container">
+      <div class="filter-header" onclick="toggleFilters()">
+        <i class="fas fa-filter filter-icon"></i>
+        <span>Advanced Filters</span>
+        <i class="fas fa-chevron-down chevron"></i>
+      </div>
+      <div class="filter-content" id="filter-content">
+        <div class="filter-pills" id="filter-pills">
+          <div class="filter-pill" data-filter="location" data-value="remote">
+            <i class="fas fa-home"></i>
+            Remote
+          </div>
+          <div class="filter-pill" data-filter="jobType" data-value="full-time">
+            <i class="fas fa-clock"></i>
+            Full-time
+          </div>
+          <div class="filter-pill" data-filter="jobType" data-value="part-time">
+            <i class="fas fa-clock"></i>
+            Part-time
+          </div>
+          <div class="filter-pill" data-filter="jobType" data-value="contract">
+            <i class="fas fa-handshake"></i>
+            Contract
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="engineering">
+            <i class="fas fa-code"></i>
+            Engineering
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="marketing">
+            <i class="fas fa-bullhorn"></i>
+            Marketing
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="sales">
+            <i class="fas fa-chart-line"></i>
+            Sales
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="design">
+            <i class="fas fa-palette"></i>
+            Design
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="data-science">
+            <i class="fas fa-database"></i>
+            Data Science
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="product">
+            <i class="fas fa-rocket"></i>
+            Product
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="finance">
+            <i class="fas fa-chart-pie"></i>
+            Finance
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="hr">
+            <i class="fas fa-users"></i>
+            Human Resources
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="construction">
+            <i class="fas fa-hard-hat"></i>
+            Construction
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="manufacturing">
+            <i class="fas fa-industry"></i>
+            Manufacturing
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="logistics">
+            <i class="fas fa-truck"></i>
+            Logistics & Transport
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="healthcare-support">
+            <i class="fas fa-user-nurse"></i>
+            Healthcare Support
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="retail">
+            <i class="fas fa-store"></i>
+            Retail & Customer Service
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="maintenance">
+            <i class="fas fa-tools"></i>
+            Maintenance & Repair
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="food-service">
+            <i class="fas fa-utensils"></i>
+            Food Service
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="security">
+            <i class="fas fa-shield-alt"></i>
+            Security
+          </div>
+          <div class="filter-pill" data-filter="category" data-value="cleaning">
+            <i class="fas fa-broom"></i>
+            Cleaning & Janitorial
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Jobs Section -->
+    <div class="jobs-section">
+      <div class="section-header">
+        <h2 class="section-title">Opportunities Waiting for You</h2>
+        <div class="jobs-subtitle">Discover premium job opportunities from India's leading companies. Your next career
+          move starts here.</div>
+      </div>
+
+      <!-- Database Stats -->
+      <!-- <div id="db-stats" class="jobs-count-container" style="margin-bottom: 1rem;">
+        <div class="jobs-count">Loading job statistics...</div>
+      </div> -->
+
+      <!-- Loading State -->
+      <div id="loading" class="loading-state" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Finding opportunities...</p>
+      </div>
+
+      <!-- Jobs Grid -->
+      <div id="results-container" class="jobs-grid">
+        <!-- Jobs will be loaded here -->
+      </div>
+
+      <!-- Load More Jobs Button -->
+      <div class="load-more-container"
+        style="display: flex; justify-content: center; align-items: center; margin: 3rem 0; padding: 2rem;">
+        <button id="load-more-btn" class="load-more-button" style="display: none;">
+          Load More Jobs
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Global variables
+    let currentJobs = [];
+    let currentPage = 1;
+    let jobsPerPage = 10;
+    let activeFilters = {};
+    let totalPages = 1;
+    let currentSearchTerm = '';
+    let currentLocation = '';
+    let nextStartIndex = 1;
+    let hasMoreResults = true;
+    let loadMoreClickCount = 0;
+    const maxLoadMoreClicks = 3;
+    const maxDailySearches = 3;
+
+    // Function to toggle filters visibility
+    function toggleFilters() {
+      const filterContent = document.getElementById('filter-content');
+      const filterHeader = document.querySelector('.filter-header');
+
+      if (filterContent.classList.contains('expanded')) {
+        filterContent.classList.remove('expanded');
+        filterHeader.classList.remove('expanded');
+      } else {
+        filterContent.classList.add('expanded');
+        filterHeader.classList.add('expanded');
+      }
+    }
+
+    // Function to handle filter selection
+    function handleFilterClick(filterElement) {
+      const filterType = filterElement.dataset.filter;
+      const filterValue = filterElement.dataset.value;
+
+      // Toggle active state
+      if (filterElement.classList.contains('active')) {
+        filterElement.classList.remove('active');
+        delete activeFilters[filterType];
+      } else {
+        // Remove other active filters of the same type
+        document.querySelectorAll(`[data-filter="${filterType}"]`).forEach(el => {
+          el.classList.remove('active');
+        });
+
+        filterElement.classList.add('active');
+        activeFilters[filterType] = filterValue;
+      }
+
+      // Apply filters to search
+      applyFilters();
+    }
+
+    // Load more jobs function
+    async function loadMoreJobs() {
+      const loadMoreBtn = document.getElementById('load-more-btn');
+      const originalText = loadMoreBtn.innerHTML;
+
+      // Check if we've reached the maximum number of load more clicks
+      if (loadMoreClickCount >= maxLoadMoreClicks) {
+        loadMoreBtn.style.display = 'none';
+        return;
+      }
+
+      // Show loading state
+      loadMoreBtn.disabled = true;
+      loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading More...';
+
+      try {
+        const moreJobData = await getJobListings(currentSearchTerm, currentLocation, nextStartIndex, true);
+        displayJobListings(moreJobData, true);
+
+        // Increment the load more click count
+        loadMoreClickCount++;
+
+        // Update button text
+        loadMoreBtn.innerHTML = 'Load More Jobs';
+
+        // Hide button if max clicks reached
+        if (loadMoreClickCount >= maxLoadMoreClicks) {
+          loadMoreBtn.style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Error loading more jobs:', error);
+
+        // Check if it's an API limit issue
+        if (error.message && isApiLimitExceeded(error)) {
+          showMaintenanceMessage();
+        } else {
+          showError('Failed to load more jobs');
+        }
+      } finally {
+        loadMoreBtn.disabled = false;
+        if (loadMoreClickCount < maxLoadMoreClicks) {
+          loadMoreBtn.innerHTML = 'Load More Jobs';
+        }
+      }
+    }
+
+    // Apply filters function
+    async function applyFilters() {
+      // Check daily search limit
+      if (!canMakeSearch()) {
+        showSearchLimitMessage();
+        return;
+      }
+
+      const searchTerm = document.getElementById('search').value.trim() || 'construction worker';
+      const location = document.getElementById('location').value.trim();
+
+      // Increment search count for filter application
+      incrementDailySearchCount();
+      updateSearchCounter();
+
+      // Store current search terms for load more functionality
+      currentSearchTerm = searchTerm;
+      currentLocation = location;
+
+      let enhancedSearchTerm = searchTerm;
+
+      // Add filters to search term for Google Custom Search
+      if (activeFilters.category) {
+        enhancedSearchTerm = `${activeFilters.category} ${searchTerm}`;
+      }
+
+      if (activeFilters.jobType) {
+        enhancedSearchTerm += ` ${activeFilters.jobType}`;
+      }
+
+      if (activeFilters.location === 'remote') {
+        enhancedSearchTerm += ' remote';
+      }
+
+      console.log('Applying filters:', activeFilters);
+      console.log('Enhanced search term:', enhancedSearchTerm);
+
+      // Reset pagination
+      nextStartIndex = 1;
+      hasMoreResults = true;
+      currentJobs = [];
+      loadMoreClickCount = 0; // Reset load more counter
+
+      // Show loading state
+      const loadingDiv = document.getElementById('loading');
+      loadingDiv.style.display = 'block';
+      document.getElementById('results-container').innerHTML = '';
+
+      try {
+        const jobData = await getJobListings(enhancedSearchTerm, location, 1, false);
+        displayJobListings(jobData, false);
+      } catch (error) {
+        console.error('Filter application failed:', error);
+
+        // Check if it's an API limit issue
+        if (error.message && isApiLimitExceeded(error)) {
+          showMaintenanceMessage();
+        } else {
+          showError('Failed to apply filters');
+        }
+      } finally {
+        loadingDiv.style.display = 'none';
+      }
+    }
+
+    // Backend API integration
+    async function getJobListings(searchTerm = 'construction worker', location = '', startIndex = 1, append = false) {
+      try {
+        // Build search query parameters - don't add "jobs" if already present
+        const cleanSearchTerm = searchTerm.replace(/ jobs?$/i, ''); // Remove trailing "job" or "jobs"
+
+        const params = new URLSearchParams({
+          q: cleanSearchTerm,
+          limit: 10, // Request 10 results per call
+          page: Math.ceil(startIndex / 10) // Convert startIndex to page number
+        });
+
+        if (location && location.trim()) {
+          params.append('location', location.trim());
+        }
+
+        console.log('Searching database for:', cleanSearchTerm, location ? `in ${location}` : '(any location)', `- Page: ${Math.ceil(startIndex / 10)}`);
+
+        // First, try local database
+        const response = await fetch(`/api/search/jobs?${params}`);
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('API Error:', errorData);
+
+          // Check if it's an API limit issue
+          if (isApiLimitExceeded(new Error(errorData.error), response)) {
+            return { success: false, error: 'API_LIMIT_EXCEEDED', apiLimitExceeded: true };
+          }
+
+          throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.success && data.jobs && data.jobs.length > 0) {
+          console.log(`Found ${data.jobs.length} jobs from database (Page: ${Math.ceil(startIndex / 10)})`);
+
+          // Update global pagination state - database response structure
+          nextStartIndex = data.pagination?.hasNext ? startIndex + 10 : startIndex;
+          hasMoreResults = data.pagination?.hasNext || false;
+
+          if (append) {
+            // Append to existing jobs
+            currentJobs = [...currentJobs, ...data.jobs];
+          } else {
+            // Replace existing jobs
+            currentJobs = data.jobs;
+          }
+
+          return {
+            success: true,
+            jobs: append ? currentJobs : data.jobs,
+            pagination: data.pagination,
+            append: append,
+            source: 'local'
+          };
+        } else {
+          console.log('No jobs found in local database, trying external API...');
+
+          // If no results from local database, try external API
+          return await getJobListingsFromExternalAPI(cleanSearchTerm, location, startIndex, append);
+        }
+      } catch (error) {
+        console.error('Error fetching job listings from local database:', error);
+
+        // Check if it's an API limit issue
+        if (error.message && isApiLimitExceeded(error)) {
+          return { success: false, error: 'API_LIMIT_EXCEEDED', apiLimitExceeded: true };
+        }
+
+        console.log('Falling back to external API...');
+
+        // Fallback to external API
+        try {
+          return await getJobListingsFromExternalAPI(searchTerm, location, startIndex, append);
+        } catch (externalError) {
+          console.error('External API also failed:', externalError);
+
+          // Check if external API also hit limits
+          if (externalError.message && isApiLimitExceeded(externalError)) {
+            return { success: false, error: 'API_LIMIT_EXCEEDED', apiLimitExceeded: true };
+          }
+
+          return { success: false, error: error.message || 'Failed to fetch jobs. Please try again later.' };
+        }
+      }
+    }
+
+    // External API integration
+    async function getJobListingsFromExternalAPI(searchTerm = 'construction worker', location = '', startIndex = 1, append = false) {
+      try {
+        const cleanSearchTerm = searchTerm.replace(/ jobs?$/i, ''); // Remove trailing "job" or "jobs"
+
+        const params = new URLSearchParams({
+          q: cleanSearchTerm,
+          limit: 10,
+          page: Math.ceil(startIndex / 10)
+        });
+
+        if (location && location.trim()) {
+          params.append('location', location.trim());
+        }
+
+        console.log('Searching external API for:', cleanSearchTerm, location ? `in ${location}` : '(any location)', `- Page: ${Math.ceil(startIndex / 10)}`);
+
+        const response = await fetch(`/api/search/jobs/external?${params}`);
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('External API Error:', errorData);
+
+          // Check if it's an API limit issue
+          if (isApiLimitExceeded(new Error(errorData.error), response)) {
+            return { success: false, error: 'API_LIMIT_EXCEEDED', apiLimitExceeded: true };
+          }
+
+          throw new Error(errorData.error || `External API error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.success && data.jobs && data.jobs.length > 0) {
+          console.log(`Found ${data.jobs.length} jobs from external API (Page: ${Math.ceil(startIndex / 10)})`);
+
+          // Update global pagination state - external API response structure
+          nextStartIndex = data.pagination?.hasNext ? startIndex + 10 : startIndex;
+          hasMoreResults = data.pagination?.hasNext || false;
+
+          if (append) {
+            // Append to existing jobs
+            currentJobs = [...currentJobs, ...data.jobs];
+          } else {
+            // Replace existing jobs
+            currentJobs = data.jobs;
+          }
+
+          return {
+            success: true,
+            jobs: append ? currentJobs : data.jobs,
+            pagination: data.pagination,
+            append: append,
+            source: 'external'
+          };
+        } else {
+          console.log('No jobs found from external API either');
+          return {
+            success: true,
+            jobs: [],
+            message: 'No jobs found for your search. Try different keywords or location.',
+            source: 'external'
+          };
+        }
+      } catch (error) {
+        console.error('Error fetching job listings from external API:', error);
+
+        // Check if it's an API limit issue
+        if (error.message && isApiLimitExceeded(error)) {
+          return { success: false, error: 'API_LIMIT_EXCEEDED', apiLimitExceeded: true };
+        }
+
+        return { success: false, error: error.message || 'Failed to fetch jobs from external sources. Please try again later.' };
+      }
+    }
+
+    // Function to display job listings
+    function displayJobListings(jobData, append = false) {
+      const resultsContainer = document.getElementById('results-container');
+
+      if (!jobData.success) {
+        // Check if it's an API limit issue
+        if (jobData.apiLimitExceeded || jobData.error === 'API_LIMIT_EXCEEDED') {
+          showMaintenanceMessage();
+          return;
+        }
+
+        resultsContainer.innerHTML = `
+          <div class="empty-state">
+            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: bold;">!</div>
+            <h3>Error: ${jobData.error}</h3>
+            <p>Please try again later.</p>
+          </div>
+        `;
+        loadMoreBtn.style.display = 'none';
+        return;
+      }
+
+      const jobsToDisplay = jobData.append ? currentJobs : (jobData.jobs || []);
+
+      if (jobsToDisplay.length === 0) {
+        resultsContainer.innerHTML = `
+          <div class="empty-state">
+            <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%); border-radius: 20px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem; font-weight: bold;">?</div>
+            <h3>No opportunities found</h3>
+            <p>Try searching with different keywords or location.</p>
+          </div>
+        `;
+        loadMoreBtn.style.display = 'none';
+        return;
+      }
+
+      // Add source indicator at the top if this is a new search (not append)
+      let sourceIndicator = '';
+
+      const jobsHTML = jobsToDisplay.map((job, index) => {
+        const company = job.company || job.displayLink || 'Company';
+        const location = job.location || 'Remote';
+        const title = job.title || 'Job Opportunity';
+        const description = job.description || job.snippet || 'No description available';
+        const source = job.source || job.displayLink || 'Job Board';
+
+        // Generate some visual variety for the cards
+        const tagTypes = ['trending', 'featured', '', 'urgent'];
+        const tagTexts = ['Trending', 'Featured', 'New', 'Urgent'];
+        const tagIndex = index % tagTypes.length;
+        const tagType = tagTypes[tagIndex];
+        const tagText = tagTexts[tagIndex];
+
+        return `
+          <div class="job-card" onclick="window.open('${job.url || job.link}', '_blank')">
+            <div class="job-header">
+              <div class="job-info">
+                <h3>${escapeHtml(title)}</h3>
+                <div class="job-company">${escapeHtml(company)}</div>
+                <div class="job-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  ${escapeHtml(location)}
+                </div>
+              </div>
+              ${tagText ? `<div class="job-tags"><span class="job-tag ${tagType}">${tagText}</span></div>` : ''}
+            </div>
+            
+            <div class="job-description">
+              ${escapeHtml(description.substring(0, 150))}${description.length > 150 ? '...' : ''}
+            </div>
+            
+            <div class="job-footer">
+              <div class="job-source">
+                <i class="fas fa-external-link-alt"></i>
+                ${escapeHtml(source)}
+              </div>
+              <a href="${job.url || job.link}" target="_blank" class="apply-btn" onclick="event.stopPropagation()">
+                Apply Now
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (append) {
+        // Append new jobs to existing content
+        resultsContainer.innerHTML += jobsHTML;
+      } else {
+        // Replace all content with source indicator and jobs
+        resultsContainer.innerHTML = sourceIndicator + jobsHTML;
+      }
+
+      // Show/hide load more button based on whether there are more results and click count
+      const loadMoreBtn = document.getElementById('load-more-btn');
+      const loadMoreContainer = loadMoreBtn.parentElement;
+
+      if (hasMoreResults && loadMoreClickCount < maxLoadMoreClicks) {
+        loadMoreBtn.style.display = 'flex';
+        loadMoreContainer.style.display = 'flex';
+
+        // Update button text
+        loadMoreBtn.innerHTML = 'Load More Jobs';
+      } else {
+        loadMoreBtn.style.display = 'none';
+        loadMoreContainer.style.display = 'none';
+      }
+    }
+
+    // Utility functions
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function isApiLimitExceeded(error, response) {
+      // Check for common API limit indicators
+      const errorMessage = error.message?.toLowerCase() || '';
+      const status = response?.status;
+
+      return (
+        status === 429 || // Too Many Requests
+        errorMessage.includes('rate limit') ||
+        errorMessage.includes('api limit') ||
+        errorMessage.includes('quota exceeded') ||
+        errorMessage.includes('too many requests') ||
+        errorMessage.includes('limit exceeded')
+      );
+    }
+
+    // Search limit functions
+    function getTodayKey() {
+      const today = new Date();
+      return `searches_${today.getFullYear()}_${today.getMonth()}_${today.getDate()}`;
+    }
+
+    function getDailySearchCount() {
+      const todayKey = getTodayKey();
+      const storedData = localStorage.getItem(todayKey);
+      return storedData ? parseInt(storedData) : 0;
+    }
+
+    function incrementDailySearchCount() {
+      const todayKey = getTodayKey();
+      const currentCount = getDailySearchCount();
+      localStorage.setItem(todayKey, (currentCount + 1).toString());
+    }
+
+    function canMakeSearch() {
+      return getDailySearchCount() < maxDailySearches;
+    }
+
+    function getRemainingSearches() {
+      return Math.max(0, maxDailySearches - getDailySearchCount());
+    }
+
+    function showSearchLimitMessage() {
+      const resultsContainer = document.getElementById('results-container');
+      const remainingSearches = getRemainingSearches();
+
+      resultsContainer.innerHTML = `
+        <div class="empty-state" style="background: linear-gradient(135deg, var(--color-card) 0%, rgba(220, 38, 38, 0.05) 100%); border: 1px solid rgba(220, 38, 38, 0.2);">
+          <div style="width: 120px; height: 120px; background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); border-radius: 25px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: bold;">⚠</div>
+          <h3 style="color: var(--color-accent-red); margin-bottom: 1rem;">Daily Search Limit Exceeded</h3>
+          <p style="margin-bottom: 1rem;">You have exceeded your limit of <strong>${maxDailySearches} searches per day</strong>.</p>
+          <p style="margin-bottom: 1.5rem; color: var(--color-text-muted); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+            <span style="display: inline-block; width: 20px; height: 20px; background: var(--color-accent-red); border-radius: 50%; color: white; text-align: center; line-height: 20px; font-size: 12px; font-weight: bold; flex-shrink: 0;">⏰</span> 
+            <span>Search functionality will be available again tomorrow.</span>
+          </p>
+          <div style="background: var(--color-bg-secondary); padding: 1rem; border-radius: 8px; border: 1px solid var(--color-border);">
+            <p style="font-size: 0.9rem; margin: 0; color: var(--color-text-secondary); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <span style="display: inline-block; width: 18px; height: 18px; background: #3b82f6; border-radius: 50%; color: white; text-align: center; line-height: 18px; font-size: 10px; font-weight: bold; flex-shrink: 0;">i</span> 
+              <span>This limit helps us provide quality service to all users.</span>
+            </p>
+          </div>
+        </div>
+      `;
+
+
+      const loadMoreBtn = document.getElementById('load-more-btn');
+      const loadMoreContainer = loadMoreBtn.parentElement;
+      loadMoreBtn.style.display = 'none';
+      loadMoreContainer.style.display = 'none';
+    }
+
+    function updateSearchCounter() {
+      // Create or update search counter display
+      let counterDiv = document.getElementById('search-counter');
+      if (!counterDiv) {
+        counterDiv = document.createElement('div');
+        counterDiv.id = 'search-counter';
+        counterDiv.style.cssText = `
+          text-align: center;
+          margin-bottom: 1rem;
+          padding: 0.75rem;
+          background: var(--color-bg-secondary);
+          border: 1px solid var(--color-border);
+          border-radius: 8px;
+          color: var(--color-text-secondary);
+          font-size: 0.9rem;
+        `;
+
+        // Insert after search section
+        const searchSection = document.querySelector('.search-section');
+        searchSection.parentNode.insertBefore(counterDiv, searchSection.nextSibling);
+      }
+
+      const remainingSearches = getRemainingSearches();
+      const usedSearches = getDailySearchCount();
+
+      if (remainingSearches > 0) {
+        counterDiv.innerHTML = `
+          <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+            <i class="fas fa-search" style="flex-shrink: 0;"></i> 
+            <span>Daily Searches: <strong>${usedSearches}/${maxDailySearches}</strong></span>
+            <span>|</span>
+            <span style="color: var(--color-accent-green);">${remainingSearches} remaining</span>
+          </div>
+        `;
+        counterDiv.style.borderColor = 'var(--color-border)';
+        counterDiv.style.background = 'var(--color-bg-secondary)';
+
+        // Enable search functionality
+        const searchBtn = document.getElementById('btn-search');
+        const searchInputs = document.querySelectorAll('.search-input');
+        searchBtn.disabled = false;
+        searchBtn.style.opacity = '1';
+        searchInputs.forEach(input => {
+          input.disabled = false;
+          input.style.opacity = '1';
+        });
+      } else {
+        counterDiv.innerHTML = `
+          <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+            <span style="display: inline-block; width: 20px; height: 20px; background: var(--color-accent-red); border-radius: 50%; color: white; text-align: center; line-height: 20px; font-size: 12px; font-weight: bold; flex-shrink: 0;">!</span> 
+            <span>Daily search limit reached: <strong>${maxDailySearches}/${maxDailySearches}</strong></span>
+            <span>|</span>
+            <span style="color: var(--color-accent-red);">No searches remaining today</span>
+          </div>
+        `;
+        counterDiv.style.borderColor = 'rgba(220, 38, 38, 0.3)';
+        counterDiv.style.background = 'rgba(220, 38, 38, 0.05)';
+
+        // Disable search functionality
+        const searchBtn = document.getElementById('btn-search');
+        const searchInputs = document.querySelectorAll('.search-input');
+        searchBtn.disabled = true;
+        searchBtn.style.opacity = '0.5';
+        searchInputs.forEach(input => {
+          input.disabled = true;
+          input.style.opacity = '0.5';
+        });
+      }
+    }
+
+    function showMaintenanceMessage() {
+      const resultsContainer = document.getElementById('results-container');
+      resultsContainer.innerHTML = `
+        <div class="empty-state" style="background: linear-gradient(135deg, var(--color-card) 0%, rgba(220, 38, 38, 0.05) 100%); border: 1px solid rgba(220, 38, 38, 0.2);">
+          <div style="width: 120px; height: 120px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius: 25px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: bold;">🔧</div>
+          <h3 style="color: var(--color-accent-red); margin-bottom: 1rem;">Service Under Maintenance</h3>
+          <p style="margin-bottom: 1rem;">Our job search feature is currently unavailable due to API rate limits.</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-muted); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+            <span style="display: inline-block; width: 20px; height: 20px; background: var(--color-accent-red); border-radius: 50%; color: white; text-align: center; line-height: 20px; font-size: 12px; font-weight: bold; flex-shrink: 0;">⏰</span> 
+            <span>Please try again in a few minutes or contact support if the issue persists.</span>
+          </p>
+        </div>
+      `;
+
+      // Hide load more button
+      const loadMoreBtn = document.getElementById('load-more-btn');
+      const loadMoreContainer = loadMoreBtn.parentElement;
+      loadMoreBtn.style.display = 'none';
+      loadMoreContainer.style.display = 'none';
+    }
+
+    function showError(message) {
+      console.error(message);
+      // You can implement a toast notification here
+    }
+
+    // Search functionality
+    const searchInput = document.getElementById('search');
+    const locationInput = document.getElementById('location');
+    const searchBtn = document.getElementById('btn-search');
+    const loadingDiv = document.getElementById('loading');
+
+    searchBtn.addEventListener("click", async function () {
+      // Check daily search limit
+      if (!canMakeSearch()) {
+        showSearchLimitMessage();
+        return;
+      }
+
+      const searchTerm = searchInput.value.trim() || 'construction worker';
+      const location = locationInput.value.trim();
+
+      // Increment search count
+      incrementDailySearchCount();
+      updateSearchCounter();
+
+      // Store current search terms for load more functionality
+      currentSearchTerm = searchTerm;
+      currentLocation = location;
+
+      console.log('Searching for:', searchTerm, location ? `in ${location}` : '(any location)');
+
+      // Reset pagination
+      nextStartIndex = 1;
+      hasMoreResults = true;
+      currentJobs = [];
+      loadMoreClickCount = 0; // Reset load more counter
+
+      // Show loading state
+      loadingDiv.style.display = 'block';
+      document.getElementById('results-container').innerHTML = '';
+      searchBtn.disabled = true;
+      searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+
+      try {
+        const jobData = await getJobListings(searchTerm, location, 1, false);
+        displayJobListings(jobData, false);
+      } catch (error) {
+        console.error('Search failed:', error);
+
+        // Check if it's an API limit issue
+        if (error.message && isApiLimitExceeded(error)) {
+          showMaintenanceMessage();
+        } else {
+          document.getElementById('results-container').innerHTML = `
+            <div class="empty-state">
+              <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: bold;">✗</div>
+              <h3>Search failed</h3>
+              <p>An error occurred while searching. Please try again.</p>
+            </div>
+          `;
+        }
+      } finally {
+        loadingDiv.style.display = 'none';
+        searchBtn.disabled = false;
+        searchBtn.innerHTML = '<i class="fas fa-search"></i> Search Jobs';
+      }
+    });
+
+    // Allow search on Enter key press
+    [searchInput, locationInput].forEach(input => {
+      input.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          searchBtn.click();
+        }
+      });
+    });
+
+    // Load default jobs when page loads
+    document.addEventListener('DOMContentLoaded', async function () {
+      console.log('JobSync Dashboard Loading...');
+
+      // Initialize search counter display
+      updateSearchCounter();
+
+      // Initialize filter click handlers
+      document.querySelectorAll('.filter-pill').forEach(pill => {
+        pill.addEventListener('click', function () {
+          handleFilterClick(this);
+        });
+      });
+
+      // Initialize Load More button
+      const loadMoreBtn = document.getElementById('load-more-btn');
+      if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', loadMoreJobs);
+      }
+
+      // Set initial search terms
+      currentSearchTerm = 'construction worker';
+      currentLocation = '';
+      loadMoreClickCount = 0; // Reset load more counter
+
+      try {
+        loadingDiv.style.display = 'block';
+
+        // Load default jobs (this doesn't count towards daily limit)
+        console.log('Loading default job opportunities...');
+        const defaultJobs = await getJobListings('construction worker', '', 1, false);
+        displayJobListings(defaultJobs, false);
+      } catch (error) {
+        console.error('Error loading initial jobs:', error);
+
+        // Check if it's an API limit issue
+        if (error.message && isApiLimitExceeded(error)) {
+          showMaintenanceMessage();
+        } else {
+          document.getElementById('results-container').innerHTML = `
+            <div class="empty-state">
+              <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 20px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem; font-weight: bold;">👋</div>
+              <h3>Welcome to JobSync!</h3>
+              <p>Use the search above to discover amazing career opportunities.</p>
+            </div>
+          `;
+        }
+      } finally {
+        loadingDiv.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+
+</html>

@@ -96,75 +96,92 @@
   </div>
   <div class="container" id="container">
     <div class="form-container sign-in">
-      <form method="POST" action="/login">
-        <h1>Sign In</h1>
-        <!-- <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
+      <div class="glass-card">
+        <form method="POST" action="/login">
+          <h1>Welcome Back</h1>
+          <p class="subtitle"><b>Sign in to JobSync</b></p>
+          <label for="email">Email</label>
+          <input type="email" name="email" placeholder="you@example.com" required>
+          <label for="password">Password</label>
+          <input type="password" name="password" placeholder="Password" required>
+          <a href="#" onclick="showForgotPassword()">Forget Your Password?</a>
+          <button type="submit">Sign In</button>
 
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div> -->
-        <!-- <span>or use your email password</span> -->
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <a href="#" onclick="showForgotPassword()">Forget Your Password?</a>
-        <button type="submit">Sign In</button>
-      </form>
+        </form>
+        <div class="login-divider">
+          <span>Or continue with</span>
+        </div>
+        <div class="social-login">
+          <button class="social-btn google-btn">
+            <i class="fab fa-google"></i>
+            <span>Google</span>
+          </button>
+          <button class="social-btn otp-btn">
+            <i class="fas fa-mobile-alt"></i>
+            <span>OTP Login</span>
+          </button>
+
+
+        </div>
+        <p class="signup-link">Don't have an account? <a href="/signup">Sign Up</a></p>
+      </div>
+
     </div>
-    <div class="toggle-container">
-      <div class="toggle">
-        <div class="toggle-panel toggle-left">
-          <h1>Welcome Back!</h1>
-          <p>Enter your details to access site</p>
-          <button class="hidden" id="signin">Sign In</button>
-        </div>
-        <div class="toggle-panel toggle-right">
-          <h1>Hello, Friend!</h1>
-          <p>Register with your details</p>
-          <a href="/signup" class="hidden"
-            style="background: transparent; border: 1px solid white; padding: 12px 45px; border-radius: 8px; color: white; text-decoration: none; font-weight: 600;">Sign
-            Up</a>
-        </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal"
+      style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000;">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+           background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 15px;
+           padding: 2rem; width: 90%; max-width: 400px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); color: #fff;">
+
+        <h2 style="margin-bottom: 1rem; text-align: center;">Reset Password</h2>
+
+        <form action="/forgot-password" method="POST">
+          <input type="email" name="email" placeholder="you@example.com" required style="width: 100%; padding: 12px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.3);
+               border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff;">
+
+          <div style="display: flex; gap: 1rem;">
+            <button type="submit" style="flex: 1; padding: 12px; background: linear-gradient(to right, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+                 color: white; border: none; border-radius: 8px; cursor: pointer;">
+              Send Link
+            </button>
+
+            <button type="button" onclick="hideForgotPassword()" style="flex: 1; padding: 12px; background: rgba(255,255,255,0.2); color: white;
+                 border: none; border-radius: 8px; cursor: pointer;">
+              Cancel
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-  </div>
 
-  <!-- Forgot Password Modal -->
-  <div id="forgotPasswordModal"
-    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000;">
-    <div
-      style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 10px; width: 90%; max-width: 400px;">
-      <h2 style="margin-bottom: 1rem; color: #333;">Reset Password</h2>
-      <form action="/forgot-password" method="POST">
-        <input type="email" name="email" placeholder="Enter your email" required
-          style="width: 100%; padding: 12px; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 5px;">
-        <div style="display: flex; gap: 1rem;">
-          <button type="submit"
-            style="flex: 1; padding: 12px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">Send
-            Reset Link</button>
-          <button type="button" onclick="hideForgotPassword()"
-            style="flex: 1; padding: 12px; background: #ccc; color: #333; border: none; border-radius: 5px; cursor: pointer;">Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
 
-  <script src="js/login.js"></script>
-  <script>
-    // Auto-hide flash messages after 5 seconds
-    setTimeout(() => {
-      const flashMessages = document.querySelectorAll('.flash-message');
-      flashMessages.forEach(msg => {
-        msg.style.animation = 'slideIn 0.3s ease reverse';
-        setTimeout(() => msg.remove(), 300);
+    <script src="js/login.js"></script>
+    <script>
+      // Auto-hide flash messages after 5 seconds
+      setTimeout(() => {
+        const flashMessages = document.querySelectorAll('.flash-message');
+        flashMessages.forEach(msg => {
+          msg.style.animation = 'slideIn 0.3s ease reverse';
+          setTimeout(() => msg.remove(), 300);
+        });
+      }, 5000);
+      const signupLink = document.querySelector('.signup-link a');
+      signupLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.body.classList.add('fade-out');
+        setTimeout(() => {
+          window.location.href = this.href;
+        }, 500); // duration matches CSS animation
       });
-    }, 5000);
 
-    function showForgotPassword() {
-      document.getElementById('forgotPasswordModal').style.display = 'block';
-    }
+      function showForgotPassword() {
+        document.getElementById('forgotPasswordModal').style.display = 'block';
+      }
 
-    function hideForgotPassword() {
-      document.getElementById('forgotPasswordModal').style.display = 'none';
-    }
-  </script>
+      function hideForgotPassword() {
+        document.getElementById('forgotPasswordModal').style.display = 'none';
+      }
+
+    </script>

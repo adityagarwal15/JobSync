@@ -2,142 +2,172 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="css/signup.css">
-    <title>Sign Up Page</title>
-    <style>
-        .flash-messages {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="css/signup.css">
+  <title>Sign Up Page</title>
+  <style>
+    .flash-messages {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
 
-        .flash-message {
-            padding: 1rem 1.5rem;
-            margin-bottom: 1rem;
-            border-radius: 5px;
-            color: white;
-            font-weight: 500;
-            min-width: 300px;
-            animation: slideIn 0.3s ease;
-        }
+    .flash-message {
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      color: white;
+      font-weight: 500;
+      min-width: 300px;
+      animation: slideIn 0.3s ease;
+    }
 
-        .flash-success {
-            background: linear-gradient(45deg, #28a745, #20c997);
-        }
+    .flash-success {
+      background: linear-gradient(45deg, #28a745, #20c997);
+    }
 
-        .flash-error {
-            background: linear-gradient(45deg, #dc3545, #e74c3c);
-        }
+    .flash-error {
+      background: linear-gradient(45deg, #dc3545, #e74c3c);
+    }
 
-        .flash-warning {
-            background: linear-gradient(45deg, #ffc107, #f39c12);
-        }
+    .flash-warning {
+      background: linear-gradient(45deg, #ffc107, #f39c12);
+    }
 
-        .flash-info {
-            background: linear-gradient(45deg, #17a2b8, #3498db);
-        }
+    .flash-info {
+      background: linear-gradient(45deg, #17a2b8, #3498db);
+    }
 
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
 
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-    </style>
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <!-- Flash Messages -->
-    <div class="flash-messages">
-  <% if (typeof success !== 'undefined' && success && success.length > 0) { %>
-    <% success.forEach(function(msg) { %>
-      <div class="flash-message flash-success">
-        <i class="fas fa-check-circle"></i>
-        <%= msg %>
-      </div>
-    <% }); %>
-  <% } %>
+  <!-- Flash Messages -->
+  <div class="flash-messages">
+    <% if (typeof success !=='undefined' && success && success.length> 0) { %>
+      <% success.forEach(function(msg) { %>
+        <div class="flash-message flash-success">
+          <i class="fas fa-check-circle"></i>
+          <%= msg %>
+        </div>
+        <% }); %>
+          <% } %>
 
-  <% if (typeof error !== 'undefined' && error && error.length > 0) { %>
-    <% error.forEach(function(msg) { %>
-      <div class="flash-message flash-error">
-        <i class="fas fa-exclamation-circle"></i>
-        <%= msg %>
-      </div>
-    <% }); %>
-  <% } %>
+            <% if (typeof error !=='undefined' && error && error.length> 0) { %>
+              <% error.forEach(function(msg) { %>
+                <div class="flash-message flash-error">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <%= msg %>
+                </div>
+                <% }); %>
+                  <% } %>
 
-  <% if (typeof warning !== 'undefined' && warning && warning.length > 0) { %>
-    <% warning.forEach(function(msg) { %>
-      <div class="flash-message flash-warning">
-        <i class="fas fa-exclamation-triangle"></i>
-        <%= msg %>
-      </div>
-    <% }); %>
-  <% } %>
+                    <% if (typeof warning !=='undefined' && warning && warning.length> 0) { %>
+                      <% warning.forEach(function(msg) { %>
+                        <div class="flash-message flash-warning">
+                          <i class="fas fa-exclamation-triangle"></i>
+                          <%= msg %>
+                        </div>
+                        <% }); %>
+                          <% } %>
 
-  <% if (typeof info !== 'undefined' && info && info.length > 0) { %>
-    <% info.forEach(function(msg) { %>
-      <div class="flash-message flash-info">
-        <i class="fas fa-info-circle"></i>
-        <%= msg %>
-      </div>
-    <% }); %>
-  <% } %>
-</div>
+                            <% if (typeof info !=='undefined' && info && info.length> 0) { %>
+                              <% info.forEach(function(msg) { %>
+                                <div class="flash-message flash-info">
+                                  <i class="fas fa-info-circle"></i>
+                                  <%= msg %>
+                                </div>
+                                <% }); %>
+                                  <% } %>
+  </div>
 
 
-    <div class="glow"></div>
-    <div class="glow"></div>
+  <div class="glow"></div>
+  <div class="glow"></div>
 
-    <div class="container">
-        <form class="signup-left-panel" action="/login" method="GET">
+  <div class="container">
+    <!-- <form class="signup-left-panel" action="/login" method="GET">
             <h1>Hello, Friend!</h1>
             <p style="font-size: small;">Already have an account?</p>
             <button type="submit" style="margin-top: 2rem;">Sign In</button>
-        </form>
+        </form> -->
 
-        <div class="signup-form-container">
-            <form method="POST" action="/signup">
-                <h1>Create Account</h1>
-                <!-- <div class="social-icons">
+    <div class="signup-form-container">
+      <form method="POST" action="/signup">
+        <h1>Create Account</h1>
+        <!-- <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
                     <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
                     <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
                 <span>or use your email for registration</span> -->
-                <input type="text" name="name" placeholder="Name" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required minlength="6">
-                <select name="role"
-                    style="width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; background: white;">
-                    <option value="user">Job Seeker</option>
-                    <option value="admin">Employer</option>
-                </select>
-                <button type="submit">Sign Up</button>
-            </form>
-        </div>
-    </div>
+        <p class="subtitle">Get started with JobSync</p>
+        <label for="name">Full Name</label>
+        <input type="text" name="name" placeholder="John Doe " required>
+        <label for="email">Email</label>
+        <input type="email" name="email" placeholder="you@example.com" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="Create a Password" required minlength="6">
+        <label for="role">Role</label>
+        <select name="role"
+          style="width: 100%; padding: 14px 16px; margin: 8px 0 15px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); ">
+          <option value="user">Job Seeker</option>
+          <option value="admin">Employer</option>
+        </select>
+        <button type="submit">Create Account</button>
+      </form>
+      <div class="login-divider">
+        <span>Or continue with</span>
+      </div>
+      <div class="social-login">
+        <button class="social-btn google-btn">
+          <i class="fab fa-google"></i>
+          <span>Google</span>
+        </button>
+         <button class="social-btn otp-btn">
+            <i class="fas fa-mobile-alt"></i>
+            <span>OTP Login</span>
+          </button>
 
-    <script>
-        // Auto-hide flash messages after 5 seconds
-        setTimeout(() => {
-            const flashMessages = document.querySelectorAll('.flash-message');
-            flashMessages.forEach(msg => {
-                msg.style.animation = 'slideIn 0.3s ease reverse';
-                setTimeout(() => msg.remove(), 300);
-            });
-        }, 5000);
-    </script>
+
+      </div>
+      <p class="signin-link">Already have an account? <a href="/login">Sign In</a></p>
+    </div>
+  </div>
+  </div>
+
+  <script>
+    // Auto-hide flash messages after 5 seconds
+    setTimeout(() => {
+      const flashMessages = document.querySelectorAll('.flash-message');
+      flashMessages.forEach(msg => {
+        msg.style.animation = 'slideIn 0.3s ease reverse';
+        setTimeout(() => msg.remove(), 300);
+      });
+    }, 5000);
+    const signupLink = document.querySelector('.signin-link a');
+  signupLink.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.body.classList.add('fade-in');
+    setTimeout(() => {
+      window.location.href = this.href;
+    }, 500); // duration matches CSS animation
+  });
+  </script>
 </body>
 
 </html>

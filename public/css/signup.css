@@ -7,71 +7,62 @@
     font-family: 'Poppins', sans-serif;
 }
 
+html,
 body {
-    background: linear-gradient(135deg, #fc002d, #ff6b00, #ff8534);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    color: #ffffff;
-    overflow: hidden;
-    position: relative;
+    overflow: auto;
+    height: 100%;
 }
 
-/* Glowing background effect */
-body::before {
-    content: "";
-    position: absolute;
+body {
+    background: black;
+    min-height: 100vh;
+    display: flex;
+    
+    flex-direction: column;
+    font-family: 'Seoge UI', sans-serif;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white;
     width: 100vw;
     height: 100vh;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05), transparent);
-    animation: glowEffect 6s infinite alternate ease-in-out;
-    z-index: -1;
+    transition: opacity 1s ease-in-out;
 }
 
-@keyframes glowEffect {
-    0% {
-        background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1), transparent);
-    }
-    100% {
-        background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), transparent);
-    }
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../assets/grad.png') center/cover no-repeat;
+    opacity: 0.4;
+    z-index: -1;
+    pointer-events: none;
+}
+
+body.fade-in {
+    opacity: 0;
 }
 
 .container {
-    display: flex;
-    width: 768px;
-    max-width: 100%;
-    min-height: 480px;
-    background-color: #1f1f1f;
-    border-radius: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
+    width: 100%;
+    max-width: 650px;
+    padding: 20px;
+    margin: auto;
+
 }
 
-/* LEFT PANEL */
-.signup-left-panel {
-    flex: 1;
-    background: linear-gradient(to right, #fc002d, #ff6b00);
-    color: #F0F4F8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 30px;
-    text-align: center;
-    border-top-right-radius: 9rem ;
-    border-bottom-right-radius: 9rem ;
-}
-
-/* RIGHT PANEL */
 .signup-form-container {
-    flex: 1;
-    background-color: #f9644c;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    padding: 60px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(25px) saturate(180%);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3),inset 0 4px 12px rgba(255, 255, 255, 0.05);
+    margin: auto;
 }
 
 form {
@@ -82,9 +73,30 @@ form {
 }
 
 form h1 {
-    margin-bottom: 10px;
-    font-size: 28px;
+    margin-bottom: 5px;
+    
 }
+
+form label {
+    display: block;
+    width: 100%;
+    text-align: left; 
+    margin-left: 0; 
+    padding-left: 0; 
+}
+
+
+
+
+.signup-form-container .subtitle {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    margin-bottom: 25px;
+    font-weight: 300;
+    font-size: 16px;
+}
+
 
 .social-icons {
     margin: 20px 0;
@@ -110,45 +122,93 @@ form span {
 }
 
 input {
-    background-color: #eee;
-    border: none;
-    margin: 8px 0;
-    padding: 12px 15px;
-    font-size: 13px;
-    border-radius: 8px;
     width: 100%;
-    outline: none;
+    padding: 14px 16px;
+    margin: 8px 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
 }
-
 button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: linear-gradient(135deg, #fc002d, #ff6b00);
     color: #ffffff;
+    width: 100%;
+    text-align: center;
     font-size: 14px;
     padding: 14px 55px;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
+    gap: 4px;
     font-weight: 700;
     letter-spacing: 0.7px;
     text-transform: uppercase;
-    margin-top: 12px;
+    /* margin-top: 12px; */
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     box-shadow: 0 4px 12px rgba(58, 61, 91, 0.4);
-    position: relative;
+    /* position: relative; */
     overflow: hidden;
 }
 
-button::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300%;
-    height: 300%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent);
-    transition: all 0.5s ease-out;
-    transform: translate(-50%, -50%) scale(0);
+.social-btn {
+    flex: 1;
+    text-align: center;
+    min-width: 160px;
+    width: auto;
+    padding: 14px 0 !important;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;
+  letter-spacing: 0.7px;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 12px;
 }
+
+
+.social-btn i {
+    font-size: 16px;
+    width: 30px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-btn.google-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+
+}
+
+.social-btn.google-btn i {
+    margin-right: 8px;
+    
+}
+
+.social-btn.otp-btn {
+    background: linear-gradient(135deg, #fc002d, #ff6b00);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    
+    padding: 12px 20px;
+}
+.social-btn.otp-btn i {
+  margin-right: 8px; 
+}
+
+.otp-btn:hover{
+     background: linear-gradient(135deg, #ff6b00, #fc002d);
+    transform: translateY(-2px);
+}
+
 
 button:hover::before {
     transform: translate(-50%, -50%) scale(1);
@@ -156,11 +216,145 @@ button:hover::before {
 
 button:hover {
     background: linear-gradient(135deg, #ff6b00, #fc002d);
-    box-shadow: 0 6px 18px rgba(58, 61, 91, 0.5);
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 }
 
 button:active {
     transform: translateY(1px);
     box-shadow: 0 2px 8px rgba(58, 61, 91, 0.4);
+}
+
+
+.login-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #ccc;
+    margin: 1.5rem 0;
+    font-size: 14px;
+}
+
+.login-divider span {
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0 10px;
+    color: #eee;
+    position: relative;
+    z-index: 2;
+}
+
+.login-divider::before,
+.login-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 0 10px;
+}
+
+.social-login {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    margin-top: 15px;
+    gap: 16px;
+}
+
+
+
+.signin-link {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 20px;
+    color: #ffffff;
+}
+
+.signin-link a {
+    color:#ff6b00;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        max-width: 95%;
+    }
+
+    .signup-form-container {
+        padding: 25px 20px;
+        margin: 2vh auto;
+        backdrop-filter: blur(20px); 
+    }
+
+    form h1 {
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+
+    input, select {
+        padding: 12px 14px !important;
+        margin: 10px 0 !important;
+    }
+
+    button, .social-btn {
+        padding: 12px 20px !important;
+        font-size: 13px !important;
+    }
+
+    .social-login {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .social-btn.google-btn, 
+    .social-btn.otp-btn {
+        width: 100% !important;
+        margin-left: 0 !important;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    body::before {
+        opacity: 0.3; 
+    }
+
+    .signup-form-container {
+        padding: 20px 15px;
+        border-radius: 16px;
+    }
+
+    input, select {
+        font-size: 13px !important;
+    }
+
+    .login-divider {
+        margin: 1rem 0;
+    }
+
+    .signin-link {
+        font-size: 13px;
+    }
+
+    .signin-link a {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 375px) {
+    form h1 {
+        font-size: 22px !important;
+    }
+
+    .social-btn span {
+        font-size: 12px !important;
+    }
+
+    .social-btn i {
+        font-size: 14px !important;
+    }
 }

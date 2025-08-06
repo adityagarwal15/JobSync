@@ -43,9 +43,7 @@ authRouter.get('/reset-password/:resetKey', (req, res) => {
 authRouter.post('/reset-password/:resetKey', resetPasswordController);
 
 // Protected routes (require authentication)
-authRouter.get('/dashboard', authenticateToken, async (req, res) => {
-  res.send('Coming soon!');
-});
+authRouter.get('/dashboard', authenticateToken, dashboardController);
 authRouter.get('/profile', authenticateToken, profileController);
 authRouter.post('/logout', authenticateToken, logoutController);
 authRouter.post('/resend-verification', authenticateToken, resendVerificationController);

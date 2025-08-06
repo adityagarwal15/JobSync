@@ -13,8 +13,12 @@ const bcrypt = require('bcrypt');
 const fetch = require('node-fetch');
 const User = require('./models/user.js');
 const Contact = require('./models/contact.js');
+const Job = require('./models/job.js');
 const authRouter = require('./routes/auth.routes.js');
 const { optionalAuth } = require('./middleware/auth.middleware.js');
+const jobFetcher = require('./services/jobFetcher.js');
+const jobRouter = require('./routes/jobAPI.routes.js');
+const searchRouter = require('./routes/searchAPI.routes.js');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -22,13 +26,13 @@ const PORT = process.env.PORT || 10000;
 app.set('trust proxy', 1); // Important for Render
 
 // === Force HTTPS Redirect (for Render) ===
-if (process.env.NODE_ENV === "production") {
-app.use((req, res, next) => {
-  if (req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
-    return res.redirect('https://' + req.headers.host + req.url);
-  }
-  next();
-});
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
+      return res.redirect('https://' + req.headers.host + req.url);
+    }
+    next();
+  });
 }
 
 // ========== MONGO DB SETUP ==========
@@ -166,6 +170,8 @@ app.get('/chatbot', (req, res) => {
 
 // Auth routes from auth.routes.js
 app.use('/', authRouter);
+app.use('/api/jobs', jobRouter);
+app.use('/api/search', searchRouter);
 
 // === PROXY EXTERNAL API TO BYPASS CORS ===
 app.get('/api/totalusers', async (req, res) => {
@@ -191,8 +197,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS,
   },
   tls: {
-  rejectUnauthorized: false,
-},
+    rejectUnauthorized: false,
+  },
 });
 
 // Contact form submission
@@ -203,16 +209,12 @@ app.post('/send-email', emailRateLimit, async (req, res) => {
   const { user_name, user_role, user_email, portfolio_link, message } = req.body;
 
   if (!user_name || !user_role || !user_email || !message) {
-    return res
-      .status(400)
-      .json({ success: false, message: 'Please fill in all required fields.' });
+    return res.status(400).json({ success: false, message: 'Please fill in all required fields.' });
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(user_email)) {
-    return res
-      .status(400)
-      .json({ success: false, message: 'Please enter a valid email address.' });
+    return res.status(400).json({ success: false, message: 'Please enter a valid email address.' });
   }
 
   try {
@@ -248,12 +250,31 @@ app.post('/send-email', emailRateLimit, async (req, res) => {
   }
 });
 
-
 // === START SERVER ===
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`);
-});
 
+  // Initialize job fetcher service after server starts
+  try {
+    // Check if database has jobs, if not run initial fetch
+    const jobCount = await Job.countDocuments({ isActive: true });
+    const shouldRunInitialFetch = jobCount < 10; // Run if less than 10 jobs
+
+    console.log(`📊 Current active jobs in database: ${jobCount}`);
+
+    if (shouldRunInitialFetch) {
+      console.log('🔄 Database has few jobs, running initial fetch...');
+      await jobFetcher.init(true); // Pass true to run immediate fetch
+    } else {
+      console.log('✅ Database has sufficient jobs, only scheduling cron job...');
+      await jobFetcher.init(false); // Pass false to only schedule cron job, no immediate fetch
+    }
+
+    console.log('Job Fetcher Service started successfully');
+  } catch (error) {
+    console.error('Failed to start Job Fetcher Service:', error);
+  }
+});
 
 // 404 handler - keep this as the last middleware
 app.use((req, res, next) => {

@@ -241,6 +241,72 @@
         font-size: 0.9rem;
       }
     }
+
+    /* Floating Chatbot Button Styles */
+    .floating-chatbot-btn {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 9999;
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+      text-decoration: none;
+      padding: 0;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .floating-chatbot-btn:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+      transform: translateY(-2px) scale(1.04);
+      background: transparent;
+    }
+
+    .chatbot-svg-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+    }
+
+    .floating-chatbot-btn .chatbot-btn-text {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .floating-chatbot-btn {
+        bottom: 80px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.6em;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      .chatbot-svg-icon {
+        width: 32px;
+        height: 32px;
+      }
+      .floating-chatbot-btn .chatbot-btn-text {
+        display: none;
+      }
+    }
   </style>
 </head>
 
@@ -882,6 +948,48 @@
           </div>
         </footer>
       </div>
+
+      <!-- Floating Chatbot Button -->
+      <a href="/chatbot" class="floating-chatbot-btn" title="Chat with AI">
+        <span class="chatbot-svg-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#FF8E53;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#FFB366;stop-opacity:1" />
+              </linearGradient>
+              <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="0.5"/>
+              </filter>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge> 
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <path d="M12 32 C12 24, 18 18, 26 18 L42 18 C50 18, 56 24, 56 32 L56 40 C56 48, 50 54, 42 54 L28 54 L18 60 L18 54 C14 52, 12 46, 12 40 Z" 
+                  fill="url(#orangeGradient)" 
+                  filter="url(#glow)"
+                  opacity="0.9"/>
+            <path d="M8 20 C8 12, 14 6, 22 6 L38 6 C46 6, 52 12, 52 20 L52 28 C52 36, 46 42, 38 42 L24 42 L14 48 L14 42 C10 40, 8 34, 8 28 Z" 
+                  fill="rgba(255, 255, 255, 0.25)" 
+                  stroke="rgba(255, 255, 255, 0.3)" 
+                  stroke-width="1"
+                  filter="url(#blur)"
+                  backdrop-filter="blur(10px)"/>
+            <path d="M22 6 C14 6, 8 12, 8 20 L8 22 C8 14, 14 8, 22 8 L38 8 C42 8, 45 9, 48 11 C50 9, 52 7, 52 4 C49 4, 46 5, 42 6 Z" 
+                  fill="rgba(255, 255, 255, 0.4)" 
+                  opacity="0.6"/>
+            <circle cx="30" cy="16" r="1.5" fill="rgba(255, 255, 255, 0.6)"/>
+            <circle cx="36" cy="16" r="1.5" fill="rgba(255, 255, 255, 0.6)"/>
+            <circle cx="42" cy="16" r="1.5" fill="rgba(255, 255, 255, 0.6)"/>
+          </svg>
+        </span>
+        <span class="chatbot-btn-text"> Chatbot</span>
+      </a>
 
       <script src="https://unpkg.com/lenis@1.1.4/dist/lenis.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

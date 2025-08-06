@@ -23,6 +23,18 @@ const searchRouter = require('./routes/searchAPI.routes.js');
 const app = express();
 const PORT = process.env.PORT || 10000;
 
+const requiredEnv = [
+  'SESSION_SECRET',
+  'MONGODB_URI',
+  'GEMINI_API_KEY'
+];
+
+const missingEnv = requiredEnv.filter(key => !process.env[key]);
+if (missingEnv.length > 0) {
+  console.error(`❌ Missing required environment variables: ${missingEnv.join(', ')}`);
+  process.exit(1);
+}
+
 app.set('trust proxy', 1); // Important for Render
 
 // === Force HTTPS Redirect (for Render) ===

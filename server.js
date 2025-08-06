@@ -19,6 +19,7 @@ const { optionalAuth } = require('./middleware/auth.middleware.js');
 const jobFetcher = require('./services/jobFetcher.js');
 const jobRouter = require('./routes/jobAPI.routes.js');
 const searchRouter = require('./routes/searchAPI.routes.js');
+const sanitizeHtml = require('sanitize-html');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -34,6 +35,54 @@ if (missingEnv.length > 0) {
   console.error(`❌ Missing required environment variables: ${missingEnv.join(', ')}`);
   process.exit(1);
 }
+
+app.post('/api/chat', async (req, res) => {
+  // Validate Content-Type
+  if (!req.is('application/json')) {
+    return res.status(415).json({ success: false, message: 'Unsupported Content-Type.' });
+  }
+
+  let { message } = req.body;
+
+  // Validate message presence and length
+  if (!message || typeof message !== 'string' || message.trim().length < 2 || message.length > 1000) {
+    return res.status(400).json({ success: false, message: 'Message must be between 2 and 1000 characters.' });
+  }
+
+  // Sanitize message
+  message = sanitizeHtml(message, { allowedTags: [], allowedAttributes: {} });
+
+  try {
+    // Call Gemini API (replace with your actual call)
+    const aiResponse = await fetch('https://generativeai.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + process.env.GEMINI_API_KEY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: message }] }] })
+    });
+
+    if (!aiResponse.ok) {
+      // Handle quota, invalid key, etc.
+      const errorData = await aiResponse.json();
+      return res.status(502).json({
+        success: false,
+        message: 'AI service error',
+        details: errorData
+      });
+    }
+
+    const data = await aiResponse.json();
+    // Handle empty/invalid AI response
+    if (!data || !data.candidates || !data.candidates[0]?.content?.parts[0]?.text) {
+      return res.status(500).json({ success: false, message: 'AI did not return a valid response.' });
+    }
+
+    res.json({ success: true, reply: data.candidates[0].content.parts[0].text });
+  } catch (error) {
+    // Network or unexpected error
+    console.error('AI API error:', error);
+    res.status(500).json({ success: false, message: 'Failed to contact AI service.' });
+  }
+});
 
 app.set('trust proxy', 1); // Important for Render
 

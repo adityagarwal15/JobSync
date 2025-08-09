@@ -24,7 +24,7 @@
 .menu-items {
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 0.25em;
   background: var(--color-text);
   border-radius: 8px;
@@ -79,6 +79,6 @@
   }
 
   .whitespace {
-    display: none;
+    display: block;
   }
 }

@@ -252,7 +252,32 @@ textarea:focus {
   background: #fff;
 }
 
+/* Form Validation Styles */
+.form-row input.error-field,
+.form-row textarea.error-field {
+  outline: 1.5px solid #dc3545;
+}
+
+.error-container {
+  min-height: 20px; /* Reserve space to prevent layout shift */
+}
+
+.error-message {
+  color: #dc3545;
+  margin-top: 5px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.error-message i {
+  margin-right: 5px;
+}
+
 /* Responsive */
+
 @media (max-width: 900px) {
   .footer-sub-header h2 {
     font-size: 3vw;

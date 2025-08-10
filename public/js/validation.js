@@ -1,89 +1,100 @@
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("contact-form");
+  if (!form) {
+    return; // Exit if form is not found
+  }
 
-  form.addEventListener("submit", function (event) {
-    let isValid = true;
+  const fieldsToValidate = [
+    'user_name',
+    'user_role',
+    'user_email',
+    'message',
+    'portfolio_link'
+  ];
 
-    // Clear previous error messages
-    const errorMessages = document.querySelectorAll(".error-message");
-    errorMessages.forEach((msg) => msg.remove());
+  // Helper for email validation
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-    // Validate "Your Name"
-    const userName = form.querySelector('[name="user_name"]');
-    if (userName.value.trim() === "") {
-      showError(userName, "Please fill out your name.");
-      isValid = false;
+  // Validation logic for each field
+  const getErrorMessage = (name, value) => {
+    switch (name) {
+      case 'user_name':
+        if (!value.trim()) return "Please fill out your name.";
+        break;
+      case 'user_role':
+        if (!value.trim()) return "Please fill out your role.";
+        break;
+      case 'user_email':
+        if (!value.trim()) return "Please fill out your email.";
+        if (!isValidEmail(value)) return "Please enter a valid email address.";
+        break;
+      case 'message':
+        if (!value.trim()) return "Please fill out a message.";
+        break;
+      // Portfolio link is optional, so no validation needed unless specified otherwise
+      default:
+        return null;
     }
+    return null; // No error
+  };
 
-    // Validate "Your Role"
-    const userRole = form.querySelector('[name="user_role"]');
-    if (userRole.value.trim() === "") {
-      showError(userRole, "Please fill out your role.");
-      isValid = false;
+  const showError = (inputElement, message) => {
+    inputElement.classList.add("error-field");
+    const errorContainer = inputElement.parentElement.querySelector('.error-container');
+    if (errorContainer) {
+      errorContainer.innerHTML = `<p class="error-message" role="alert" aria-live="polite"><i class="fas fa-exclamation-circle"></i> ${message}</p>`;
     }
+  };
 
-    // Validate "Email"
-    const userEmail = form.querySelector('[name="user_email"]');
-    if (userEmail.value.trim() === "") {
-      showError(userEmail, "Please fill out your email.");
-      isValid = false;
-    } else if (!isValidEmail(userEmail.value)) {
-      if (userEmail.value.indexOf('@') === -1) {
-        showError(userEmail, "Please include an '@' in the email address.");
-      } else {
-        showError(userEmail, "Please enter a valid email address.");
-      }
-      isValid = false;
+  const clearError = (inputElement) => {
+    inputElement.classList.remove("error-field");
+    const errorContainer = inputElement.parentElement.querySelector('.error-container');
+    if (errorContainer) {
+      errorContainer.innerHTML = "";
     }
+  };
 
-    // Validate "Message"
-    const message = form.querySelector('[name="message"]');
-    if (message.value.trim() === "") {
-      showError(message, "Please fill out a message.");
-      isValid = false;
+  const validateField = (inputElement) => {
+    const errorMessage = getErrorMessage(inputElement.name, inputElement.value);
+    if (errorMessage) {
+      showError(inputElement, errorMessage);
+      return false;
     }
+    clearError(inputElement);
+    return true;
+  };
 
-    if (!isValid) {
-      event.preventDefault(); // Prevent form submission if validation fails
+  // Attach event listeners for real-time validation
+  fieldsToValidate.forEach(fieldName => {
+    const field = form.querySelector(`[name="${fieldName}"]`);
+    if (field) {
+      field.addEventListener('blur', () => validateField(field));
+      // Clear error on input for better UX
+      field.addEventListener('input', () => clearError(field));
     }
   });
 
-  function showError(inputElement, message) {
-    const errorMessage = document.createElement("p");
-    errorMessage.className = "error-message";
+  form.addEventListener("submit", function (event) {
+    let isFormValid = true;
+    let firstInvalidField = null;
 
-    // Create icon element
-    const icon = document.createElement('i');
-    icon.className = 'fas fa-exclamation-circle';
-    icon.style.marginRight = '5px';
-    icon.style.color = '#fc002d';
+    fieldsToValidate.forEach(fieldName => {
+      const field = form.querySelector(`[name="${fieldName}"]`);
+      if (field) {
+        if (!validateField(field)) {
+          isFormValid = false;
+          if (!firstInvalidField) {
+            firstInvalidField = field;
+          }
+        }
+      }
+    });
 
-    // Apply gradient text color matching the send button
-    errorMessage.style.background = 'linear-gradient(90deg, #e60000fd, #ff6804ff)';
-    errorMessage.style.webkitBackgroundClip = 'text';
-    errorMessage.style.webkitTextFillColor = 'transparent';
-    errorMessage.style.backgroundClip = 'text';
-    errorMessage.style.textFillColor = 'transparent';
-
-    errorMessage.style.marginTop = '5px';
-    errorMessage.style.padding = '0';
-    errorMessage.style.fontSize = '0.85rem';
-    errorMessage.style.display = 'flex';
-    errorMessage.style.alignItems = 'center';
-    errorMessage.style.fontFamily = "'Helvetica Neue', Helvetica, Arial, sans-serif";
-    errorMessage.style.fontWeight = '400';
-
-    // Add icon and text message
-    errorMessage.appendChild(icon);
-    errorMessage.appendChild(document.createTextNode(message));
-
-    // Insert error message after the input field's parent container
-    inputElement.parentNode.appendChild(errorMessage);
-  }
-
-  function isValidEmail(email) {
-    // Basic email validation regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
+    if (!isFormValid) {
+      event.preventDefault(); // Prevent form submission
+      if (firstInvalidField) {
+        firstInvalidField.focus(); // Focus on the first invalid field
+      }
+    }
+  });
 });

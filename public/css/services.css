@@ -24,6 +24,7 @@
 
 .service-item {
   position: relative;
+  z-index: 10;   /*the menu-container was overlapping on the div and hence z-index was given... Bug resolved*/
   width: 100%;
   aspect-ratio: 1;
   display: flex;

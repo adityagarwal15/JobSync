@@ -1,11 +1,42 @@
 const User = require('../models/user.js');
+const Job = require('../models/job.js');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const jobFetcher = require('../services/jobFetcher.js');
 
 dotenv.config(); //env
+
+const googleAuthController = async (req, res) => {
+  try {
+    const user = req.user;
+
+    const tkn = jwt.sign(
+      { id: user._id, name: user.name, email: user.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: '24h',
+      }
+    );
+
+    res.cookie('token', tkn, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    req.flash('success', `Welcome back, ${user.name}!`);
+    res.redirect('/');
+  } catch (error) {
+    console.error('Google Auth Callback Error:', error);
+    req.flash('error', 'Authentication failed. Please try again.');
+    return res.redirect('/login');
+  }
+    
+  }
 
 const registerUserController = async (req, res) => {
   const { name, email, password, role } = req.body;
@@ -26,7 +57,7 @@ const registerUserController = async (req, res) => {
       name,
       email,
       password,
-      role: role || 'user',
+      role: 'user',
     });
 
     if (!newUser) {
@@ -104,8 +135,8 @@ const verificationController = async (req, res) => {
 
     res.cookie('token', tkn, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'None',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
       maxAge: 24 * 60 * 60 * 1000,
     });
 
@@ -132,6 +163,12 @@ const loginController = async (req, res) => {
       return res.redirect('/login');
     }
 
+    // Check if user has a password (could be null for OAuth users)
+    if (!user.password) {
+      req.flash('error', 'This account does not have a password set. Try logging in with Google.');
+      return res.redirect('/login');
+    }
+    
     const isMatched = await bcrypt.compare(password, user.password);
     console.log('ismatched value: ', isMatched);
     if (!isMatched) {
@@ -154,8 +191,8 @@ const loginController = async (req, res) => {
 
     res.cookie('token', tkn, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'None',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
       maxAge: 24 * 60 * 60 * 1000,
     });
 
@@ -172,9 +209,9 @@ const logoutController = async (req, res) => {
   try {
     res.cookie('token', '', {
       httpOnly: true,
-      secure: true,
-      sameSite: 'None',
-      maxAge: 0, // expire cookie
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+      maxAge: 0,
     });
 
     req.flash('info', 'You have been logged out successfully.');
@@ -369,14 +406,20 @@ const resendVerificationController = async (req, res) => {
 const dashboardController = async (req, res) => {
   try {
     const user = req.user;
-    console.log('user inside of dashboard controller: ', user);
 
     if (!user) {
       console.log('No user found in dashboard controller');
       req.flash('error', 'User data not found. Please login again.');
       return res.redirect('/login');
     }
-    res.render('dashboard.ejs', { user });
+
+    // Get fresh job statistics for dashboard
+    const jobStats = await getJobStats();
+
+    res.render('dashboard.ejs', {
+      jobStats: jobStats,
+      user: user,
+    });
   } catch (error) {
     console.log('Error loading dashboard: ', error);
     req.flash('error', 'Failed to load dashboard. Please try again later.');
@@ -384,7 +427,50 @@ const dashboardController = async (req, res) => {
   }
 };
 
+// Helper function to get job statistics
+async function getJobStats() {
+  try {
+    const totalJobs = await Job.countDocuments({ isActive: true });
+    const recentJobs = await Job.countDocuments({
+      isActive: true,
+      fetchedAt: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+    });
+
+    const jobsByCategory = await Job.aggregate([
+      { $match: { isActive: true } },
+      { $group: { _id: '$category', count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 10 },
+    ]);
+
+    const jobsBySource = await Job.aggregate([
+      { $match: { isActive: true } },
+      { $group: { _id: '$source', count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+    ]);
+
+    return {
+      totalJobs,
+      recentJobs,
+      categories: jobsByCategory,
+      sources: jobsBySource,
+      lastUpdated: await Job.findOne({ isActive: true }, {}, { sort: { fetchedAt: -1 } })
+        ?.fetchedAt,
+    };
+  } catch (error) {
+    console.error('Error getting job stats:', error);
+    return {
+      totalJobs: 0,
+      recentJobs: 0,
+      categories: [],
+      sources: [],
+      lastUpdated: null,
+    };
+  }
+}
+
 module.exports = {
+  googleAuthController,
   registerUserController,
   verificationController,
   loginController,

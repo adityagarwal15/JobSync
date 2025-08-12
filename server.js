@@ -13,8 +13,19 @@ const bcrypt = require('bcrypt');
 const fetch = require('node-fetch');
 const User = require('./models/user.js');
 const Contact = require('./models/contact.js');
+const Job = require('./models/job.js');
 const authRouter = require('./routes/auth.routes.js');
 const { optionalAuth } = require('./middleware/auth.middleware.js');
+const jobFetcher = require('./services/jobFetcher.js');
+const jobRouter = require('./routes/jobAPI.routes.js');
+const searchRouter = require('./routes/searchAPI.routes.js');
+const passport = require('passport');
+require('./utils/passport.js');
+const {
+  csrfProtection,
+  exposeCsrfToken,
+  csrfErrorHandler,
+} = require('./middleware/csrf.middleware.js');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -22,13 +33,13 @@ const PORT = process.env.PORT || 10000;
 app.set('trust proxy', 1); // Important for Render
 
 // === Force HTTPS Redirect (for Render) ===
-if (process.env.NODE_ENV === "production") {
-app.use((req, res, next) => {
-  if (req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
-    return res.redirect('https://' + req.headers.host + req.url);
-  }
-  next();
-});
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
+      return res.redirect('https://' + req.headers.host + req.url);
+    }
+    next();
+  });
 }
 
 // ========== MONGO DB SETUP ==========
@@ -46,6 +57,7 @@ main();
 const allowedOrigins = [
   'https://jobsync-new.onrender.com',
   'https://jobsyncc.netlify.app',
+  'http://localhost:5000',
   'http://localhost:3000',
 ];
 
@@ -89,6 +101,9 @@ app.use(
     },
   })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Initialize flash middleware
 app.use(flash());
@@ -140,6 +155,10 @@ const generalRateLimit = rateLimit({
 
 app.use(generalRateLimit);
 
+// csrf protection
+app.use(csrfProtection);
+app.use(exposeCsrfToken);
+
 // ========== ROUTES ==========
 
 // Homepage
@@ -149,16 +168,64 @@ app.get('/', optionalAuth, (req, res) => {
 
 // Auth routes from auth.routes.js
 app.use('/', authRouter);
+app.use('/api/jobs', jobRouter);
+app.use('/api/search', searchRouter);
 
 // === PROXY EXTERNAL API TO BYPASS CORS ===
 app.get('/api/totalusers', async (req, res) => {
   try {
-    const response = await fetch('https://sc.ecombullet.com/api/dashboard/totalusers');
+    const response = await globalThis.fetch('https://sc.ecombullet.com/api/dashboard/totalusers');
     const data = await response.json();
     res.json(data);
   } catch (err) {
     console.error('❌ External API fetch failed:', err);
     res.status(500).json({ error: 'Failed to fetch external data' });
+  }
+});
+
+// Proxy for Google Custom Search API to bypass CORS
+app.get('/api/google-search', async (req, res) => {
+  try {
+    const { q, num = 10, start = 1 } = req.query;
+
+    if (!q) {
+      return res.status(400).json({ error: 'Query parameter "q" is required' });
+    }
+
+    const apiKey = process.env.GOOGLE_CLOUD_SEARCH_API;
+    const engineId = process.env.GOOGLE_SEARCH_ENGINE_API;
+
+    if (!apiKey || !engineId) {
+      return res.status(500).json({ error: 'Google API credentials not configured' });
+    }
+
+    const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${engineId}&q=${encodeURIComponent(q)}&num=${num}&start=${start}`;
+
+    console.log(`Proxying Google search for: "${q}"`);
+
+    const response = await globalThis.fetch(url);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`Google API Error: ${response.status} ${response.statusText}`);
+      console.error(`Error Details: ${errorText}`);
+      return res.status(response.status).json({
+        error: `Google API Error: ${response.status} ${response.statusText}`,
+        details: errorText,
+      });
+    }
+
+    const data = await response.json();
+
+    if (data.error) {
+      console.error('Google API returned error:', data.error);
+      return res.status(400).json({ error: data.error });
+    }
+
+    res.json(data);
+  } catch (err) {
+    console.error('Google search proxy failed:', err);
+    res.status(500).json({ error: 'Failed to proxy Google search request' });
   }
 });
 
@@ -174,28 +241,24 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS,
   },
   tls: {
-  rejectUnauthorized: false,
-},
+    rejectUnauthorized: false,
+  },
 });
 
 // Contact form submission
 
-app.post('/send-email', emailRateLimit, async (req, res) => {
+app.post('/send-email', emailRateLimit, csrfProtection, async (req, res) => {
   console.log('📩 Incoming form submission:', req.body);
 
   const { user_name, user_role, user_email, portfolio_link, message } = req.body;
 
   if (!user_name || !user_role || !user_email || !message) {
-    return res
-      .status(400)
-      .json({ success: false, message: 'Please fill in all required fields.' });
+    return res.status(400).json({ success: false, message: 'Please fill in all required fields.' });
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(user_email)) {
-    return res
-      .status(400)
-      .json({ success: false, message: 'Please enter a valid email address.' });
+    return res.status(400).json({ success: false, message: 'Please enter a valid email address.' });
   }
 
   try {
@@ -231,12 +294,34 @@ app.post('/send-email', emailRateLimit, async (req, res) => {
   }
 });
 
-
 // === START SERVER ===
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`);
+
+  // Initialize job fetcher service after server starts
+  try {
+    // Check if database has jobs, if not run initial fetch
+    const jobCount = await Job.countDocuments({ isActive: true });
+    const shouldRunInitialFetch = jobCount < 10; // Run if less than 10 jobs
+
+    console.log(`📊 Current active jobs in database: ${jobCount}`);
+
+    if (shouldRunInitialFetch) {
+      console.log('🔄 Database has few jobs, running initial fetch...');
+      await jobFetcher.init(true); // Pass true to run immediate fetch
+    } else {
+      console.log('✅ Database has sufficient jobs, only scheduling cron job...');
+      await jobFetcher.init(false); // Pass false to only schedule cron job, no immediate fetch
+    }
+
+    console.log('Job Fetcher Service started successfully');
+  } catch (error) {
+    console.error('Failed to start Job Fetcher Service:', error);
+  }
 });
 
+// CSRF error handler 
+app.use(csrfErrorHandler);
 
 // 404 handler - keep this as the last middleware
 app.use((req, res, next) => {

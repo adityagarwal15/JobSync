@@ -43,3 +43,26 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   });
 });
+
+const skipButtonPrices = document.querySelector('.skip-to-prices');        
+const skipButtonService = document.querySelector('.skip-to-services');        
+const priceSection = document.querySelector('.prices-hero');
+const serviceSection = document.querySelector('.services');
+
+
+if(skipButtonPrices && priceSection)
+{
+  skipButtonPrices.addEventListener('click',() =>
+  {
+    priceSection.scrollIntoView({behavior : "smooth"});
+  })
+}
+
+
+if(skipButtonService && serviceSection)
+{
+  skipButtonService.addEventListener('click',() =>
+  {
+    serviceSection.scrollIntoView({behavior : "smooth"});
+  })
+}

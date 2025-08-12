@@ -10,7 +10,10 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const bcrypt = require('bcrypt');
-const fetch = require('node-fetch');
+
+// ✅ node-fetch dynamic import fix for Node.js v20+
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+
 const User = require('./models/user.js');
 const Contact = require('./models/contact.js');
 const Job = require('./models/job.js');
@@ -70,7 +73,6 @@ app.use(
   })
 );
 
-// === MIDDLEWARE ===
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -150,13 +152,10 @@ const generalRateLimit = rateLimit({
 app.use(generalRateLimit);
 
 // ========== ROUTES ==========
-
-// Homepage
 app.get('/', optionalAuth, (req, res) => {
   res.render('index.ejs');
 });
 
-// Auth routes from auth.routes.js
 app.use('/', authRouter);
 app.use('/api/jobs', jobRouter);
 app.use('/api/search', searchRouter);
@@ -164,7 +163,7 @@ app.use('/api/search', searchRouter);
 // === PROXY EXTERNAL API TO BYPASS CORS ===
 app.get('/api/totalusers', async (req, res) => {
   try {
-    const response = await globalThis.fetch('https://sc.ecombullet.com/api/dashboard/totalusers');
+    const response = await fetch('https://sc.ecombullet.com/api/dashboard/totalusers');
     const data = await response.json();
     res.json(data);
   } catch (err) {
@@ -173,7 +172,7 @@ app.get('/api/totalusers', async (req, res) => {
   }
 });
 
-// Proxy for Google Custom Search API to bypass CORS
+// Proxy for Google Custom Search API
 app.get('/api/google-search', async (req, res) => {
   try {
     const { q, num = 10, start = 1 } = req.query;
@@ -193,7 +192,7 @@ app.get('/api/google-search', async (req, res) => {
 
     console.log(`Proxying Google search for: "${q}"`);
 
-    const response = await globalThis.fetch(url);
+    const response = await fetch(url);
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -220,12 +219,10 @@ app.get('/api/google-search', async (req, res) => {
 });
 
 // ========== EMAIL ==========
-
-// === EMAIL HANDLER ===
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: process.env.SMTP_PORT,
-  secure: process.env.SMTP_SECURE === 'true', // false for port 587, true for port 465
+  secure: process.env.SMTP_SECURE === 'true',
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
@@ -234,8 +231,6 @@ const transporter = nodemailer.createTransport({
     rejectUnauthorized: false,
   },
 });
-
-// Contact form submission
 
 app.post('/send-email', emailRateLimit, async (req, res) => {
   console.log('📩 Incoming form submission:', req.body);
@@ -252,7 +247,6 @@ app.post('/send-email', emailRateLimit, async (req, res) => {
   }
 
   try {
-    // Save to MongoDB
     await Contact.create({
       userName: user_name,
       userRole: user_role,
@@ -288,20 +282,18 @@ app.post('/send-email', emailRateLimit, async (req, res) => {
 app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`);
 
-  // Initialize job fetcher service after server starts
   try {
-    // Check if database has jobs, if not run initial fetch
     const jobCount = await Job.countDocuments({ isActive: true });
-    const shouldRunInitialFetch = jobCount < 10; // Run if less than 10 jobs
+    const shouldRunInitialFetch = jobCount < 10;
 
     console.log(`📊 Current active jobs in database: ${jobCount}`);
 
     if (shouldRunInitialFetch) {
       console.log('🔄 Database has few jobs, running initial fetch...');
-      await jobFetcher.init(true); // Pass true to run immediate fetch
+      await jobFetcher.init(true);
     } else {
       console.log('✅ Database has sufficient jobs, only scheduling cron job...');
-      await jobFetcher.init(false); // Pass false to only schedule cron job, no immediate fetch
+      await jobFetcher.init(false);
     }
 
     console.log('Job Fetcher Service started successfully');
@@ -310,7 +302,7 @@ app.listen(PORT, async () => {
   }
 });
 
-// 404 handler - keep this as the last middleware
+// 404 handler
 app.use((req, res, next) => {
-  res.status(404).render('404'); // Use .sendFile if you're not using a template engine
+  res.status(404).render('404');
 });

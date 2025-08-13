@@ -35,10 +35,10 @@
   position: relative;
   width: 100%;
   display: flex;
-  align-items: center; /* Center-aligns heading and paragraph vertically */
+  align-items: flex-start;
   justify-content: space-between;
   z-index: 1;
-  gap: 2rem;
+  gap: 2rem; /* Consistent space between columns */
 }
 
 /* Left column: Heading */
@@ -49,14 +49,12 @@
   justify-content: flex-start;
 }
 
-/* Left column: JOBSYNC */
 .hero-header h1 {
   text-transform: uppercase;
   font-family: var(--font-secondary);
-  font-size: clamp(2.5rem, 10vw, 7rem); /* Reduced max size */
+  font-size: clamp(3rem, 13vw, 10rem);
   color: var(--color-text);
   margin: 0;
-  line-height: 1; /* Prevents extra space */
 }
 
 /* Right column: Description text */
@@ -71,7 +69,7 @@ p#site-intro {
   margin: 0;
   text-transform: uppercase;
   line-height: 1.4;
-  max-width: 400px;
+  max-width: 400px; /* Prevents overly wide text blocks */
 }
 
 /* --------------------

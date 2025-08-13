@@ -556,32 +556,37 @@
       <form class="footer-form" id="contact-form" method="POST" action="/contact" novalidate>
         <div class="form-col">
           <div class="form-row">
-            <div style="flex: 1; display: flex; flex-direction: column;">
-              <input type="text" name="user_name" placeholder="Your Name" />
-              <div class="error-container"></div>
+            <div class="form-field-wrapper">
+              <input type="text" name="user_name" placeholder="Your Name" aria-describedby="user_name_error" />
+              <div class="error-container" id="user_name_error"></div>
             </div>
-            <div style="flex: 1; display: flex; flex-direction: column;">
-              <input type="text" name="user_role" placeholder="Your Role" />
-              <div class="error-container"></div>
+
+            <div class="form-field-wrapper">
+              <input type="text" name="user_role" placeholder="Your Role" aria-describedby="user_role_error" />
+              <div class="error-container" id="user_role_error"></div>
             </div>
+
           </div>
           <div class="form-row">
-            <div style="flex: 1; display: flex; flex-direction: column;">
-              <input type="email" name="user_email" placeholder="Email" />
-              <div class="error-container"></div>
+            <div class="form-field-wrapper">
+              <input type="email" name="user_email" placeholder="Email" aria-describedby="user_email_error" />
+              <div class="error-container" id="user_email_error"></div>
             </div>
+
           </div>
           <div class="form-row">
-            <div style="flex: 1; display: flex; flex-direction: column;">
-              <input type="text" name="portfolio_link" placeholder="Portfolio Link" />
-              <div class="error-container"></div>
+            <div class="form-field-wrapper">
+              <input type="text" name="portfolio_link" placeholder="Portfolio Link" aria-describedby="portfolio_link_error" />
+              <div class="error-container" id="portfolio_link_error"></div>
             </div>
+
           </div>
           <div class="form-row">
-            <div style="flex: 1; display: flex; flex-direction: column;">
-              <textarea name="message" rows="4" placeholder="Message"></textarea>
-              <div class="error-container"></div>
+            <div class="form-field-wrapper">
+              <textarea name="message" rows="4" placeholder="Message" aria-describedby="message_error"></textarea>
+              <div class="error-container" id="message_error"></div>
             </div>
+
           </div>
         </div>
 

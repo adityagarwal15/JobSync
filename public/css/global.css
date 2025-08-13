@@ -49,8 +49,9 @@ html.lenis body {
 }
 
 a,
-p,
+body p,
 span {
+
   text-decoration: none;
   font-size: 13px;
   color: var(--color-text);

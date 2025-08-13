@@ -5,6 +5,12 @@ footer {
   flex-direction: column;
 }
 
+:root {
+  --error-color: #dc3545;
+  --success-color: #28a745;
+  --error-border-width: 1.5px;
+}
+
 .footer-bg {
   position: absolute;
   top: -20%;
@@ -258,12 +264,17 @@ textarea:focus {
   outline: 1.5px solid #dc3545;
 }
 
+.form-row input.success-field,
+.form-row textarea.success-field {
+  outline: 1.5px solid #28a745;
+}
+
+
 .error-container {
   min-height: 20px; /* Reserve space to prevent layout shift */
 }
 
-.error-message {
-  color: #dc3545;
+#contact-form .error-message {
   margin-top: 5px;
   font-size: 0.85rem;
   display: flex;
@@ -272,9 +283,17 @@ textarea:focus {
   text-transform: none;
 }
 
-.error-message i {
+#contact-form .error-message span {
+  color: #dc3545;
+}
+
+#contact-form .error-message i {
+  color: #dc3545;
   margin-right: 5px;
 }
+
+
+
 
 /* Responsive */
 
@@ -315,4 +334,10 @@ textarea:focus {
   .footer-copyright {
     padding: 0.5em 1.5em 15em 1.5em;
   }
+}
+
+.form-field-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }

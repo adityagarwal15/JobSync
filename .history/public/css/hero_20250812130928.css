@@ -1,20 +1,16 @@
-/* --------------------
-   HERO SECTION
--------------------- */
 .hero {
   position: relative;
   width: 100vw;
   min-height: 100vh;
   display: flex;
-  justify-content: space-between; /* Ensures even column layout */
-  align-items: center; /* Vertically centers columns */
+  justify-content: flex-end;
+  align-items: flex-end;
   overflow: hidden;
   margin: 0;
-  padding: 40px 5%; /* Horizontal padding for consistent alignment */
-  box-sizing: border-box;
+  padding: 0;
+  padding-top: 40px; /* reduced from 160px */
 }
 
-/* Background image / graphic */
 .hero-img {
   position: absolute;
   top: 0;
@@ -30,86 +26,68 @@
   transform: scale(1.25);
 }
 
-/* Main content container */
 .hero-header {
   position: relative;
   width: 100%;
+  height: 100%;
   display: flex;
-  align-items: center; /* Center-aligns heading and paragraph vertically */
-  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1em;
   z-index: 1;
-  gap: 2rem;
 }
 
-/* Left column: Heading */
 .hero-col:nth-child(1) {
   flex: 6;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
 }
 
-/* Left column: JOBSYNC */
-.hero-header h1 {
-  text-transform: uppercase;
-  font-family: var(--font-secondary);
-  font-size: clamp(2.5rem, 10vw, 7rem); /* Reduced max size */
-  color: var(--color-text);
-  margin: 0;
-  line-height: 1; /* Prevents extra space */
-}
-
-/* Right column: Description text */
 .hero-col:nth-child(2) {
-  flex: 4;
-  display: flex;
-  align-items: center;
+  flex: 2;
   padding: 0.5em;
 }
 
-p#site-intro {
-  margin: 0;
+.hero-header h1 {
   text-transform: uppercase;
-  line-height: 1.4;
-  max-width: 400px;
+  font-family: var(--font-secondary);
+  font-size: 13vw;
+  color: var(--color-text);
 }
 
-/* --------------------
-   RESPONSIVE STYLES
--------------------- */
+p#site-intro {
+  text-indent: 10em;
+  margin-top: 2em;
+  text-transform: uppercase;
+}
+
 @media (max-width: 900px) {
-  .hero {
-    flex-direction: column;
-    align-items: center;
-    padding: 120px 5% 40px; /* Extra top padding for navbar space */
-  }
-
   .hero-header {
+    position: absolute;
+    bottom: 20%;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1.5rem;
-  }
-
-  .hero-col:nth-child(1),
-  .hero-col:nth-child(2) {
-    flex: unset;
-    width: 100%;
   }
 
   p#site-intro {
-    max-width: 90%;
+    margin-top: 0;
     text-indent: 0;
   }
 
   .hero-img {
     transform: rotate(-170deg);
   }
+
+  .resume-upload {
+    width: 80%;
+  }
+
+  .job-recommendations {
+    width: 95%;
+    top: 60px; /* Adjust for smaller navbar on mobile */
+  }
+    
+  .hero {
+    padding-top: 120px; /* Adjust for smaller job recommendations height on mobile */
+  }
 }
 
-/* --------------------
-   RESUME UPLOAD BOX
--------------------- */
 .resume-upload {
   text-align: center;
   margin-top: 0;
@@ -149,9 +127,7 @@ p#site-intro {
   margin-top: 5px;
 }
 
-/* --------------------
-   JOB RECOMMENDATIONS
--------------------- */
+/* REMOVE or COMMENT OUT this block */
 .job-recommendations {
   text-align: center;
   padding: 20px;
@@ -174,9 +150,6 @@ p#site-intro {
   color: white;
 }
 
-/* --------------------
-   CHATBOT ICON
--------------------- */
 .chatbot-icon {
   position: fixed;
   bottom: 20px;
@@ -189,3 +162,4 @@ p#site-intro {
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
 }
+

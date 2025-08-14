@@ -101,7 +101,7 @@ button:focus {
   font-weight: 600;
 }
 
-input[type='file'] {
+input[type="file"] {
   background: #ff6f61;
   color: white;
   padding: 12px 20px;
@@ -112,7 +112,7 @@ input[type='file'] {
   transition: background 0.3s ease;
 }
 
-input[type='file']:hover {
+input[type="file"]:hover {
   background: #ff5f4f;
 }
 
@@ -196,7 +196,7 @@ header h1,
     font-size: 1rem;
   }
 
-  input[type='file'],
+  input[type="file"],
   .resume-section button {
     font-size: 1rem;
     padding: 10px 15px;
@@ -231,7 +231,7 @@ header h1,
     font-size: 1.1rem;
   }
 
-  input[type='file'],
+  input[type="file"],
   .resume-section button {
     font-size: 1.1rem;
     padding: 10px 20px;
@@ -266,7 +266,7 @@ header h1,
     font-size: 1.2rem;
   }
 
-  input[type='file'],
+  input[type="file"],
   .resume-section button {
     font-size: 1.2rem;
   }

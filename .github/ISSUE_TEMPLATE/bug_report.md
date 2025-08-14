@@ -4,7 +4,6 @@ about: "Report a bug to help improve the project"
 title: "🐛 : "
 labels: ""
 assignees: ""
-
 ---
 
 ### 🔍 Have You Searched Existing Issues?
@@ -13,12 +12,14 @@ assignees: ""
 
 ---
 
-### 🐞 Describe the Bug  
+### 🐞 Describe the Bug
+
 What is causing the issue?
 
 ---
 
-### ▶️ Steps to Reproduce  
+### ▶️ Steps to Reproduce
+
 1. Go to '...'
 2. Click on '...'
 3. Scroll to '...'
@@ -26,23 +27,26 @@ What is causing the issue?
 
 ---
 
-### ✅ Expected Behavior  
+### ✅ Expected Behavior
+
 What should have to be done?
 
 ---
 
-### 🖼️ Screenshots (If applicable)  
+### 🖼️ Screenshots (If applicable)
+
 Add screenshots to help explain the issue.
 
 ---
 
-### 📘 Additional Context  
+### 📘 Additional Context
+
 Any other details that might help.
 
 ---
 
 ### 🙌 Contributor Checklist
 
-- [ ] I agree to follow this project's Code of Conduct  
-- [ ] I am a GSSOC'25 contributor  
-- [ ] I want to work on this issue  
+- [ ] I agree to follow this project's Code of Conduct
+- [ ] I am a GSSOC'25 contributor
+- [ ] I want to work on this issue

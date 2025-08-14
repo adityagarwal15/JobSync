@@ -1,291 +1,276 @@
-@import url('https://fonts.googleapis.com/css2?family=Fenix&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fenix&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
 html,
 body {
-    overflow: hidden;
-    height: 100%;
+  overflow: hidden;
+  height: 100%;
 }
 
-
 body {
-    
-    background: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    min-height: 100vh;
-    font-family: 'Seoge UI', sans-serif;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    color: white;
-    opacity: 1;
-    transition: opacity 1s ease-in-out;
-
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Seoge UI", sans-serif;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
 }
 
 body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('../assets/grad.png') center/cover no-repeat;
-    opacity: 0.4;
-    z-index: -1;
-    pointer-events: none;
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("../assets/grad.png") center/cover no-repeat;
+  opacity: 0.4;
+  z-index: -1;
+  pointer-events: none;
 }
 
 body.fade-out {
-    opacity: 0;
+  opacity: 0;
 }
 
-
 .glass-card {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(25px) saturate(180%);
-    max-width: 500px;
-    width: 100%;
-    margin: 5vh auto;
-    padding: 30px;
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3),inset 0 4px 12px rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px) saturate(180%);
+  max-width: 500px;
+  width: 100%;
+  margin: 5vh auto;
+  padding: 30px;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 4px 12px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
 }
 
 .glass-card h1 {
-    text-align: center;
-    margin-bottom: 5px;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-
+  text-align: center;
+  margin-bottom: 5px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .glass-card .subtitle {
-    text-align: center;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 14px;
-    margin-bottom: 25px;
-    font-weight: 300;
-    font-size: 16px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  margin-bottom: 25px;
+  font-weight: 300;
+  font-size: 16px;
 }
 
 .glass-card input {
-    width: 100%;
-    padding: 12px 15px;
-    margin: 10px 0;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-size: 14px;
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
 }
 
 .glass-card input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .glass-card a {
-    display: block;
-    text-align: right;
-    text-decoration: none;
-    font-size: 14px;
-    color: #f2f2f2;
-    margin-bottom: 20px;
-    margin-top: 8px;
+  display: block;
+  text-align: right;
+  text-decoration: none;
+  font-size: 14px;
+  color: #f2f2f2;
+  margin-bottom: 20px;
+  margin-top: 8px;
 }
 
 .glass-card button[type="submit"],
 .social-btn {
-    background: linear-gradient(135deg, #fc002d, #ff6b00);
-    backdrop-filter: blur(10px);
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 12px 24px;
-    font-size: 16px;
-    border-radius: 12px;
-    cursor: pointer;
-    width: 100%;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+  background: linear-gradient(135deg, #fc002d, #ff6b00);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
 }
-
 
 .container button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #fc002d, #ff6b00);
-    color: #ffffff;
-    text-align: center;
-    font-size: 14px;
-    padding: 14px 55px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    gap: 4px;
-    font-weight: 700;
-    letter-spacing: 0.7px;
-    text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fc002d, #ff6b00);
+  color: #ffffff;
+  text-align: center;
+  font-size: 14px;
+  padding: 14px 55px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  gap: 4px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
 
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 4px 12px rgba(58, 61, 91, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(58, 61, 91, 0.4);
 
-    overflow: hidden;
+  overflow: hidden;
 }
 
-
-
 .container button::before {
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent);
-    transition: all 0.5s ease-out;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent);
+  transition: all 0.5s ease-out;
 }
 
 .container button:hover::before {
-    transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(1);
 }
 
 /* Hover effects */
 .container button:hover {
-    background: linear-gradient(135deg, #ff6b00, #fc002d);
-    box-shadow: 0 6px 18px rgba(58, 61, 91, 0.5);
-    transform: translateY(-3px);
+  background: linear-gradient(135deg, #ff6b00, #fc002d);
+  box-shadow: 0 6px 18px rgba(58, 61, 91, 0.5);
+  transform: translateY(-3px);
 }
 
 /* Active click effect */
 .container button:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 8px rgba(58, 61, 91, 0.4);
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(58, 61, 91, 0.4);
 }
-
 
 .container button.hidden {
-    background-color: transparent;
-    border-color: #c7b0b0;
+  background-color: transparent;
+  border-color: #c7b0b0;
 }
 
-
-
 .login-divider {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #ccc;
-    margin: 1.5rem 0 ;
-    font-size: 14px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ccc;
+  margin: 1.5rem 0;
+  font-size: 14px;
 }
 
 .login-divider span {
-    font-size: 0.85rem;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 0 10px;
-    color: #eee;
-    position: relative;
-    z-index: 2;
+  font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0 10px;
+  color: #eee;
+  position: relative;
+  z-index: 2;
 }
 
 .login-divider::before,
 .login-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: 0 10px;
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 0 10px;
 }
 
 .social-login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1rem;
-    margin-top: 15px;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  margin-top: 15px;
 }
 
-
-
 .signup-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 15px;
-    gap: 4px;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    margin-top: 20px;
-    color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  gap: 4px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  margin-top: 20px;
+  color: #ffffff;
 }
 
 .signup-link a {
-    display: inline-block;
-    margin: 0;
-    color:#ff6b00;
-    text-decoration: none;
-    font-weight: 500;
+  display: inline-block;
+  margin: 0;
+  color: #ff6b00;
+  text-decoration: none;
+  font-weight: 500;
 
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .social-btn {
-    min-width: 160px;
-    width: auto;
-    padding: 12px 20px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+  min-width: 160px;
+  width: auto;
+  padding: 12px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-
 .social-btn i {
-    font-size: 16px;
-    width: 16px;
-    height: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .social-btn.google-btn {
-     background:  #1f1f1f;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
+  background: #1f1f1f;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .social-btn.google-btn i {
-    margin-right: 8px;
-    
+  margin-right: 8px;
 }
 
 .social-btn.otp-btn {
-    background:  #1f1f1f;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    margin-left: 8px;
+  background: #1f1f1f;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  margin-left: 8px;
 }
 .social-btn.otp-btn i {
-  margin-right: 8px; 
+  margin-right: 8px;
 }
 
-.social-btn.google-btn:hover,.social-btn.otp-btn:hover {
-     background:  #1f1f1f;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
+.social-btn.google-btn:hover,
+.social-btn.otp-btn:hover {
+  background: #1f1f1f;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
 }
-
 
 .password-wrapper {
   position: relative;
@@ -300,7 +285,6 @@ body.fade-out {
   cursor: pointer;
   color: rgba(255, 255, 255, 0.6);
   font-size: 16px;
-  
 }
 
 .toggle-password:hover {
@@ -326,7 +310,6 @@ body.fade-out {
     min-width: unset !important;
   }
 }
-
 
 @media (max-width: 480px) {
   .social-login {

@@ -20,5 +20,5 @@ const tl2 = gsap
       color: "#fff",
       stagger: 0.1,
     },
-    0.1
+    0.1,
   );

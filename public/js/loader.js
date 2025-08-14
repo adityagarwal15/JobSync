@@ -61,7 +61,7 @@ const progressAnim = gsap.to(".progress-bar", {
 if (skipBtn) {
   skipBtn.addEventListener("click", () => {
     clearTimeout(textAnimationTimeout);
-    progressAnim.kill(); 
+    progressAnim.kill();
     gsap.to(".progress-bar", {
       width: "100%",
       duration: 0.5,

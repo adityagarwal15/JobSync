@@ -33,7 +33,7 @@
 
 .loader .word {
   opacity: 0;
-} 
+}
 #skip-loader-btn {
   position: absolute;
   top: 24px;
@@ -50,7 +50,10 @@
   user-select: none;
   z-index: 1010;
   box-shadow: 0 2px 8px rgba(255, 107, 0, 0.3);
-  transition: background-color 0.25s, box-shadow 0.25s, transform 0.15s;
+  transition:
+    background-color 0.25s,
+    box-shadow 0.25s,
+    transform 0.15s;
 }
 
 #skip-loader-btn:hover {
@@ -73,7 +76,7 @@
   #loader-copy-2,
   #loader-copy-3 {
     font-size: 1.2rem;
-    padding: 0 10px; 
+    padding: 0 10px;
   }
 
   #skip-loader-btn {
@@ -93,7 +96,7 @@
   #loader-copy-1,
   #loader-copy-2,
   #loader-copy-3 {
-    font-size: 1rem; 
+    font-size: 1rem;
   }
 
   #skip-loader-btn {
@@ -104,6 +107,11 @@
   }
 
   .progress-bar {
-    clip-path: polygon(0% 88%, 100% 88%, 100% 100%, 0% 100%); /* adjust shape for very small screens */
+    clip-path: polygon(
+      0% 88%,
+      100% 88%,
+      100% 100%,
+      0% 100%
+    ); /* adjust shape for very small screens */
   }
 }

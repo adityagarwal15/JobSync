@@ -48,32 +48,16 @@
 
     body {
       font-family: var(--font-primary);
-      /*background: var(--color-bg);*/
       background: linear-gradient(rgba(0, 0, 0, 0.2),
-          /* black tint */
           rgba(0, 0, 0, 0.2)),
         url("../assets/grad.png") center/cover no-repeat;
       position: relative;
-      /*background-image: linear-gradient(135deg, var(--color-bg) 0%, #0f1419 100%);*/
-      /* background:
-        linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1));*/
       background-attachment: fixed;
       color: var(--color-text);
       min-height: 100vh;
       line-height: 1.6;
       padding-top: 70px;
-
-      /*background:
-        linear-gradient(to bottom, #0a0c10 0%, #0d1117 100%),
-        radial-gradient(ellipse at 20% 10%, rgba(220, 38, 38, 0.15) 0%, transparent 40%),
-        radial-gradient(ellipse at 80% 90%, rgba(220, 38, 38, 0.1) 0%, transparent 30%),
-        repeating-linear-gradient(45deg,
-          rgba(255, 255, 255, 0.02) 0px,
-          rgba(255, 255, 255, 0.02) 1px,
-          transparent 1px,
-          transparent 4px);*/
-
-    }
+}
 
     body::before {
       content: "";
@@ -83,53 +67,11 @@
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.6);
-
       z-index: -1;
       pointer-events: none;
     }
-
-
-
-
-
-
-    /* Navbar */
-
-    /*nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .user-auth {
-      margin-left: auto;
-    }*/
-    /*.navbar {*/
-    /*background: var(--color-navbar);*/
-    /*background: rgba(22,27,34,0.85);*/
-    /* background: linear-gradient(to right,
-          rgba(0, 0, 0, 0.85),
-          rgba(22, 27, 34, 0.85));
-      padding: 1rem 2rem;
-      box-shadow: var(--shadow-md);
-      position: fixed;
-      top: 0;
-      
-
-      z-index: 1000;
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
-      border-bottom: 1px solid rgba(220, 38, 38, 0.3);
-      /*border-bottom: 1px solid var(--color-border);*/
-    /* backdrop-filter: blur(12px);
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-    }*/
-
-    /*.navbar.scrolled {
-      box-shadow: 0 6px 18px rgba(220, 38, 38, 0.3);
-      
-    }*/
-
-    /* Dashboard-specific navbar alignment */
+   /* Navbar */
+/* Dashboard-specific navbar alignment */
     .dashboard nav {
       display: grid;
       grid-template-columns: auto 1fr auto;
@@ -144,60 +86,6 @@
       align-items: center;
       gap: 1rem;
     }
-
-
-
-
-
-    /*.navbar-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .navbar-logo {
-      font-size: 1.5rem;
-      position: relative;
-      font-weight: 700;
-      color: var(--color-accent-red);
-      text-decoration: none;
-      text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
-    }
-
-    .navbar-logo::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(to right,
-          var(--color-accent-red),
-          var(--color-accent-red-light));
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-
-    .navbar-logo:hover::after {
-      transform: scaleX(1);
-    }
-
-    .navbar-user {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .navbar-user span {
-      color: var(--color-text);
-      font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 150px;
-    }*/
 
     .user-avatar {
       width: 40px;

@@ -20,6 +20,16 @@ const jobFetcher = require('./services/jobFetcher.js');
 const jobRouter = require('./routes/jobAPI.routes.js');
 const searchRouter = require('./routes/searchAPI.routes.js');
 const passport = require('passport');
+
+const requiredEnvVars = ['MONGODB_URI', 'SESSION_SECRET'];
+const missingVars = requiredEnvVars.filter((key) => !process.env[key]);
+const helmet = require('helmet');
+app.use(helmet()); //added helmet to secure HTTP header
+
+if (missingVars.length > 0) {
+  console.error(` Missing required environment variables: ${missingVars.join(', ')}`);
+  process.exit(1); // Exit to prevent running without them
+}
 require('./utils/passport.js');
 const {
   csrfProtection,

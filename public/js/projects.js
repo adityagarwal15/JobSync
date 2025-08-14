@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
           end: endScalePoint,
           scrub: 1,
         },
-      }
+      },
     );
   });
 });

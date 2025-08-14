@@ -25,20 +25,18 @@ document
 
       // Send data to server
       const response = await fetch("/send-email", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify(formObject),
-});
-
-
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formObject),
+      });
 
       // Check if response is ok (status 200-299)
       if (!response.ok) {
         const errorResult = await response.json();
         throw new Error(
-          errorResult.message || `HTTP error! status: ${response.status}`
+          errorResult.message || `HTTP error! status: ${response.status}`,
         );
       }
 
@@ -49,38 +47,38 @@ document
         submitBtn.classList.remove("loading");
         submitBtn.classList.add("success");
         submitBtn.innerHTML = "<h3>Sent</h3>";
-        
+
         showNotification(
           "Message sent successfully! We'll get back to you soon.",
-          "success"
+          "success",
         );
         form.reset();
-        
+
         // Reset to normal state after 3 seconds
         setTimeout(() => {
           submitBtn.classList.remove("success");
           submitBtn.innerHTML = originalText;
           submitBtn.disabled = false;
         }, 3000);
-        
+
         return;
       } else {
         // Handle rate limiting specifically
         if (result.error === "RATE_LIMIT_EXCEEDED") {
           showNotification(
             "You've sent too many messages recently. Please wait 15 minutes before trying again.",
-            "error"
+            "error",
           );
         } else if (result.error === "GENERAL_RATE_LIMIT_EXCEEDED") {
           showNotification(
             "Too many requests. Please wait a moment before trying again.",
-            "error"
+            "error",
           );
         } else {
           // Other error messages
           showNotification(
             result.message || "Failed to send message. Please try again.",
-            "error"
+            "error",
           );
         }
       }
@@ -88,7 +86,7 @@ document
       // console.error("Error:", error);
       showNotification(
         "Too many email requests. Please try again in 15 minutes.",
-        "error"
+        "error",
       );
     } finally {
       // Reset button state (only if not successful)

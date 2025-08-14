@@ -42,8 +42,6 @@ cd jobsync
 npm install
 ```
 
-
-
 > Add the following environment variables to your `.env` file:
 
 ```bash

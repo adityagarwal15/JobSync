@@ -1,3 +1,6 @@
+<!-- Global navbar is included via partials. Do not declare EJS vars here. -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -312,9 +315,12 @@
           Skip
         </button>
       </div>
+      
+         <%- include('partials/navbar', { page: 'home', user: user }) %>
+
 
       <!-- navbar -->
-      <nav class="<% if (typeof user !== 'undefined' && user && !user.isVerified) { %>nav-with-banner<% } %>">
+      <!-- <nav class="<% if (typeof user !== 'undefined' && user && !user.isVerified) { %>nav-with-banner<% } %>">
         <div class="logo">
           <a href="#hero"><img src="./assets/site-logo.png" alt="" /></a>
         </div>
@@ -336,9 +342,9 @@
                 </a>
                 <% } %>
             </div>
-            <% } else { %>
+            <% } else { %>-->
               <!-- User is not logged in -->
-              <div class="button">
+              <!-- <div class="button">
                 <a href="/login" class="auth-button">
                   <i class="fa-solid fa-right-to-bracket"></i>&nbsp;&nbsp;
                   Sign In
@@ -361,7 +367,7 @@
             <p>Menu</p>
           </div>
         </div>
-      </nav>
+      </nav>  -->
 
       <!-- menu links -->
       <div class="menu-container">

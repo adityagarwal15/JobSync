@@ -1,7 +1,7 @@
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const User = require('../models/user.js');
-require('dotenv').config(); 
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const User = require("../models/user.js");
+require("dotenv").config();
 
 passport.use(
   new GoogleStrategy(
@@ -19,7 +19,7 @@ passport.use(
 
           if (user) {
             user.googleId = profile.id;
-            user.authProvider = 'google';
+            user.authProvider = "google";
             user.isGoogleUser = true;
             user.isVerified = true;
             await user.save();
@@ -30,7 +30,7 @@ passport.use(
               email: profile.emails[0].value,
               googleId: profile.id,
               isGoogleUser: true,
-              authProvider: 'google',
+              authProvider: "google",
               isVerified: true,
             });
           }
@@ -39,11 +39,13 @@ passport.use(
       } catch (err) {
         return done(err, null);
       }
-    }
-  )
+    },
+  ),
 );
 
-passport.serializeUser((user, done) => {done(null, user.id)});
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
 
 passport.deserializeUser(async (id, done) => {
   try {

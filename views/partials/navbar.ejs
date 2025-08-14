@@ -1,0 +1,63 @@
+<!-- views/partials/navbar.ejs -->
+<nav class="<% if (typeof user !== 'undefined' && user && !user.isVerified) { %>nav-with-banner<% } %>">
+  <div class="logo">
+    <a href="/"><img src="./assets/site-logo.png" alt="" /></a>
+    <% if (page === 'dashboard') { %>
+      <span class="site-name">JobSync</span>
+    <% } %>
+  </div>
+  
+  
+  <div class="clock">
+    <% if (page === 'home') { %>
+      <p>ON <span id="currentTime"></span></p>
+    <% } %>
+  </div>
+
+  <div class="user-auth">
+    <% if (page === 'dashboard') { %>
+      <% if (typeof user !== 'undefined' && user) { %>
+        <div class="user-avatar">
+          <a href="/profile" style="text-decoration: none;">
+            <%= (user.name ? user.name.charAt(0) : user.email.charAt(0)).toUpperCase() %>
+          </a>
+        </div>
+      <% } else { %>
+        <a href="/login" class="auth-button">Sign In</a>
+      <% } %>
+    <% } else { %>
+      <% if (typeof user !== 'undefined' && user) { %>
+        <div style="display: flex; gap: 0.5rem;">
+          <% if (user.isVerified) { %>
+            <a href="/dashboard" class="auth-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+              <i class="fa-solid fa-tachometer-alt"></i>&nbsp;&nbsp;Dashboard
+            </a>
+          <% } %>
+        </div>
+      <% } else { %>
+        <div class="button">
+          <a href="/login" class="auth-button">
+            <i class="fa-solid fa-right-to-bracket"></i>&nbsp;&nbsp;Sign In
+          </a>
+        </div>
+        <div class="button">
+          <a href="/signup" class="auth-button">
+            <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Sign Up
+          </a>
+        </div>
+      <% } %>
+    <% } %>
+  </div>
+
+
+  <div class="ctas">
+    <% if (page === 'home') { %>
+      <div class="menu">
+        <div class="menu-icon">
+          <ion-icon name="close-sharp"></ion-icon>
+        </div>
+        <p>Menu</p>
+      </div>
+    <% } %>
+  </div>
+</nav>

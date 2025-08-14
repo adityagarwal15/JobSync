@@ -82,7 +82,7 @@ p#site-intro {
     width: 95%;
     top: 60px; /* Adjust for smaller navbar on mobile */
   }
-    
+
   .hero {
     padding-top: 120px; /* Adjust for smaller job recommendations height on mobile */
   }
@@ -162,4 +162,3 @@ p#site-intro {
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
 }
-

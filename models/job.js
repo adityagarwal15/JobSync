@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const jobSchema = new mongoose.Schema(
   {
@@ -12,7 +12,7 @@ const jobSchema = new mongoose.Schema(
     },
     location: {
       type: String,
-      default: 'Remote',
+      default: "Remote",
     },
     description: {
       type: String,
@@ -25,7 +25,7 @@ const jobSchema = new mongoose.Schema(
     },
     source: {
       type: String,
-      default: 'Google Jobs API',
+      default: "Google Jobs API",
     },
     postedDate: {
       type: Date,
@@ -33,21 +33,21 @@ const jobSchema = new mongoose.Schema(
     },
     salary: {
       type: String,
-      default: 'Not specified',
+      default: "Not specified",
     },
     jobType: {
       type: String,
       enum: [
-        'full-time',
-        'part-time',
-        'contract',
-        'internship',
-        'remote',
-        'daily',
-        'weekly',
-        'not-specified',
+        "full-time",
+        "part-time",
+        "contract",
+        "internship",
+        "remote",
+        "daily",
+        "weekly",
+        "not-specified",
       ],
-      default: 'not-specified',
+      default: "not-specified",
     },
     skills: {
       type: [String],
@@ -55,7 +55,7 @@ const jobSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      default: 'General',
+      default: "General",
     },
     isActive: {
       type: Boolean,
@@ -68,13 +68,13 @@ const jobSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 // Index for better search performance
-jobSchema.index({ title: 'text', company: 'text', description: 'text' });
+jobSchema.index({ title: "text", company: "text", description: "text" });
 jobSchema.index({ category: 1, isActive: 1 });
 jobSchema.index({ postedDate: -1 });
 
-const Job = mongoose.model('Job', jobSchema);
+const Job = mongoose.model("Job", jobSchema);
 module.exports = Job;

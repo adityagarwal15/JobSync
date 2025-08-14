@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
             isMenuOpen = true;
           },
         },
-        "<"
+        "<",
       );
     } else {
       if (isMenuOpen) {

@@ -98,6 +98,7 @@
     <div class="form-container sign-in">
       <div class="glass-card">
         <form method="POST" action="/login">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <h1>Welcome Back</h1>
           <p class="subtitle"><b>Sign in to JobSync</b></p>
           <label for="email">Email</label>
@@ -141,6 +142,7 @@
         <h2 style="margin-bottom: 1rem; text-align: center;">Reset Password</h2>
 
         <form action="/forgot-password" method="POST">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <input type="email" name="email" placeholder="you@example.com" required style="width: 100%; padding: 12px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.3);
                border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff;">
 

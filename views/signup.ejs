@@ -52,6 +52,141 @@
         opacity: 1;
       }
     }
+
+    .signup-form-container form {
+      align-items: flex-start;
+
+    }
+
+    .signup-form-container h1,
+    .signup-form-container .subtitle {
+      text-align: center;
+      width: 100%;
+    }
+
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      border: 1px solid #e74c3c;
+    }
+
+    .error-message {
+      font-size: 12px;
+      color: #e74c3c;
+      margin-bottom: 4px;
+      text-align: left;
+    }
+
+    .signup-form-container label {
+      margin-top: 5px;
+      display: block;
+    }
+
+    .signup-form-container input,
+    .signup-form-container select.custom-select {
+      margin-top: 6px;
+      margin-bottom: 8px;
+    }
+
+    .strength-meter {
+      border-radius: 4px;
+      background-color: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      font-size: 12px;
+      font-weight: bold;
+      text-align: left;
+      margin-top: -3px;
+      margin-bottom: 3px;
+    }
+
+    .strength-meter-fill {
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .custom-dropdown {
+      position: relative;
+      width: 100%;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .dropdown-selected {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dropdown-icon {
+      font-size: 12px;
+      color: #fff;
+      transition: transform 0.3s ease;
+    }
+
+    .dropdown-list {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      width: 100%;
+      background: #222;
+      border-radius: 12px;
+      overflow: hidden;
+      z-index: 10;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+
+    }
+
+    .dropdown-list div {
+      padding: 12px;
+      color: #fff;
+    }
+
+    .dropdown-list div:hover {
+      background: #333;
+    }
+
+    .custom-dropdown.open .dropdown-icon {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-list div.selected {
+      background: #e74c3c;
+      color: #000;
+    }
+
+    .password-hint {
+      color: #7b7b7b;
+      transition: opacity 0.3s ease;
+    }
+
+    .password-hint.hidden {
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .dropdown-list [role="option"] {
+      font-size: 14px;
+      font-family: inherit;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #fff;
+    }
+
+    .dropdown-text {
+      margin: 0;
+      font-size: 14px;
+    }
+
   </style>
 </head>
 
@@ -108,30 +243,55 @@
 
     <div class="signup-form-container">
       <form method="POST" action="/signup">
+         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <h1>Create Account</h1>
         <!-- <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
                     <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
                     <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div> -->
-                <!-- <span>or use your email for registration</span> -->
+        <!-- <span>or use your email for registration</span> -->
         <p class="subtitle">Get started with JobSync</p>
         <label for="name">Full Name</label>
-        <input type="text" name="name" placeholder="John Doe " required>
+        <input type="text" name="name" id="name" aria-describedby="name-error" placeholder="John Doe" required>
+        <div id="name-error" class="error-message"></div>
+
         <label for="email">Email</label>
-        <input type="email" name="email" placeholder="you@example.com" required>
+        <input type="email" name="email" id="email" aria-describedby="email-error" placeholder="you@example.com"
+          required>
+        <div id="email-error" class="error-message"></div>
+
         <label for="password">Password</label>
+        <p class="password-hint" id="password-hint" style="font-size:12px; margin-top:6px;">
+          Password must be 8+ characters and include uppercase, lowercase, number & special character.
+        </p>
+
         <div class="password-wrapper">
-          <input type="password" name="password" id="password" placeholder="Create a Password" required minlength="6">
+          <input type="password" name="password" id="password" aria-describedby="password-error"
+            placeholder="Create a Password" required>
           <i class="fas fa-eye-slash toggle-password"></i>
         </div>
+        <div id="password-error" class="error-message"></div>
+        <div class="strength-meter">
+          <div class="strength-meter-fill"></div>
+        </div>
+        <div id="strength-text" style="font-size: 12px;" aria-live="polite"></div>
+
+        <input type="hidden" name="role" id="role-input" value="user">
         <label for="role">Role</label>
-        <select name="role"
-          style="width: 100%; padding: 14px 16px; margin: 8px 0 15px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); ">
-          <option value="user">Job Seeker</option>
-          <option value="admin">Employer</option>
-        </select>
-        <button type="submit">Create Account</button>
+        <div class="custom-dropdown" role="listbox" aria-expanded="false" tabindex="0">
+          <div class="dropdown-selected" aria-haspopup="listbox">
+            <span class="dropdown-text">Job Seeker</span>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+          </div>
+          <div class="dropdown-list" role="presentation">
+            <div role="option" data-value="user" aria-selected="true">Job Seeker</div>
+            <div role="option" data-value="admin" aria-selected="false">Employer</div>
+          </div>
+        </div>
+
+
+        <button type="submit" id="submit-btn">Create Account</button>
       </form>
       <div class="login-divider">
         <span>Or continue with</span>
@@ -147,7 +307,7 @@
           <span>OTP Login</span>
         </button>
 
-              
+
 
       </div>
       <p class="signin-link">Already have an account? <a href="/login">Sign In</a></p>
@@ -156,36 +316,215 @@
   </div>
 
   <script>
-    // Auto-hide flash messages after 5 seconds
-    setTimeout(() => {
-      const flashMessages = document.querySelectorAll('.flash-message');
-      flashMessages.forEach(msg => {
-        msg.style.animation = 'slideIn 0.3s ease reverse';
-        setTimeout(() => msg.remove(), 300);
-      });
-    }, 5000);
-    const signupLink = document.querySelector('.signin-link a');
-    signupLink.addEventListener('click', function (e) {
-      e.preventDefault();
-      document.body.classList.add('fade-in');
+    (() => {
       setTimeout(() => {
-        window.location.href = this.href;
-      }, 500); // duration matches CSS animation
-    });
-
-    document.querySelector('.toggle-password').addEventListener('click', function () {
+        const flashMessages = document.querySelectorAll('.flash-message');
+        flashMessages.forEach(msg => {
+          msg.style.animation = 'slideIn 0.3s ease reverse';
+          setTimeout(() => msg.remove(), 300);
+        });
+      }, 5000);
+      const signupLink = document.querySelector('.signin-link a');
+      signupLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.body.classList.add('fade-in');
+        setTimeout(() => {
+          window.location.href = this.href;
+        }, 500); 
+      });
+      // Elements
+      const roleInput = document.getElementById('role-input');
+      const dropdowns = document.querySelectorAll('.custom-dropdown');
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
       const passwordInput = document.getElementById('password');
-      const icon = this;
+      const nameError = document.getElementById('name-error');
+      const emailError = document.getElementById('email-error');
+      const passwordError = document.getElementById('password-error');
+      const strengthMeterFill = document.querySelector('.strength-meter-fill');
+      const strengthText = document.getElementById('strength-text');
+      const submitBtn = document.getElementById('submit-btn');
+      const form = document.querySelector('.signup-form-container form');
 
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        icon.classList.replace('fa-eye-slash', 'fa-eye');
-      } else {
-        passwordInput.type = 'password';
-        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      // Password rules
+      const passwordChecks = [
+        { regex: /.{8,}/, message: "Password must be at least 8 characters." },
+        { regex: /[A-Z]/, message: "Password must include an uppercase letter." },
+        { regex: /[a-z]/, message: "Password must include a lowercase letter." },
+        { regex: /\d/, message: "Password must include a number." },
+        { regex: /[^A-Za-z0-9]/, message: "Password must include a special character." }
+      ];
+
+      
+      dropdowns.forEach(dropdown => {
+        const selected = dropdown.querySelector('.dropdown-selected');
+        const list = dropdown.querySelector('.dropdown-list');
+        const selectedText = selected.querySelector('.dropdown-text');
+        const initialOption = list.querySelector('div.selected') || list.querySelector('div[data-value]');
+        if (initialOption) {
+          selectedText.textContent = initialOption.textContent.trim();
+          roleInput.value = initialOption.getAttribute('data-value') || 'user';
+          list.querySelectorAll('div').forEach(i => i.setAttribute('role', 'option'));
+          initialOption.setAttribute('aria-selected', 'true');
+        } else {
+          roleInput.value = 'user';
+        }
+
+        selected.addEventListener('click', () => {
+          const isOpen = dropdown.classList.contains('open');
+          document.querySelectorAll('.custom-dropdown').forEach(d => {
+            d.classList.remove('open');
+            d.querySelector('.dropdown-list').style.display = 'none';
+            d.setAttribute('aria-expanded', 'false');
+          });
+          if (!isOpen) {
+            dropdown.classList.add('open');
+            list.style.display = 'block';
+            dropdown.setAttribute('aria-expanded', 'true');
+          }
+        });
+
+        list.querySelectorAll('div').forEach(item => {
+          item.addEventListener('click', () => {
+            list.querySelectorAll('div').forEach(i => {
+              i.classList.remove('selected');
+              i.setAttribute('aria-selected', 'false');
+            });
+            item.classList.add('selected');
+            item.setAttribute('aria-selected', 'true');
+            selectedText.textContent = item.textContent.trim();
+            roleInput.value = item.getAttribute('data-value');
+            dropdown.classList.remove('open');
+            list.style.display = 'none';
+            dropdown.setAttribute('aria-expanded', 'false');
+          });
+        });
+      });
+
+      document.addEventListener('click', e => {
+        if (!e.target.closest('.custom-dropdown')) {
+          document.querySelectorAll('.custom-dropdown').forEach(d => {
+            d.classList.remove('open');
+            d.querySelector('.dropdown-list').style.display = 'none';
+            d.setAttribute('aria-expanded', 'false');
+          });
+        }
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.custom-dropdown').forEach(d => {
+            d.classList.remove('open');
+            d.querySelector('.dropdown-list').style.display = 'none';
+            d.setAttribute('aria-expanded', 'false');
+          });
+        }
+      });
+
+      function setAriaInvalid(input, isValid) {
+        input.setAttribute('aria-invalid', String(!isValid));
       }
-    });
+
+      nameInput.addEventListener('input', () => {
+        const ok = nameInput.value.trim().length >= 3;
+        nameError.textContent = ok ? '' : 'Full Name must be at least 3 characters.';
+        setAriaInvalid(nameInput, ok);
+      });
+
+      emailInput.addEventListener('input', () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const ok = emailRegex.test(emailInput.value);
+        emailError.textContent = ok ? '' : 'Enter a valid email address.';
+        setAriaInvalid(emailInput, ok);
+      });
+
+      function handlePasswordInput() {
+        const value = passwordInput.value;
+        const currentCheck = passwordChecks.find(check => !check.regex.test(value));
+        passwordError.textContent = currentCheck ? currentCheck.message : '';
+        setAriaInvalid(passwordInput, !Boolean(currentCheck));
+
+        const passedChecks = passwordChecks.filter(check => check.regex.test(value)).length;
+        const strengthPercent = (passedChecks / passwordChecks.length) * 100;
+        strengthMeterFill.style.width = strengthPercent + '%';
+
+        if (strengthPercent < 40) {
+          strengthMeterFill.style.backgroundColor = "#e74c3c";
+          strengthText.innerHTML = "Password Strength: <b>Weak</b>";
+          strengthText.style.color = "#e74c3c";
+        } else if (strengthPercent < 80) {
+          strengthMeterFill.style.backgroundColor = "#f39c12";
+          strengthText.innerHTML = "Password Strength: <b>Medium</b>";
+          strengthText.style.color = "#f39c12";
+        } else {
+          strengthMeterFill.style.backgroundColor = "#28a745";
+          strengthText.innerHTML = "Password Strength: <b>Strong</b>";
+          strengthText.style.color = "#28a745";
+        }
+      }
+      
+      passwordInput.addEventListener('input', handlePasswordInput);
+
+      const toggle = document.querySelector('.toggle-password');
+      if (toggle) {
+        toggle.addEventListener('click', function () {
+          const icon = this;
+          if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+          } else {
+            passwordInput.type = 'password';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+          }
+        });
+      }
+
+      form.addEventListener('submit', function (e) {
+        let hasError = false;
+        if (nameInput.value.trim().length < 3) {
+          nameError.textContent = "Full Name must be at least 3 characters.";
+          setAriaInvalid(nameInput, false);
+          hasError = true;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value)) {
+          emailError.textContent = "Enter a valid email address.";
+          setAriaInvalid(emailInput, false);
+          hasError = true;
+        }
+        const currentCheck = passwordChecks.find(check => !check.regex.test(passwordInput.value));
+        if (currentCheck) {
+          passwordError.textContent = currentCheck.message;
+          setAriaInvalid(passwordInput, false);
+          hasError = true;
+        }
+
+        if (hasError) {
+          e.preventDefault();
+          const firstError = form.querySelector('input[aria-invalid="true"]');
+          if (firstError) firstError.focus();
+          return;
+        }
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.dataset.origText = submitBtn.textContent;
+          submitBtn.textContent = 'Creating account...';
+        }
+      });
+
+
+      const passwordHint = document.getElementById('password-hint');
+      passwordInput.addEventListener('input', () => {
+        if (passwordInput.value.length > 0) {
+          passwordHint.classList.add('hidden');
+        } else {
+          passwordHint.classList.remove('hidden');
+        }
+      });
+
+    })(); 
   </script>
+
 </body>
 
 </html>

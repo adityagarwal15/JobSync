@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const { csrfProtection } = require('../middleware/csrf.middleware.js');
 
 const {
   googleAuthController,
@@ -39,10 +40,10 @@ authRouter.get('/signup', redirectIfAuthenticated, (req, res) => {
 });
 
 // Auth actions
-authRouter.post('/signup', registerUserController);
-authRouter.post('/login', loginController);
+authRouter.post('/signup', csrfProtection, registerUserController);
+authRouter.post('/login', csrfProtection, loginController);
 authRouter.get('/auth/verify/:token', verificationController);
-authRouter.post('/forgot-password', forgetPasswordController);
+authRouter.post('/forgot-password', csrfProtection, forgetPasswordController);
 
 // Reset password routes
 authRouter.get('/reset-password/:resetKey', (req, res) => {
@@ -50,12 +51,12 @@ authRouter.get('/reset-password/:resetKey', (req, res) => {
   res.render('reset-password.ejs', { resetKey });
 });
 
-authRouter.post('/reset-password/:resetKey', resetPasswordController);
+authRouter.post('/reset-password/:resetKey', csrfProtection, resetPasswordController);
 
 // Protected routes (require authentication)
 authRouter.get('/dashboard', authenticateToken, dashboardController);
 authRouter.get('/profile', authenticateToken, profileController);
-authRouter.post('/logout', authenticateToken, logoutController);
-authRouter.post('/resend-verification', authenticateToken, resendVerificationController);
+authRouter.post('/logout', authenticateToken, csrfProtection, logoutController);
+authRouter.post('/resend-verification', csrfProtection, authenticateToken, resendVerificationController);
 
 module.exports = authRouter;

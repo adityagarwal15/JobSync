@@ -553,29 +553,53 @@
           </div>
         </div>
       </div>
-      <div class="footer-form">
+      <form class="footer-form" id="contact-form" method="POST" action="/contact" novalidate>
         <div class="form-col">
           <div class="form-row">
-            <input type="text" placeholder="Your Name" />
-            <input type="text" placeholder="Your Role" />
+            <div class="form-field-wrapper">
+              <input type="text" name="user_name" placeholder="Your Name" aria-describedby="user_name_error" />
+              <div class="error-container" id="user_name_error"></div>
+            </div>
+
+            <div class="form-field-wrapper">
+              <input type="text" name="user_role" placeholder="Your Role" aria-describedby="user_role_error" />
+              <div class="error-container" id="user_role_error"></div>
+            </div>
+
           </div>
           <div class="form-row">
-            <input type="text" placeholder="Email" />
+            <div class="form-field-wrapper">
+              <input type="email" name="user_email" placeholder="Email" aria-describedby="user_email_error" />
+              <div class="error-container" id="user_email_error"></div>
+            </div>
+
           </div>
           <div class="form-row">
-            <input type="text" placeholder="Portfolio Link" />
+            <div class="form-field-wrapper">
+              <input type="text" name="portfolio_link" placeholder="Portfolio Link" aria-describedby="portfolio_link_error" />
+              <div class="error-container" id="portfolio_link_error"></div>
+            </div>
+
           </div>
           <div class="form-row">
-            <textarea name="" rows="4" placeholder="Message" id=""></textarea>
+            <div class="form-field-wrapper">
+              <textarea name="message" rows="4" placeholder="Message" aria-describedby="message_error"></textarea>
+              <div class="error-container" id="message_error"></div>
+            </div>
+
           </div>
         </div>
 
+
         <div class="form-col">
           <div class="submit-btn">
-            <h3>Send</h3>
+            <button type="submit">
+              <h3>Send</h3>
+            </button>
           </div>
         </div>
-      </div>
+      </form>
+
 
       <div class="footer-copyright">
         <p>JOBSYNC Web</p>
@@ -596,8 +620,10 @@
   <script src="/js/about.js"></script>
   <script src="/js/projects.js"></script>
   <script src="/js/prices.js"></script>
+  <script src="/js/validation.js"></script>
 
   <script>
+
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
         e.preventDefault();

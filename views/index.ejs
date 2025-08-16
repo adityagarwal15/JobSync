@@ -35,6 +35,8 @@
   <link rel="stylesheet" href="/css/prices.css" />
   <link rel="stylesheet" href="/css/features.css" />
   <link rel="stylesheet" href="/css/footer.css" />
+ 
+
 
   <!-- Favicon & Web Manifest -->
   <link rel="icon" type="image/svg+xml" href="/assets/favicon-32x32.svg" />
@@ -851,22 +853,43 @@
               </div>
             </div>
           </div>
-          <form id="contact-form">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          
+          <form id="contact-form" method="POST" action="/contact" novalidate>
+  
             <div class="footer-form">
               <div class="form-col">
                 <div class="form-row">
-                  <input type="text" name="user_name" placeholder="Your Name" required />
-                  <input type="text" name="user_role" placeholder="Your Role" required />
+                  <div class="form-field-wrapper">
+                    <input type="text" name="user_name" placeholder="Your Name" aria-describedby="user_name_error" />
+                    <div class="error-container" id="user_name_error"></div>
+                  </div>
+
+                  <div class="form-field-wrapper">
+                    <input type="text" name="user_role" placeholder="Your Role" aria-describedby="user_role_error" />
+                    <div class="error-container" id="user_role_error"></div>
+                  </div>
+
                 </div>
                 <div class="form-row">
-                  <input type="email" name="user_email" placeholder="Email" required />
+                  <div class="form-field-wrapper">
+                    <input type="email" name="user_email" placeholder="Email" aria-describedby="user_email_error" />
+                    <div class="error-container" id="user_email_error"></div>
+                  </div>
+
                 </div>
                 <div class="form-row">
-                  <input type="text" name="portfolio_link" placeholder="Portfolio Link" />
+                  <div class="form-field-wrapper">
+                    <input type="text" name="portfolio_link" placeholder="Portfolio Link" aria-describedby="portfolio_link_error" />
+                    <div class="error-container" id="portfolio_link_error"></div>
+                  </div>
+
                 </div>
                 <div class="form-row">
-                  <textarea name="message" rows="4" placeholder="Message" required></textarea>
+                  <div class="form-field-wrapper">
+                    <textarea name="message" rows="4" placeholder="Message" aria-describedby="message_error"></textarea>
+                    <div class="error-container" id="message_error"></div>
+                  </div>
+
                 </div>
               </div>
 
@@ -879,6 +902,7 @@
               </div>
             </div>
           </form>
+
 
           <div class="footer-copyright">
             <p>JOBSYNC Web</p>
@@ -897,7 +921,11 @@
       </script>
       <script src="./js/form.js"></script>
       <script src="./js/loader.js"></script>
+      <script src="/js/validation.js"></script>
+
+
       <script src="./js/lenis.js"></script>
+
       <script src="./js/menu.js"></script>
       <script src="./js/about.js"></script>
       <script src="./js/projects.js"></script>

@@ -39,11 +39,6 @@ class FormValidator {
       case 'message':
         if (!value.trim()) return 'Please fill out a message.';
         break;
-      case 'portfolio_link':
-        if (value.trim() && !this._isValidUrl(value)) {
-          return 'Please enter a valid URL.';
-        }
-        break;
       default:
         return null;
     }

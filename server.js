@@ -288,7 +288,7 @@ app.post('/send-email', emailRateLimit, async (req, res) => {
       userName: user_name,
       userRole: user_role,
       userEmail: user_email,
-      portfolioLink: portfolio_link,
+      portfolioLink: portfolio_link || "undefined",
       message,
     });
 

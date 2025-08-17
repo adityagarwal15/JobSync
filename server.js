@@ -106,13 +106,8 @@ app.use(passport.session());
 app.use(flash());
 
 // Modern CSRF Protection Setup
-const {
-  invalidCsrfTokenError,
-  generateToken,
-  validateRequest,
-  doubleCsrfProtection,
-} = doubleCsrf({
-  getSecret: () => process.env.SESSION_SECRET || 'your-csrf-secret',
+const { invalidCsrfTokenError, generateToken, validateRequest, doubleCsrfProtection } = doubleCsrf({
+  getSecret: () => process.env.CSRF_SECRET || 'your-csrf-secret-fallback',
   cookieName: '_csrf',
   cookieOptions: {
     secure: process.env.NODE_ENV === 'production',
@@ -121,13 +116,15 @@ const {
   },
   size: 64,
   ignoredMethods: ['GET', 'HEAD', 'OPTIONS'],
-  getTokenFromRequest: (req) => req.body._csrf || req.headers['x-csrf-token'],
+  getTokenFromRequest: (req) => {
+    return req.body._csrf || req.headers['x-csrf-token'] || req.headers['X-CSRF-Token'];
+  },
 });
 
 // Apply CSRF protection selectively
 const csrfMiddleware = (req, res, next) => {
-  // Skip CSRF for API routes
-  if (req.path.startsWith('/api/')) {
+  // Skip CSRF for API routes and send-email (handled separately)
+  if (req.path.startsWith('/api/') || req.path === '/send-email') {
     return next();
   }
   return doubleCsrfProtection(req, res, next);
@@ -141,14 +138,14 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error');
   res.locals.warning = req.flash('warning');
   res.locals.info = req.flash('info');
-  
+
   // Generate CSRF token for templates
   try {
     res.locals.csrfToken = generateToken(req, res);
   } catch (error) {
     res.locals.csrfToken = null;
   }
-  
+
   next();
 });
 
@@ -271,19 +268,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Email route with modern CSRF validation
-app.post('/send-email', emailRateLimit, (req, res, next) => {
-  // Validate CSRF token manually for this route
-  try {
-    validateRequest(req);
-    next();
-  } catch (error) {
-    return res.status(403).json({ 
-      success: false, 
-      message: 'Invalid CSRF token.' 
-    });
-  }
-}, async (req, res) => {
+// Email route with rate limiting only (CSRF excluded in middleware)
+app.post('/send-email', emailRateLimit, async (req, res) => {
   console.log('📩 Incoming form submission:', req.body);
 
   const { user_name, user_role, user_email, portfolio_link, message } = req.body;

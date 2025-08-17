@@ -576,7 +576,8 @@
           </div>
           <div class="form-row">
             <div class="form-field-wrapper">
-              <input type="text" name="portfolio_link" placeholder="Portfolio Link" aria-describedby="portfolio_link_error" />
+              <input type="text" name="portfolio_link" placeholder="Portfolio Link"
+                aria-describedby="portfolio_link_error" />
               <div class="error-container" id="portfolio_link_error"></div>
             </div>
 
@@ -621,8 +622,11 @@
   <script src="/js/projects.js"></script>
   <script src="/js/prices.js"></script>
   <script src="/js/validation.js"></script>
+  <script src="/js/form.js"></script>
 
   <script>
+    // Make CSRF token available globally
+    window.csrfToken = '<%= csrfToken %>';
 
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", function (e) {

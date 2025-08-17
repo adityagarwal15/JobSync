@@ -26,12 +26,8 @@ document.getElementById('contact-form').addEventListener('submit', async functio
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': window.csrfToken, // Add this header
       },
-      body: JSON.stringify({
-        ...formObject,
-        _csrf: window.csrfToken,
-      }),
+      body: JSON.stringify(formObject),
     });
 
     // Check if response is ok (status 200-299)
@@ -187,3 +183,39 @@ function showNotification(message, type = 'info') {
     }
   }, 5000);
 }
+
+// Handle Enter key navigation in form fields
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+
+  // Get all form inputs and textarea (excluding buttons)
+  const formElements = form.querySelectorAll('input, textarea');
+
+  formElements.forEach((element, index) => {
+    element.addEventListener('keydown', function (event) {
+      // Check if Enter key was pressed
+      if (event.key === 'Enter') {
+        // If it's not a textarea, prevent default behavior and move to next field
+        if (element.tagName.toLowerCase() !== 'textarea') {
+          event.preventDefault();
+
+          // Find the next focusable element
+          const nextIndex = index + 1;
+          if (nextIndex < formElements.length) {
+            formElements[nextIndex].focus();
+          } else {
+            // If it's the last field, submit the form
+            form.dispatchEvent(new Event('submit'));
+          }
+        } else {
+          // For textarea, allow Enter for new lines but handle Ctrl+Enter for submission
+          if (event.ctrlKey) {
+            event.preventDefault();
+            form.dispatchEvent(new Event('submit'));
+          }
+        }
+      }
+    });
+  });
+});

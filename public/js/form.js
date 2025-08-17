@@ -2,6 +2,11 @@
 document.getElementById('contact-form').addEventListener('submit', async function (event) {
   event.preventDefault();
 
+  // Validate form before submission
+  if (formValidator && !formValidator.validateForm()) {
+    return; // Stop submission if validation fails
+  }
+
   const form = this;
   const submitBtn = form.querySelector('.submit-btn button');
   const originalText = submitBtn.innerHTML;
@@ -45,7 +50,13 @@ document.getElementById('contact-form').addEventListener('submit', async functio
       submitBtn.innerHTML = '<h3>Sent</h3>';
 
       showNotification("Message sent successfully! We'll get back to you soon.", 'success');
-      form.reset();
+
+      // Clear form and validation state
+      if (formValidator) {
+        formValidator.clearForm();
+      } else {
+        form.reset();
+      }
 
       // Reset to normal state after 3 seconds
       setTimeout(() => {

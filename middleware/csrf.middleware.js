@@ -1,26 +1,56 @@
-const csrf = require('csurf');
+const { doubleCsrf } = require("csrf-csrf");
 
-// CSRF protection middleware
-const csrfProtection = csrf({
-  cookie: {
+// Double CSRF protection configuration
+const doubleCsrfOptions = {
+  getSecret: () => process.env.CSRF_SECRET || "your-secret-key-change-this-in-production",
+  cookieName: "x-csrf-token",
+  cookieOptions: {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    maxAge: 3600000,
+    maxAge: 3600000, // 1 hour
   },
-  ignoreMethods: ['GET', 'HEAD', 'OPTIONS'],
-});
+  size: 64,
+  ignoredMethods: ["GET", "HEAD", "OPTIONS"],
+  getTokenFromRequest: (req) => {
+    // Check multiple possible locations for the token
+    return (
+      req.body._csrf ||
+      req.query._csrf ||
+      req.headers["x-csrf-token"] ||
+      req.headers["x-xsrf-token"]
+    );
+  },
+};
+
+const { generateToken, doubleCsrfProtection } = doubleCsrf(doubleCsrfOptions);
+
+// CSRF protection middleware (renamed from csrfProtection to match your current usage)
+const csrfProtection = doubleCsrfProtection;
 
 // Middleware to expose CSRF token to all templates
 const exposeCsrfToken = (req, res, next) => {
-  res.locals.csrfToken = req.csrfToken ? req.csrfToken() : '';
-  next();
+  try {
+    // Generate token and make it available to templates
+    const token = generateToken(req, res);
+    res.locals.csrfToken = token;
+    
+    // Also make it available as a function for compatibility
+    req.csrfToken = () => token;
+    
+    next();
+  } catch (error) {
+    console.error('Error generating CSRF token:', error);
+    res.locals.csrfToken = '';
+    req.csrfToken = () => '';
+    next();
+  }
 };
 
 // CSRF error handler middleware
 const csrfErrorHandler = (err, req, res, next) => {
-  if (err.code === 'EBADCSRFTOKEN') {
-    // CSRF token validation failed
+  // Check if this is a CSRF error from csrf-csrf
+  if (err.message && err.message.includes('CSRF')) {
     console.log('🚨 CSRF Token Error:', err.message);
 
     // More robust AJAX detection

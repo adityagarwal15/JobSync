@@ -1124,24 +1124,7 @@
 
 <body>
   <!-- Navbar -->
-  <!-- <nav class="navbar">
-    <div class="navbar-content">
-      <a href="/" class="navbar-logo">JobSync</a>
-      <div class="navbar-user">
-        <% if (typeof user !=='undefined' && user) { %>
-
-          <div class="user-avatar">
-            <a href="/profile" style=" text-decoration: none;">
-              <%= (user.name ? user.name.charAt(0) : user.email.charAt(0)).toUpperCase() %>
-            </a>
-          </div>
-          <% } else { %>
-            <a href="/login" style="color: var(--color-accent-red); text-decoration: none; font-weight: 600;">Sign
-              In</a>
-            <% } %>
-      </div>
-    </div>
-  </nav> -->
+ 
   <div class="dashboard">
     <%- include('partials/navbar', { page: 'dashboard' , user: user }) %>
   </div>

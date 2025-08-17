@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSRF Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 3px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>CSRF Protection Test</h1>
+    
+    <div class="test-section">
+        <h3>1. Get CSRF Token</h3>
+        <button onclick="getCsrfToken()">Get CSRF Token</button>
+        <div id="token-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. Test CSRF Protection</h3>
+        <button onclick="testCsrfProtection()">Test CSRF Protection</button>
+        <div id="test-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. Test Signup Form (with CSRF)</h3>
+        <form id="signup-form">
+            <input type="hidden" name="_csrf" id="csrf-input">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="Test User" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="test@example.com" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" value="TestPass123!" required>
+            </div>
+            <button type="submit">Test Signup</button>
+        </form>
+        <div id="signup-result" class="result"></div>
+    </div>
+
+    <script>
+        let currentCsrfToken = '';
+
+        async function getCsrfToken() {
+            try {
+                const response = await fetch('/csrf-token', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                
+                if (data.csrfToken) {
+                    currentCsrfToken = data.csrfToken;
+                    document.getElementById('csrf-input').value = currentCsrfToken;
+                    document.getElementById('token-result').innerHTML = 
+                        `<div class="success">✅ CSRF Token received: ${currentCsrfToken.substring(0, 20)}...</div>`;
+                } else {
+                    document.getElementById('token-result').innerHTML = 
+                        `<div class="error">❌ No CSRF token received</div>`;
+                }
+            } catch (error) {
+                document.getElementById('token-result').innerHTML = 
+                    `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function testCsrfProtection() {
+            if (!currentCsrfToken) {
+                document.getElementById('test-result').innerHTML = 
+                    `<div class="error">❌ Please get a CSRF token first</div>`;
+                return;
+            }
+
+            try {
+                const response = await fetch('/test-csrf', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        _csrf: currentCsrfToken,
+                        test: 'data'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('test-result').innerHTML = 
+                        `<div class="success">✅ CSRF Protection Working! ${data.message}</div>`;
+                } else {
+                    document.getElementById('test-result').innerHTML = 
+                        `<div class="error">❌ CSRF Error: ${data.message || 'Unknown error'}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('test-result').innerHTML = 
+                    `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        // Handle signup form submission
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!currentCsrfToken) {
+                document.getElementById('signup-result').innerHTML = 
+                    `<div class="error">❌ Please get a CSRF token first</div>`;
+                return;
+            }
+
+            const formData = new FormData(e.target);
+            const formObject = {};
+            formData.forEach((value, key) => formObject[key] = value);
+
+            try {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(formObject)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('signup-result').innerHTML = 
+                        `<div class="success">✅ Signup test successful! ${data.message || 'Form submitted'}</div>`;
+                } else {
+                    document.getElementById('signup-result').innerHTML = 
+                        `<div class="error">❌ Signup error: ${data.message || 'Unknown error'}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('signup-result').innerHTML = 
+                    `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        });
+
+        // Auto-get CSRF token when page loads
+        window.addEventListener('load', getCsrfToken);
+    </script>
+</body>
+</html>

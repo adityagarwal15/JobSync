@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const path = require('path');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
+
 require('dotenv').config();
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
@@ -10,7 +11,10 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const bcrypt = require('bcrypt');
-const fetch = require('node-fetch');
+
+// ✅ node-fetch dynamic import fix for Node.js v20+
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+
 const User = require('./models/user.js');
 const Contact = require('./models/contact.js');
 const Job = require('./models/job.js');
@@ -21,11 +25,6 @@ const jobRouter = require('./routes/jobAPI.routes.js');
 const searchRouter = require('./routes/searchAPI.routes.js');
 const passport = require('passport');
 require('./utils/passport.js');
-const {
-  csrfProtection,
-  exposeCsrfToken,
-  csrfErrorHandler,
-} = require('./middleware/csrf.middleware.js');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -58,7 +57,6 @@ const allowedOrigins = [
   'https://jobsync-new.onrender.com',
   'https://jobsyncc.netlify.app',
   'http://localhost:5000',
-  'http://localhost:3000',
 ];
 
 // ========== MIDDLEWARE ==========
@@ -73,10 +71,11 @@ app.use(
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token', 'X-Requested-With'],
+    exposedHeaders: ['Set-Cookie'],
   })
 );
 
-// === MIDDLEWARE ===
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -108,6 +107,20 @@ app.use(passport.session());
 // Initialize flash middleware
 app.use(flash());
 
+// Import CSRF middleware
+const { csrfProtection, exposeCsrfToken, csrfErrorHandler, tokenStore } = require('./middleware/csrf.middleware.js');
+
+// Apply CSRF protection selectively
+const csrfMiddleware = (req, res, next) => {
+  // Skip CSRF for API routes and send-email (handled separately)
+  if (req.path.startsWith('/api/') || req.path === '/send-email') {
+    return next();
+  }
+  return csrfProtection(req, res, next);
+};
+
+app.use(csrfMiddleware);
+
 // Make flash messages available to all views
 app.use((req, res, next) => {
   res.locals.success = req.flash('success');
@@ -115,6 +128,71 @@ app.use((req, res, next) => {
   res.locals.warning = req.flash('warning');
   res.locals.info = req.flash('info');
   next();
+});
+
+// Apply CSRF token exposure middleware
+app.use(exposeCsrfToken);
+
+// Apply CSRF error handler
+app.use(csrfErrorHandler);
+
+// === CSRF TOKEN ENDPOINT ===
+app.get('/csrf-token', (req, res) => {
+  try {
+    // Generate a simple but secure CSRF token
+    const token = Math.random().toString(36).substring(2) + Date.now().toString(36) + Math.random().toString(36).substring(2);
+    
+    console.log('🔐 Generating CSRF token for request from:', req.get('Origin') || 'Unknown origin');
+    console.log('🔐 User agent:', req.get('User-Agent'));
+    
+    // Store the token in our token store for validation
+    tokenStore.set(token, {
+      createdAt: Date.now(),
+      origin: req.get('Origin') || 'Unknown',
+      userAgent: req.get('User-Agent')
+    });
+    
+    // Set the token in a cookie for the client
+    res.cookie('_csrf', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 3600000, // 1 hour
+      path: '/'
+    });
+    
+    console.log('🔐 CSRF token generated, stored, and cookie set:', token.substring(0, 20) + '...');
+    console.log('🔐 Tokens in store:', tokenStore.size);
+    
+    res.json({ 
+      csrfToken: token,
+      message: 'CSRF token generated successfully',
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('❌ Error generating CSRF token:', error);
+    res.status(500).json({ 
+      error: 'Failed to generate CSRF token',
+      message: error.message 
+    });
+  }
+});
+
+// Test CSRF protection endpoint
+app.post('/test-csrf', csrfProtection, (req, res) => {
+  console.log('🧪 Test CSRF endpoint hit');
+  console.log('🧪 Request headers:', req.headers);
+  console.log('🧪 Request body:', req.body);
+  console.log('🧪 Request cookies:', req.cookies);
+  
+  res.json({ 
+    success: true, 
+    message: 'CSRF protection working!',
+    receivedToken: req.body._csrf,
+    cookieToken: req.cookies._csrf,
+    headers: req.headers,
+    timestamp: new Date().toISOString()
+  });
 });
 
 // === RATE LIMITING ===
@@ -155,18 +233,11 @@ const generalRateLimit = rateLimit({
 
 app.use(generalRateLimit);
 
-// csrf protection
-app.use(csrfProtection);
-app.use(exposeCsrfToken);
-
 // ========== ROUTES ==========
-
-// Homepage
 app.get('/', optionalAuth, (req, res) => {
   res.render('index.ejs');
 });
 
-// Auth routes from auth.routes.js
 app.use('/', authRouter);
 app.use('/api/jobs', jobRouter);
 app.use('/api/search', searchRouter);
@@ -174,7 +245,7 @@ app.use('/api/search', searchRouter);
 // === PROXY EXTERNAL API TO BYPASS CORS ===
 app.get('/api/totalusers', async (req, res) => {
   try {
-    const response = await globalThis.fetch('https://sc.ecombullet.com/api/dashboard/totalusers');
+    const response = await fetch('https://sc.ecombullet.com/api/dashboard/totalusers');
     const data = await response.json();
     res.json(data);
   } catch (err) {
@@ -183,7 +254,7 @@ app.get('/api/totalusers', async (req, res) => {
   }
 });
 
-// Proxy for Google Custom Search API to bypass CORS
+// Proxy for Google Custom Search API
 app.get('/api/google-search', async (req, res) => {
   try {
     const { q, num = 10, start = 1 } = req.query;
@@ -203,7 +274,7 @@ app.get('/api/google-search', async (req, res) => {
 
     console.log(`Proxying Google search for: "${q}"`);
 
-    const response = await globalThis.fetch(url);
+    const response = await fetch(url);
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -230,12 +301,10 @@ app.get('/api/google-search', async (req, res) => {
 });
 
 // ========== EMAIL ==========
-
-// === EMAIL HANDLER ===
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: process.env.SMTP_PORT,
-  secure: process.env.SMTP_SECURE === 'true', // false for port 587, true for port 465
+  secure: process.env.SMTP_SECURE === 'true',
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
@@ -245,9 +314,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Contact form submission
-
-app.post('/send-email', emailRateLimit, csrfProtection, async (req, res) => {
+// Email route with rate limiting only (CSRF excluded in middleware)
+app.post('/send-email', emailRateLimit, async (req, res) => {
   console.log('📩 Incoming form submission:', req.body);
 
   const { user_name, user_role, user_email, portfolio_link, message } = req.body;
@@ -262,12 +330,11 @@ app.post('/send-email', emailRateLimit, csrfProtection, async (req, res) => {
   }
 
   try {
-    // Save to MongoDB
     await Contact.create({
       userName: user_name,
       userRole: user_role,
       userEmail: user_email,
-      portfolioLink: portfolio_link,
+      portfolioLink: portfolio_link || "undefined",
       message,
     });
 
@@ -279,7 +346,7 @@ app.post('/send-email', emailRateLimit, csrfProtection, async (req, res) => {
       html: `<p><strong>Name:</strong> ${user_name}<br>
              <strong>Role:</strong> ${user_role}<br>
              <strong>Email:</strong> ${user_email}<br>
-             <strong>Portfolio:</strong> ${portfolio_link || 'Not provided'}<br><br>
+             <strong>Portfolio:</strong> ${portfolio_link}<br><br>
              <strong>Message:</strong><br>${message.replace(/\n/g, '<br>')}</p>`,
       text: `Name: ${user_name}\nRole: ${user_role}\nEmail: ${user_email}\nPortfolio: ${portfolio_link}\n\nMessage:\n${message}`,
     };
@@ -298,20 +365,18 @@ app.post('/send-email', emailRateLimit, csrfProtection, async (req, res) => {
 app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`);
 
-  // Initialize job fetcher service after server starts
   try {
-    // Check if database has jobs, if not run initial fetch
     const jobCount = await Job.countDocuments({ isActive: true });
-    const shouldRunInitialFetch = jobCount < 10; // Run if less than 10 jobs
+    const shouldRunInitialFetch = jobCount < 10;
 
     console.log(`📊 Current active jobs in database: ${jobCount}`);
 
     if (shouldRunInitialFetch) {
       console.log('🔄 Database has few jobs, running initial fetch...');
-      await jobFetcher.init(true); // Pass true to run immediate fetch
+      await jobFetcher.init(true);
     } else {
       console.log('✅ Database has sufficient jobs, only scheduling cron job...');
-      await jobFetcher.init(false); // Pass false to only schedule cron job, no immediate fetch
+      await jobFetcher.init(false);
     }
 
     console.log('Job Fetcher Service started successfully');
@@ -320,10 +385,7 @@ app.listen(PORT, async () => {
   }
 });
 
-// CSRF error handler 
-app.use(csrfErrorHandler);
-
-// 404 handler - keep this as the last middleware
+// 404 handler
 app.use((req, res, next) => {
-  res.status(404).render('404'); // Use .sendFile if you're not using a template engine
+  res.status(404).render('404');
 });

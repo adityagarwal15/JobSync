@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive CSRF Test - JobSync</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background: #f5f5f5;
+        }
+        .test-section { 
+            margin: 20px 0; 
+            padding: 20px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-section h3 { 
+            color: #333; 
+            border-bottom: 2px solid #007bff; 
+            padding-bottom: 10px;
+        }
+        button { 
+            padding: 12px 24px; 
+            margin: 10px 5px; 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #6c757d; cursor: not-allowed; }
+        .result { 
+            margin: 15px 0; 
+            padding: 15px; 
+            background: #f8f9fa; 
+            border-radius: 6px; 
+            border-left: 4px solid #dee2e6;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .success { 
+            background: #d4edda; 
+            color: #155724; 
+            border-left-color: #28a745;
+        }
+        .error { 
+            background: #f8d7da; 
+            color: #721c24; 
+            border-left-color: #dc3545;
+        }
+        .warning { 
+            background: #fff3cd; 
+            color: #856404; 
+            border-left-color: #ffc107;
+        }
+        .info { 
+            background: #d1ecf1; 
+            color: #0c5460; 
+            border-left-color: #17a2b8;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+        }
+        .status-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            z-index: 1000;
+        }
+        .main-content {
+            margin-top: 60px;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        .log-entry.success { background: rgba(40, 167, 69, 0.1); }
+        .log-entry.error { background: rgba(220, 53, 69, 0.1); }
+        .log-entry.warning { background: rgba(255, 193, 7, 0.1); }
+        .log-entry.info { background: rgba(23, 162, 184, 0.1); }
+    </style>
+</head>
+<body>
+    <div class="status-bar">
+        <span id="status">Ready to test CSRF protection</span>
+    </div>
+    
+    <div class="main-content">
+        <h1>🔐 Comprehensive CSRF Protection Test</h1>
+        <p>This page will test all aspects of your CSRF protection system.</p>
+        
+        <div class="test-section">
+            <h3>1. 🚀 Initial Setup & Token Generation</h3>
+            <button onclick="initializeTest()">Initialize Test</button>
+            <button onclick="getCsrfToken()">Get CSRF Token</button>
+            <button onclick="clearLogs()">Clear Logs</button>
+            <div id="setup-result" class="result info">Click "Initialize Test" to begin...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>2. 🧪 Test CSRF Protection</h3>
+            <button onclick="testCsrfProtection()" id="test-csrf-btn" disabled>Test CSRF Protection</button>
+            <div id="test-result" class="result">Get a CSRF token first...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>3. 📝 Test Signup Form (with CSRF)</h3>
+            <form id="signup-form">
+                <input type="hidden" name="_csrf" id="csrf-input">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" value="Test User" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="test@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" value="TestPass123!" required>
+                </div>
+                <button type="submit" id="signup-btn" disabled>Test Signup</button>
+            </form>
+            <div id="signup-result" class="result">Get a CSRF token first...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>4. 🔍 Test Login Form (with CSRF)</h3>
+            <form id="login-form">
+                <input type="hidden" name="_csrf" id="login-csrf-input">
+                <div class="form-group">
+                    <label for="login-email">Email:</label>
+                    <input type="email" id="login-email" name="email" value="test@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="password" value="TestPass123!" required>
+                </div>
+                <button type="submit" id="login-btn" disabled>Test Login</button>
+            </form>
+            <div id="login-result" class="result">Get a CSRF token first...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>5. 📊 Test Results & Debug Info</h3>
+            <button onclick="showDebugInfo()">Show Debug Info</button>
+            <button onclick="testWithoutToken()">Test Without Token (Should Fail)</button>
+            <div id="debug-result" class="result">Click "Show Debug Info" to see current state...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>6. 📝 Activity Log</h3>
+            <div id="activity-log" class="result" style="max-height: 200px; overflow-y: auto;">
+                <div class="log-entry info">Log initialized. Ready to test.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentCsrfToken = '';
+        let testResults = {};
+        let logCounter = 0;
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('activity-log');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            logDiv.appendChild(logEntry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+            logCounter++;
+            
+            // Update status bar
+            document.getElementById('status').textContent = message;
+        }
+
+        function clearLogs() {
+            document.getElementById('activity-log').innerHTML = '<div class="log-entry info">Logs cleared.</div>';
+            logCounter = 0;
+        }
+
+        function updateResult(elementId, content, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.textContent = content;
+            element.className = `result ${type}`;
+        }
+
+        async function initializeTest() {
+            log('🚀 Initializing CSRF test...', 'info');
+            updateResult('setup-result', 'Initializing test...', 'info');
+            
+            try {
+                // Test basic connectivity
+                const response = await fetch('/csrf-token', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    log('✅ Basic connectivity test passed', 'success');
+                    updateResult('setup-result', '✅ Basic connectivity test passed\nServer is responding correctly.', 'success');
+                } else {
+                    log('❌ Basic connectivity test failed', 'error');
+                    updateResult('setup-result', '❌ Basic connectivity test failed\nServer responded with status: ' + response.status, 'error');
+                }
+            } catch (error) {
+                log('❌ Connection error: ' + error.message, 'error');
+                updateResult('setup-result', '❌ Connection error: ' + error.message, 'error');
+            }
+        }
+
+        async function getCsrfToken() {
+            log('🔐 Fetching CSRF token...', 'info');
+            updateResult('setup-result', 'Fetching CSRF token...', 'info');
+            
+            try {
+                const response = await fetch('/csrf-token', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    currentCsrfToken = data.csrfToken;
+                    
+                    // Update all forms with the token
+                    document.getElementById('csrf-input').value = currentCsrfToken;
+                    document.getElementById('login-csrf-input').value = currentCsrfToken;
+                    
+                    // Enable test buttons
+                    document.getElementById('test-csrf-btn').disabled = false;
+                    document.getElementById('signup-btn').disabled = false;
+                    document.getElementById('login-btn').disabled = false;
+                    
+                    log('✅ CSRF token received: ' + currentCsrfToken.substring(0, 20) + '...', 'success');
+                    updateResult('setup-result', 
+                        '✅ CSRF Token received successfully!\n' +
+                        'Token: ' + currentCsrfToken.substring(0, 20) + '...\n' +
+                        'Timestamp: ' + data.timestamp + '\n' +
+                        'Message: ' + data.message, 'success');
+                    
+                    testResults.tokenReceived = true;
+                    testResults.tokenValue = currentCsrfToken;
+                    testResults.tokenTimestamp = data.timestamp;
+                } else {
+                    const errorData = await response.json();
+                    log('❌ Failed to get CSRF token: ' + (errorData.message || 'Unknown error'), 'error');
+                    updateResult('setup-result', '❌ Failed to get CSRF token: ' + (errorData.message || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                log('❌ Error fetching CSRF token: ' + error.message, 'error');
+                updateResult('setup-result', '❌ Error fetching CSRF token: ' + error.message, 'error');
+            }
+        }
+
+        async function testCsrfProtection() {
+            if (!currentCsrfToken) {
+                log('⚠️ No CSRF token available', 'warning');
+                return;
+            }
+            
+            log('🧪 Testing CSRF protection...', 'info');
+            updateResult('test-result', 'Testing CSRF protection...', 'info');
+            
+            try {
+                const response = await fetch('/test-csrf', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        _csrf: currentCsrfToken,
+                        test: 'data',
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log('✅ CSRF protection test passed!', 'success');
+                    updateResult('test-result', 
+                        '✅ CSRF Protection Working!\n' +
+                        'Message: ' + data.message + '\n' +
+                        'Received Token: ' + (data.receivedToken ? 'PRESENT' : 'MISSING') + '\n' +
+                        'Cookie Token: ' + (data.cookieToken ? 'PRESENT' : 'MISSING') + '\n' +
+                        'Timestamp: ' + data.timestamp, 'success');
+                    
+                    testResults.csrfProtectionTest = true;
+                    testResults.testResponse = data;
+                } else {
+                    log('❌ CSRF protection test failed: ' + (data.message || 'Unknown error'), 'error');
+                    updateResult('test-result', '❌ CSRF protection test failed: ' + (data.message || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                log('❌ Error testing CSRF protection: ' + error.message, 'error');
+                updateResult('test-result', '❌ Error testing CSRF protection: ' + error.message, 'error');
+            }
+        }
+
+        // Handle signup form submission
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!currentCsrfToken) {
+                log('⚠️ No CSRF token available for signup', 'warning');
+                return;
+            }
+            
+            log('📝 Testing signup form submission...', 'info');
+            updateResult('signup-result', 'Testing signup form submission...', 'info');
+            
+            const formData = new FormData(e.target);
+            const formObject = {};
+            formData.forEach((value, key) => formObject[key] = value);
+
+            try {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(formObject)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log('✅ Signup test successful!', 'success');
+                    updateResult('signup-result', 
+                        '✅ Signup test successful!\n' +
+                        'Response: ' + JSON.stringify(data, null, 2), 'success');
+                    
+                    testResults.signupTest = true;
+                    testResults.signupResponse = data;
+                } else {
+                    log('❌ Signup test failed: ' + (data.message || 'Unknown error'), 'error');
+                    updateResult('signup-result', 
+                        '❌ Signup test failed: ' + (data.message || 'Unknown error') + '\n' +
+                        'Status: ' + response.status + '\n' +
+                        'Response: ' + JSON.stringify(data, null, 2), 'error');
+                }
+            } catch (error) {
+                log('❌ Error testing signup: ' + error.message, 'error');
+                updateResult('signup-result', '❌ Error testing signup: ' + error.message, 'error');
+            }
+        });
+
+        // Handle login form submission
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!currentCsrfToken) {
+                log('⚠️ No CSRF token available for login', 'warning');
+                return;
+            }
+            
+            log('🔑 Testing login form submission...', 'info');
+            updateResult('login-result', 'Testing login form submission...', 'info');
+            
+            const formData = new FormData(e.target);
+            const formObject = {};
+            formData.forEach((value, key) => formObject[key] = value);
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(formObject)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log('✅ Login test successful!', 'success');
+                    updateResult('login-result', 
+                        '✅ Login test successful!\n' +
+                        'Response: ' + JSON.stringify(data, null, 2), 'success');
+                    
+                    testResults.loginTest = true;
+                    testResults.loginResponse = data;
+                } else {
+                    log('❌ Login test failed: ' + (data.message || 'Unknown error'), 'error');
+                    updateResult('login-result', 
+                        '❌ Login test failed: ' + (data.message || 'Unknown error') + '\n' +
+                        'Status: ' + response.status + '\n' +
+                        'Response: ' + JSON.stringify(data, null, 2), 'error');
+                }
+            } catch (error) {
+                log('❌ Error testing login: ' + error.message, 'error');
+                updateResult('login-result', '❌ Error testing login: ' + error.message, 'error');
+            }
+        });
+
+        async function testWithoutToken() {
+            log('⚠️ Testing request without CSRF token (should fail)...', 'warning');
+            
+            try {
+                const response = await fetch('/test-csrf', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        test: 'data without token'
+                    })
+                });
+                
+                if (response.status === 403) {
+                    log('✅ CSRF protection working correctly - blocked request without token', 'success');
+                    updateResult('debug-result', 
+                        '✅ CSRF protection working correctly!\n' +
+                        'Request without token was blocked with status 403\n' +
+                        'This confirms CSRF protection is active and working.', 'success');
+                } else {
+                    log('⚠️ Unexpected response: ' + response.status, 'warning');
+                    updateResult('debug-result', 
+                        '⚠️ Unexpected response: ' + response.status + '\n' +
+                        'Expected 403 Forbidden for request without CSRF token', 'warning');
+                }
+            } catch (error) {
+                log('❌ Error testing without token: ' + error.message, 'error');
+                updateResult('debug-result', '❌ Error testing without token: ' + error.message, 'error');
+            }
+        }
+
+        function showDebugInfo() {
+            const debugInfo = {
+                currentTime: new Date().toISOString(),
+                csrfToken: currentCsrfToken ? currentCsrfToken.substring(0, 20) + '...' : 'NOT_SET',
+                testResults: testResults,
+                cookies: document.cookie,
+                userAgent: navigator.userAgent,
+                url: window.location.href
+            };
+            
+            updateResult('debug-result', 
+                '🔍 Debug Information:\n' +
+                JSON.stringify(debugInfo, null, 2), 'info');
+            
+            log('🔍 Debug information displayed', 'info');
+        }
+
+        // Auto-initialize when page loads
+        window.addEventListener('load', () => {
+            log('📱 Page loaded, ready for CSRF testing', 'info');
+            initializeTest();
+        });
+    </script>
+</body>
+</html>

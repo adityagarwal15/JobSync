@@ -14,7 +14,6 @@ const contactSchema = new mongoose.Schema({
     },
     portfolioLink:{
         type:String,
-        required:true
     },
     message:{
         type:String,

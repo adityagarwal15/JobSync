@@ -1,0 +1,191 @@
+/* --------------------
+   HERO SECTION
+-------------------- */
+.hero {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-between; /* Ensures even column layout */
+  align-items: center; /* Vertically centers columns */
+  overflow: hidden;
+  margin: 0;
+  padding: 40px 5%; /* Horizontal padding for consistent alignment */
+  box-sizing: border-box;
+}
+
+/* Background image / graphic */
+.hero-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  transform: rotate(-165deg);
+  object-fit: cover;
+}
+
+.hero-img img {
+  transform: scale(1.25);
+}
+
+/* Main content container */
+.hero-header {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center; /* Center-aligns heading and paragraph vertically */
+  justify-content: space-between;
+  z-index: 1;
+  gap: 2rem;
+}
+
+/* Left column: Heading */
+.hero-col:nth-child(1) {
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Left column: JOBSYNC */
+.hero-header h1 {
+  text-transform: uppercase;
+  font-family: var(--font-secondary);
+  font-size: clamp(2.5rem, 10vw, 7rem); /* Reduced max size */
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1; /* Prevents extra space */
+}
+
+/* Right column: Description text */
+.hero-col:nth-child(2) {
+  flex: 4;
+  display: flex;
+  align-items: center;
+  padding: 0.5em;
+}
+
+p#site-intro {
+  margin: 0;
+  text-transform: uppercase;
+  line-height: 1.4;
+  max-width: 400px;
+}
+
+/* --------------------
+   RESPONSIVE STYLES
+-------------------- */
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    padding: 120px 5% 40px; /* Extra top padding for navbar space */
+  }
+
+  .hero-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .hero-col:nth-child(1),
+  .hero-col:nth-child(2) {
+    flex: unset;
+    width: 100%;
+  }
+
+  p#site-intro {
+    max-width: 90%;
+    text-indent: 0;
+  }
+
+  .hero-img {
+    transform: rotate(-170deg);
+  }
+}
+
+/* --------------------
+   RESUME UPLOAD BOX
+-------------------- */
+.resume-upload {
+  text-align: center;
+  margin-top: 0;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  width: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(10px);
+  z-index: 2;
+}
+
+.upload-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+  gap: 8px;
+}
+
+.upload-label ion-icon {
+  font-size: 24px;
+}
+
+#resumeInput {
+  display: none;
+}
+
+#upload-status {
+  font-size: 14px;
+  color: gray;
+  margin-top: 5px;
+}
+
+/* --------------------
+   JOB RECOMMENDATIONS
+-------------------- */
+.job-recommendations {
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  width: 90%;
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+
+#job-list {
+  list-style: none;
+  padding: 0;
+  color: white;
+}
+
+/* --------------------
+   CHATBOT ICON
+-------------------- */
+.chatbot-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: red;
+  color: white;
+  padding: 15px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
+}

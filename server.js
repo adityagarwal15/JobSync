@@ -300,7 +300,7 @@ app.post('/send-email', emailRateLimit, async (req, res) => {
       html: `<p><strong>Name:</strong> ${user_name}<br>
              <strong>Role:</strong> ${user_role}<br>
              <strong>Email:</strong> ${user_email}<br>
-             <strong>Portfolio:</strong> ${portfolio_link || 'Not provided'}<br><br>
+             <strong>Portfolio:</strong> ${portfolio_link}<br><br>
              <strong>Message:</strong><br>${message.replace(/\n/g, '<br>')}</p>`,
       text: `Name: ${user_name}\nRole: ${user_role}\nEmail: ${user_email}\nPortfolio: ${portfolio_link}\n\nMessage:\n${message}`,
     };

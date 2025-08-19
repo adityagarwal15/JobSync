@@ -1,3 +1,6 @@
+/* -----------------------------
+   HERO (merged)
+----------------------------- */
 .hero {
   position: relative;
   width: 100vw;
@@ -36,10 +39,7 @@
   z-index: 1;
 }
 
-.hero-col:nth-child(1) {
-  flex: 6;
-}
-
+.hero-col:nth-child(1) { flex: 6; }
 .hero-col:nth-child(2) {
   flex: 2;
   padding: 0.5em;
@@ -58,36 +58,67 @@ p#site-intro {
   text-transform: uppercase;
 }
 
+/* -----------------------------
+   RESPONSIVE
+   Step 1: ≤900px — center the layout
+----------------------------- */
 @media (max-width: 900px) {
-  .hero-header {
-    position: absolute;
-    bottom: 20%;
-    flex-direction: column;
+  .hero {
+    justify-content: center;
+    align-items: center;
+    padding-top: 120px; /* leaves room if job-recommendations is shown */
   }
+
+  .hero-header {
+    /* stacked & centered */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2em;
+    height: 100%;
+  }
+
+  .hero-col:nth-child(1),
+  .hero-col:nth-child(2) {
+    flex: unset;
+    padding: 0.5em 0;
+  }
+
+  .hero-header h1 { font-size: 15vw; }
 
   p#site-intro {
-    margin-top: 0;
+    margin-top: 1em;
     text-indent: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 600px;
   }
 
-  .hero-img {
-    transform: rotate(-170deg);
-  }
+  .hero-img { transform: rotate(-170deg); }
 
-  .resume-upload {
-    width: 80%;
-  }
-
+  /* Sizing tweaks carried over */
+  .resume-upload { width: 80%; }
   .job-recommendations {
     width: 95%;
-    top: 60px; /* Adjust for smaller navbar on mobile */
-  }
-    
-  .hero {
-    padding-top: 120px; /* Adjust for smaller job recommendations height on mobile */
+    top: 60px; /* smaller navbar spacing on mobile */
   }
 }
 
+/* -----------------------------
+   RESPONSIVE
+   Step 2: ≤600px — allow lower positioning variant
+----------------------------- */
+@media (max-width: 600px) {
+  .hero-header {
+    position: absolute;
+    bottom: 20%;
+  }
+}
+
+/* -----------------------------
+   RESUME UPLOAD OVERLAY
+----------------------------- */
 .resume-upload {
   text-align: center;
   margin-top: 0;
@@ -113,13 +144,8 @@ p#site-intro {
   gap: 8px;
 }
 
-.upload-label ion-icon {
-  font-size: 24px;
-}
-
-#resumeInput {
-  display: none;
-}
+.upload-label ion-icon { font-size: 24px; }
+#resumeInput { display: none; }
 
 #upload-status {
   font-size: 14px;
@@ -127,14 +153,17 @@ p#site-intro {
   margin-top: 5px;
 }
 
-/* REMOVE or COMMENT OUT this block */
+/* -----------------------------
+   JOB RECOMMENDATIONS OVERLAY
+   (Optional — keep for functionality)
+----------------------------- */
 .job-recommendations {
   text-align: center;
   padding: 20px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   width: 90%;
-  position: fixed;
+  position: fixed;         /* as in your version */
   top: 80px;
   left: 50%;
   transform: translateX(-50%);
@@ -150,6 +179,9 @@ p#site-intro {
   color: white;
 }
 
+/* -----------------------------
+   CHATBOT ICON
+----------------------------- */
 .chatbot-icon {
   position: fixed;
   bottom: 20px;
@@ -162,4 +194,3 @@ p#site-intro {
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
 }
-

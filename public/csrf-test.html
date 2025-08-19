@@ -1,34 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSRF Test</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
-        button { padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        button:hover { background: #0056b3; }
-        .result { margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 3px; }
-        .success { background: #d4edda; color: #155724; }
-        .error { background: #f8d7da; color: #721c24; }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 3px;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
     </style>
 </head>
+
 <body>
     <h1>CSRF Protection Test</h1>
-    
+
     <div class="test-section">
-        <h3>1. Get CSRF Token</h3>
-        <button onclick="getCsrfToken()">Get CSRF Token</button>
+        <h3>1. Check Auto-Generated CSRF Token</h3>
+        <button onclick="checkAutoToken()">Check Auto Token</button>
+        <button onclick="getCsrfToken()">Get NEW CSRF Token</button>
         <div id="token-result" class="result"></div>
     </div>
-    
+
     <div class="test-section">
         <h3>2. Test CSRF Protection</h3>
         <button onclick="testCsrfProtection()">Test CSRF Protection</button>
         <div id="test-result" class="result"></div>
     </div>
-    
+
     <div class="test-section">
         <h3>3. Test Signup Form (with CSRF)</h3>
         <form id="signup-form">
@@ -53,32 +93,94 @@
     <script>
         let currentCsrfToken = '';
 
+        // Check if CSRF token is automatically available
+        async function checkAutoToken() {
+            try {
+                console.log('📞 Checking auto-generated CSRF token...');
+                console.log('📞 Current cookies:', document.cookie);
+
+                // First check if token is in cookies
+                const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+                    const [key, value] = cookie.trim().split('=');
+                    acc[key] = value;
+                    return acc;
+                }, {});
+
+                const cookieToken = cookies._csrf;
+                console.log('📞 Token from cookie:', cookieToken);
+
+                if (cookieToken) {
+                    currentCsrfToken = cookieToken;
+                    document.getElementById('csrf-input').value = currentCsrfToken;
+                    document.getElementById('token-result').innerHTML =
+                        `<div class="success">✅ Auto-generated CSRF Token found in cookie: ${currentCsrfToken.substring(0, 20)}...<br>
+                        This token was automatically set when the page loaded!</div>`;
+                } else {
+                    // Try to get current token from server
+                    const response = await fetch('/csrf-token/current', {
+                        method: 'GET',
+                        credentials: 'include'
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        currentCsrfToken = data.csrfToken;
+                        document.getElementById('csrf-input').value = currentCsrfToken;
+                        document.getElementById('token-result').innerHTML =
+                            `<div class="success">✅ Current CSRF Token: ${currentCsrfToken.substring(0, 20)}...<br>
+                            Source: ${data.source}</div>`;
+                    } else {
+                        document.getElementById('token-result').innerHTML =
+                            `<div class="error">❌ No auto-generated token found. The page may need to be refreshed.</div>`;
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error checking auto token:', error);
+                document.getElementById('token-result').innerHTML =
+                    `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
         async function getCsrfToken() {
             try {
+                console.log('📞 Requesting NEW CSRF token...');
+                console.log('📞 Current cookies before:', document.cookie);
+
                 const response = await fetch('/csrf-token', {
                     method: 'GET',
                     credentials: 'include'
                 });
+
+                console.log('📞 Response status:', response.status);
+                console.log('📞 Response headers:', [...response.headers.entries()]);
+
                 const data = await response.json();
-                
+                console.log('📞 Response data:', data);
+
+                // Check cookies after response
+                console.log('📞 Cookies after request:', document.cookie);
+
                 if (data.csrfToken) {
                     currentCsrfToken = data.csrfToken;
                     document.getElementById('csrf-input').value = currentCsrfToken;
-                    document.getElementById('token-result').innerHTML = 
-                        `<div class="success">✅ CSRF Token received: ${currentCsrfToken.substring(0, 20)}...</div>`;
+                    document.getElementById('token-result').innerHTML =
+                        `<div class="success">✅ NEW CSRF Token received: ${currentCsrfToken.substring(0, 20)}...<br>
+                        Cookie set: ${data.cookieSet}<br>
+                        Current cookies: ${document.cookie}</div>`;
                 } else {
-                    document.getElementById('token-result').innerHTML = 
+                    document.getElementById('token-result').innerHTML =
                         `<div class="error">❌ No CSRF token received</div>`;
                 }
             } catch (error) {
-                document.getElementById('token-result').innerHTML = 
+                console.error('❌ Error getting CSRF token:', error);
+                document.getElementById('token-result').innerHTML =
                     `<div class="error">❌ Error: ${error.message}</div>`;
             }
         }
 
         async function testCsrfProtection() {
             if (!currentCsrfToken) {
-                document.getElementById('test-result').innerHTML = 
+                document.getElementById('test-result').innerHTML =
                     `<div class="error">❌ Please get a CSRF token first</div>`;
                 return;
             }
@@ -96,18 +198,18 @@
                         test: 'data'
                     })
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (response.ok) {
-                    document.getElementById('test-result').innerHTML = 
+                    document.getElementById('test-result').innerHTML =
                         `<div class="success">✅ CSRF Protection Working! ${data.message}</div>`;
                 } else {
-                    document.getElementById('test-result').innerHTML = 
+                    document.getElementById('test-result').innerHTML =
                         `<div class="error">❌ CSRF Error: ${data.message || 'Unknown error'}</div>`;
                 }
             } catch (error) {
-                document.getElementById('test-result').innerHTML = 
+                document.getElementById('test-result').innerHTML =
                     `<div class="error">❌ Error: ${error.message}</div>`;
             }
         }
@@ -115,9 +217,9 @@
         // Handle signup form submission
         document.getElementById('signup-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             if (!currentCsrfToken) {
-                document.getElementById('signup-result').innerHTML = 
+                document.getElementById('signup-result').innerHTML =
                     `<div class="error">❌ Please get a CSRF token first</div>`;
                 return;
             }
@@ -136,24 +238,28 @@
                     credentials: 'include',
                     body: JSON.stringify(formObject)
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (response.ok) {
-                    document.getElementById('signup-result').innerHTML = 
+                    document.getElementById('signup-result').innerHTML =
                         `<div class="success">✅ Signup test successful! ${data.message || 'Form submitted'}</div>`;
                 } else {
-                    document.getElementById('signup-result').innerHTML = 
+                    document.getElementById('signup-result').innerHTML =
                         `<div class="error">❌ Signup error: ${data.message || 'Unknown error'}</div>`;
                 }
             } catch (error) {
-                document.getElementById('signup-result').innerHTML = 
+                document.getElementById('signup-result').innerHTML =
                     `<div class="error">❌ Error: ${error.message}</div>`;
             }
         });
 
-        // Auto-get CSRF token when page loads
-        window.addEventListener('load', getCsrfToken);
+        // Auto-check for CSRF token when page loads
+        window.addEventListener('load', () => {
+            console.log('🚀 Page loaded, checking for auto-generated CSRF token...');
+            checkAutoToken();
+        });
     </script>
 </body>
+
 </html>

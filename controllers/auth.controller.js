@@ -39,8 +39,7 @@ const googleAuthController = async (req, res) => {
   }
 
 const registerUserController = async (req, res) => {
-  const { name, email, password, role } = req.body;
-  
+  const { name, email, password, role } = req.body;  
   // Check if this is an AJAX request
   const isAjax = req.xhr || 
                  (req.headers.accept && req.headers.accept.indexOf('json') > -1) ||

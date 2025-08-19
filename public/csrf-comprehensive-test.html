@@ -183,6 +183,7 @@
             <h3>5. 📊 Test Results & Debug Info</h3>
             <button onclick="showDebugInfo()">Show Debug Info</button>
             <button onclick="testWithoutToken()">Test Without Token (Should Fail)</button>
+            <button onclick="testSignupWithoutToken()">Test Signup Without Token (Should Fail)</button>
             <div id="debug-result" class="result">Click "Show Debug Info" to see current state...</div>
         </div>
         
@@ -443,7 +444,8 @@
             log('⚠️ Testing request without CSRF token (should fail)...', 'warning');
             
             try {
-                const response = await fetch('/test-csrf', {
+                // First, test with the new endpoint specifically designed for this test
+                const response = await fetch('/test-csrf-no-token', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -464,11 +466,49 @@
                     log('⚠️ Unexpected response: ' + response.status, 'warning');
                     updateResult('debug-result', 
                         '⚠️ Unexpected response: ' + response.status + '\n' +
-                        'Expected 403 Forbidden for request without CSRF token', 'warning');
+                        'Expected 403 Forbidden for request without CSRF token\n' +
+                        'Response: ' + await response.text(), 'warning');
                 }
             } catch (error) {
                 log('❌ Error testing without token: ' + error.message, 'error');
                 updateResult('debug-result', '❌ Error testing without token: ' + error.message, 'error');
+            }
+        }
+
+        async function testSignupWithoutToken() {
+            log('⚠️ Testing signup without CSRF token (should fail)...', 'warning');
+            
+            try {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        name: 'Test User No Token',
+                        email: 'notoken@example.com',
+                        password: 'TestPass123!'
+                    })
+                });
+                
+                if (response.status === 403) {
+                    log('✅ CSRF protection working correctly - blocked signup without token', 'success');
+                    updateResult('debug-result', 
+                        '✅ CSRF protection working correctly!\n' +
+                        'Signup request without token was blocked with status 403\n' +
+                        'This confirms CSRF protection is active on signup endpoint.', 'success');
+                } else {
+                    log('⚠️ Unexpected signup response: ' + response.status, 'warning');
+                    const responseText = await response.text();
+                    updateResult('debug-result', 
+                        '⚠️ Unexpected signup response: ' + response.status + '\n' +
+                        'Expected 403 Forbidden for request without CSRF token\n' +
+                        'Response: ' + responseText, 'warning');
+                }
+            } catch (error) {
+                log('❌ Error testing signup without token: ' + error.message, 'error');
+                updateResult('debug-result', '❌ Error testing signup without token: ' + error.message, 'error');
             }
         }
 

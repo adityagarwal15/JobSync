@@ -235,7 +235,7 @@ app.use(generalRateLimit);
 
 // ========== ROUTES ==========
 app.get('/', optionalAuth, (req, res) => {
-  res.render('index.ejs');
+  res.render('index.ejs', { user: req.user || null });
 });
 
 app.use('/', authRouter);

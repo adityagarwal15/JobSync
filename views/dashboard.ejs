@@ -44,6 +44,30 @@
 
     html {
       background: #000000;
+      /* Enable smooth scrolling */
+      scroll-behavior: smooth;
+    }
+
+    /* Lenis Smooth Scroll Support */
+    html.lenis,
+    html.lenis body {
+      height: auto;
+    }
+
+    .lenis.lenis-smooth {
+      scroll-behavior: auto !important;
+    }
+
+    .lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+
+    .lenis.lenis-smooth iframe {
+      pointer-events: none;
     }
 
     body {
@@ -56,6 +80,28 @@
       color: var(--color-text);
       min-height: 100vh;
       line-height: 1.6;
+      /* Enable smooth scrolling behavior */
+      scroll-behavior: smooth;
+      /* Add padding to prevent content from hiding under navbar */
+      padding-top: 90px;
+    }
+
+    /* Custom Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
     }
 
 
@@ -64,23 +110,77 @@
       background: var(--color-bg);
     }
 
-   
- 
-   /* Navbar */
-/* Dashboard-specific navbar alignment */
-    .dashboard nav {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
+    /* Navbar Background Fix - Modern Glass Effect */
+    .dashboard nav,
+    nav,
+    body .dashboard nav,
+    body nav {
+      position: fixed !important;
+      top: 0 !important;
+      width: 100% !important;
+      z-index: 1000 !important;
+      background: rgba(22, 27, 34, 0.85) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      transition: all 0.3s ease !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+    }
 
+    /* Remove the black pseudo-element overlay */
+    .dashboard nav::before,
+    nav::before {
+      display: none;
+    }
+
+    .dashboard nav.scrolled,
+    nav.scrolled {
+      background: rgba(22, 27, 34, 0.95) !important;
+      backdrop-filter: blur(25px) !important;
+      -webkit-backdrop-filter: blur(25px) !important;
+      border-bottom: 1px solid rgba(220, 38, 38, 0.3) !important;
+      box-shadow: 0 4px 25px rgba(220, 38, 38, 0.1) !important;
+    }
+
+    /* Dashboard-specific navbar layout improvements */
+    .dashboard nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      height: 70px;
+    }
+
+    .dashboard nav .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 0 0 auto;
+    }
+
+    .dashboard nav .logo img {
+      width: 50px;
+      height: auto;
+    }
+
+    .dashboard nav .site-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-accent-red);
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+    }
+
+    .dashboard nav .clock {
+      flex: 1;
+      text-align: center;
     }
 
     .dashboard .user-auth {
-      grid-column: 3;
-      justify-self: end;
       display: flex;
       align-items: center;
       gap: 1rem;
+      flex: 0 0 auto;
     }
 
     .user-avatar {
@@ -121,10 +221,11 @@
     /* Header Section */
     .header-section {
       position: relative;
-      padding: 3rem 1rem 4rem;
+      padding: 5rem 1rem 4rem;
       overflow: hidden;
       text-align: center;
       margin-bottom: 2rem;
+      margin-top: 2rem;
     }
 
     .header-section::before {
@@ -611,7 +712,7 @@
     .job-card {
       /*background: var(--color-card);*/
       background: rgba(38, 38, 45, 0.65);
-      backdrop-filter: blur(12px) ;
+      backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-radius: 16px;
       padding: 1.5rem;
@@ -1120,7 +1221,7 @@
 
 <body>
   <!-- Navbar -->
- 
+
   <div class="dashboard">
     <%- include('partials/navbar', { page: 'dashboard' , user: user }) %>
   </div>
@@ -1283,6 +1384,10 @@
     </div>
   </div>
 
+  <!-- External Scripts for Smooth Scrolling -->
+  <script src="https://unpkg.com/lenis@1.1.4/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
   <script>
     // Global variables
     let currentJobs = [];
@@ -1305,6 +1410,17 @@
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Navbar scroll behavior - fix the selector to match actual navbar
+    const nav = document.querySelector('nav');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
       }
     });
 
@@ -2024,6 +2140,49 @@
       } finally {
         loadingDiv.style.display = 'none';
       }
+    });
+
+    // Initialize Smooth Scrolling like in index.ejs
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // Make lenis available globally for smooth scrolling to elements
+    window.lenisScrollTo = (target) => {
+      lenis.scrollTo(target, {
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+      });
+    };
+
+    // Add smooth scroll for any anchor links
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute("href");
+        if (window.lenisScrollTo) {
+          window.lenisScrollTo(targetId);
+        } else {
+          document.querySelector(targetId).scrollIntoView({
+            behavior: "smooth",
+          });
+        }
+      });
     });
   </script>
 

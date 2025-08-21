@@ -64,23 +64,90 @@
       background: var(--color-bg);
     }
 
-   
- 
-   /* Navbar */
-/* Dashboard-specific navbar alignment */
+
+
+    /* Navbar */
+    /* Dashboard-specific navbar styling */
     .dashboard nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--color-navbar);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
+      z-index: 1000;
+      transition: all 0.3s ease;
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
-
+      padding: 1rem 2rem;
+      height: 70px;
     }
 
+    /* Dashboard navbar hover effect */
+    .dashboard nav:hover {
+      background: rgba(22, 27, 34, 0.98);
+      border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+      box-shadow: var(--shadow-red);
+    }
+
+    /* Dashboard navbar logo section */
+    .dashboard nav .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      grid-column: 1;
+    }
+
+    .dashboard nav .logo img {
+      width: 50px;
+      height: auto;
+      filter: brightness(1.1);
+    }
+
+    .dashboard nav .site-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-accent-red);
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+    }
+
+    /* Dashboard navbar center section */
+    .dashboard nav .clock {
+      grid-column: 2;
+      text-align: center;
+      color: var(--color-text);
+      font-weight: 500;
+    }
+
+    /* Dashboard navbar user auth section */
     .dashboard .user-auth {
       grid-column: 3;
       justify-self: end;
       display: flex;
       align-items: center;
       gap: 1rem;
+    }
+
+    /* Dashboard navbar auth button */
+    .dashboard .auth-button {
+      background: linear-gradient(135deg, var(--color-accent-red), var(--color-accent-red-hover));
+      color: var(--color-text);
+      padding: 0.6rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+
+    .dashboard .auth-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-red-lg);
+      border-color: var(--color-accent-red);
     }
 
     .user-avatar {
@@ -110,6 +177,11 @@
     .user-avatar:hover {
       box-shadow: var(--shadow-red-lg);
       transform: scale(1.05);
+    }
+
+    /* Dashboard body padding for fixed navbar */
+    body {
+      padding-top: 70px;
     }
 
     .container {
@@ -611,7 +683,7 @@
     .job-card {
       /*background: var(--color-card);*/
       background: rgba(38, 38, 45, 0.65);
-      backdrop-filter: blur(12px) ;
+      backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-radius: 16px;
       padding: 1.5rem;
@@ -986,6 +1058,60 @@
       }
     }
 
+    /* Dashboard Navbar Mobile Responsive */
+    @media (max-width: 768px) {
+      .dashboard nav {
+        padding: 1rem;
+        height: 60px;
+        grid-template-columns: auto 1fr auto;
+      }
+
+      .dashboard nav .logo img {
+        width: 40px;
+      }
+
+      .dashboard nav .site-name {
+        font-size: 1.2rem;
+      }
+
+      .dashboard nav .clock {
+        font-size: 0.9rem;
+      }
+
+      .dashboard .auth-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      body {
+        padding-top: 60px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dashboard nav {
+        padding: 0.5rem 1rem;
+        height: 55px;
+      }
+
+      .dashboard nav .site-name {
+        display: none;
+      }
+
+      .dashboard nav .clock {
+        font-size: 0.8rem;
+      }
+
+      .dashboard .auth-button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      body {
+        padding-top: 55px;
+      }
+    }
+
     /* Mobile Adjustments */
     @media (max-width: 768px) {
       .main-title {
@@ -1120,7 +1246,7 @@
 
 <body>
   <!-- Navbar -->
- 
+
   <div class="dashboard">
     <%- include('partials/navbar', { page: 'dashboard' , user: user }) %>
   </div>

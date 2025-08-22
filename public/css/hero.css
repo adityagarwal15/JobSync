@@ -41,6 +41,8 @@
   display: flex;
   align-items: flex-end;
   flex-wrap: nowrap;
+  flex-direction: column;
+  text-align: center;
 }
 
 .hero-description {
@@ -76,6 +78,16 @@ p#site-intro {
   max-width: 500px; 
 }
 
+/* Default: tagline hidden (desktop) */
+.hero-tagline {
+  display: none;
+  font-size: 1.5vw;
+  color: #fff;
+  margin-top: 0.5em;
+  font-family: var(--font-primary);
+  opacity: 0.8;
+}
+
 /* Mobile adjustments */
 @media (max-width: 900px) {
   .hero-header {
@@ -101,6 +113,12 @@ p#site-intro {
     justify-content: center;
     text-align: center;
     flex-direction: column;
+  }
+
+  /* ✅ Show tagline only in mobile */
+  .hero-tagline {
+    display: block;
+    font-size: 4vw;
   }
 
   .hero-img {

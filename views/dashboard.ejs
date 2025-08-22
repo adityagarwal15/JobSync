@@ -42,51 +42,7 @@
       box-sizing: border-box;
     }
 
-    html {
-      background: #000000;
-      /* Enable smooth scrolling */
-      scroll-behavior: smooth;
-    }
-
-    /* Lenis Smooth Scroll Support */
-    html.lenis,
-    html.lenis body {
-      height: auto;
-    }
-
-    .lenis.lenis-smooth {
-      scroll-behavior: auto !important;
-    }
-
-    .lenis.lenis-smooth [data-lenis-prevent] {
-      overscroll-behavior: contain;
-    }
-
-    .lenis.lenis-stopped {
-      overflow: hidden;
-    }
-
-    .lenis.lenis-smooth iframe {
-      pointer-events: none;
-    }
-
-    body {
-      font-family: var(--font-primary);
-      background: linear-gradient(rgba(0, 0, 0, 0.2),
-          rgba(0, 0, 0, 0.2)),
-        url("../assets/grad.png") center/cover no-repeat;
-      position: relative;
-      background-attachment: fixed;
-      color: var(--color-text);
-      min-height: 100vh;
-      line-height: 1.6;
-      /* Enable smooth scrolling behavior */
-      scroll-behavior: smooth;
-      /* Add padding to prevent content from hiding under navbar */
-      padding-top: 90px;
-    }
-
-    /* Custom Scrollbar Styling */
+    /* Custom Scrollbar Styles */
     ::-webkit-scrollbar {
       width: 7px;
     }
@@ -100,8 +56,20 @@
       background-color: rgba(255, 255, 255, 0.6);
     }
 
-    ::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.1);
+    html {
+      background: #000000;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      background: linear-gradient(rgba(0, 0, 0, 0.2),
+          rgba(0, 0, 0, 0.2)),
+        url("../assets/grad.png") center/cover no-repeat;
+      position: relative;
+      background-attachment: fixed;
+      color: var(--color-text);
+      min-height: 100vh;
+      line-height: 1.6;
     }
 
 
@@ -110,57 +78,47 @@
       background: var(--color-bg);
     }
 
-    /* Navbar Background Fix - Modern Glass Effect */
-    .dashboard nav,
-    nav,
-    body .dashboard nav,
-    body nav {
-      position: fixed !important;
-      top: 0 !important;
-      width: 100% !important;
-      z-index: 1000 !important;
-      background: rgba(22, 27, 34, 0.85) !important;
-      backdrop-filter: blur(20px) !important;
-      -webkit-backdrop-filter: blur(20px) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-      transition: all 0.3s ease !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
-    }
 
-    /* Remove the black pseudo-element overlay */
-    .dashboard nav::before,
-    nav::before {
-      display: none;
-    }
 
-    .dashboard nav.scrolled,
-    nav.scrolled {
-      background: rgba(22, 27, 34, 0.95) !important;
-      backdrop-filter: blur(25px) !important;
-      -webkit-backdrop-filter: blur(25px) !important;
-      border-bottom: 1px solid rgba(220, 38, 38, 0.3) !important;
-      box-shadow: 0 4px 25px rgba(220, 38, 38, 0.1) !important;
-    }
-
-    /* Dashboard-specific navbar layout improvements */
+    /* Navbar */
+    /* Dashboard-specific navbar styling */
     .dashboard nav {
-      display: flex;
-      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--color-navbar);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
       padding: 1rem 2rem;
       height: 70px;
     }
 
+    /* Dashboard navbar hover effect */
+    .dashboard nav:hover {
+      background: rgba(22, 27, 34, 0.98);
+      border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+      box-shadow: var(--shadow-red);
+    }
+
+    /* Dashboard navbar logo section */
     .dashboard nav .logo {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      flex: 0 0 auto;
+      grid-column: 1;
     }
 
     .dashboard nav .logo img {
       width: 50px;
       height: auto;
+      filter: brightness(1.1);
     }
 
     .dashboard nav .site-name {
@@ -171,16 +129,39 @@
       text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
     }
 
+    /* Dashboard navbar center section */
     .dashboard nav .clock {
-      flex: 1;
+      grid-column: 2;
       text-align: center;
+      color: var(--color-text);
+      font-weight: 500;
     }
 
+    /* Dashboard navbar user auth section */
     .dashboard .user-auth {
+      grid-column: 3;
+      justify-self: end;
       display: flex;
       align-items: center;
       gap: 1rem;
-      flex: 0 0 auto;
+    }
+
+    /* Dashboard navbar auth button */
+    .dashboard .auth-button {
+      background: linear-gradient(135deg, var(--color-accent-red), var(--color-accent-red-hover));
+      color: var(--color-text);
+      padding: 0.6rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+
+    .dashboard .auth-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-red-lg);
+      border-color: var(--color-accent-red);
     }
 
     .user-avatar {
@@ -212,6 +193,11 @@
       transform: scale(1.05);
     }
 
+    /* Dashboard body padding for fixed navbar */
+    body {
+      padding-top: 70px;
+    }
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -221,11 +207,10 @@
     /* Header Section */
     .header-section {
       position: relative;
-      padding: 5rem 1rem 4rem;
+      padding: 3rem 1rem 4rem;
       overflow: hidden;
       text-align: center;
       margin-bottom: 2rem;
-      margin-top: 2rem;
     }
 
     .header-section::before {
@@ -557,17 +542,15 @@
 
     /* Custom scrollbar for filter content */
     .filter-content::-webkit-scrollbar {
-      width: 6px;
+      width: 7px;
     }
 
     .filter-content::-webkit-scrollbar-track {
-      background: var(--color-bg);
-      border-radius: 3px;
+      background: transparent;
     }
 
     .filter-content::-webkit-scrollbar-thumb {
-      background: var(--color-border);
-      border-radius: 3px;
+      background-color: rgba(255, 255, 255, 0.6);
     }
 
     .filter-content::-webkit-scrollbar-thumb:hover {
@@ -1087,6 +1070,60 @@
       }
     }
 
+    /* Dashboard Navbar Mobile Responsive */
+    @media (max-width: 768px) {
+      .dashboard nav {
+        padding: 1rem;
+        height: 60px;
+        grid-template-columns: auto 1fr auto;
+      }
+
+      .dashboard nav .logo img {
+        width: 40px;
+      }
+
+      .dashboard nav .site-name {
+        font-size: 1.2rem;
+      }
+
+      .dashboard nav .clock {
+        font-size: 0.9rem;
+      }
+
+      .dashboard .auth-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      body {
+        padding-top: 60px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dashboard nav {
+        padding: 0.5rem 1rem;
+        height: 55px;
+      }
+
+      .dashboard nav .site-name {
+        display: none;
+      }
+
+      .dashboard nav .clock {
+        font-size: 0.8rem;
+      }
+
+      .dashboard .auth-button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      body {
+        padding-top: 55px;
+      }
+    }
+
     /* Mobile Adjustments */
     @media (max-width: 768px) {
       .main-title {
@@ -1384,10 +1421,6 @@
     </div>
   </div>
 
-  <!-- External Scripts for Smooth Scrolling -->
-  <script src="https://unpkg.com/lenis@1.1.4/dist/lenis.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
   <script>
     // Global variables
     let currentJobs = [];
@@ -1410,17 +1443,6 @@
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
-      }
-    });
-
-    // Navbar scroll behavior - fix the selector to match actual navbar
-    const nav = document.querySelector('nav');
-
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 20) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
       }
     });
 
@@ -2140,49 +2162,6 @@
       } finally {
         loadingDiv.style.display = 'none';
       }
-    });
-
-    // Initialize Smooth Scrolling like in index.ejs
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
-    // Make lenis available globally for smooth scrolling to elements
-    window.lenisScrollTo = (target) => {
-      lenis.scrollTo(target, {
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-      });
-    };
-
-    // Add smooth scroll for any anchor links
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener("click", function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute("href");
-        if (window.lenisScrollTo) {
-          window.lenisScrollTo(targetId);
-        } else {
-          document.querySelector(targetId).scrollIntoView({
-            behavior: "smooth",
-          });
-        }
-      });
     });
   </script>
 

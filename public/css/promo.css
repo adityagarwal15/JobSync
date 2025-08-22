@@ -45,10 +45,6 @@
 }
 
 @media (max-width: 900px) {
-  .promo {
-    height: 70vh;
-  }
-
   .promo h2 {
     font-size: 4vw;
   }

@@ -2,7 +2,7 @@
   width: 100%;
   height: max-content;
   background: var(--color-bg-secondary);
-  padding-bottom: 12em;
+  padding-bottom: 3em;
   border-radius: 12px;
 }
 
@@ -13,13 +13,8 @@
   z-index: 2;
 }
 
-/* Default (small padding) */
 .prices-header {
   padding: 1em 0 10em 0;
-}
-/* Variant (large padding) */
-.prices-header.large-padding {
-  padding: 20em 0 10em 0;
 }
 
 .prices-col {

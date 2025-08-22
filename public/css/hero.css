@@ -1,6 +1,7 @@
-/* -----------------------------
-   HERO (merged)
------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap');
+
+
 .hero {
   position: relative;
   width: 100vw;
@@ -11,7 +12,7 @@
   overflow: hidden;
   margin: 0;
   padding: 0;
-  padding-top: 40px; /* reduced from 160px */
+  padding-top: 40px;
 }
 
 .hero-img {
@@ -39,7 +40,10 @@
   z-index: 1;
 }
 
-.hero-col:nth-child(1) { flex: 6; }
+.hero-col:nth-child(1) {
+  flex: 6;
+}
+
 .hero-col:nth-child(2) {
   flex: 2;
   padding: 0.5em;
@@ -58,19 +62,15 @@ p#site-intro {
   text-transform: uppercase;
 }
 
-/* -----------------------------
-   RESPONSIVE
-   Step 1: ≤900px — center the layout
------------------------------ */
 @media (max-width: 900px) {
   .hero {
+    
     justify-content: center;
     align-items: center;
-    padding-top: 120px; /* leaves room if job-recommendations is shown */
+    margin-top: 120px;
   }
 
   .hero-header {
-    /* stacked & centered */
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -85,9 +85,15 @@ p#site-intro {
     padding: 0.5em 0;
   }
 
-  .hero-header h1 { font-size: 15vw; }
+  .hero-header h1 {
+    font-family: "Manrope", sans-serif;
+    font-style: normal;
+    font-size: 15vw;
+  }
 
   p#site-intro {
+    font-family: "Inter", sans-serif;
+    font-style: italic;
     margin-top: 1em;
     text-indent: 0;
     font-size: 0.95rem;
@@ -95,20 +101,20 @@ p#site-intro {
     max-width: 600px;
   }
 
-  .hero-img { transform: rotate(-170deg); }
+  .hero-img {
+    transform: rotate(-170deg);
+  }
 
-  /* Sizing tweaks carried over */
-  .resume-upload { width: 80%; }
+  .resume-upload {
+    width: 80%;
+  }
+
   .job-recommendations {
     width: 95%;
-    top: 60px; /* smaller navbar spacing on mobile */
+    top: 60px;
   }
 }
 
-/* -----------------------------
-   RESPONSIVE
-   Step 2: ≤600px — allow lower positioning variant
------------------------------ */
 @media (max-width: 600px) {
   .hero-header {
     position: absolute;
@@ -116,9 +122,6 @@ p#site-intro {
   }
 }
 
-/* -----------------------------
-   RESUME UPLOAD OVERLAY
------------------------------ */
 .resume-upload {
   text-align: center;
   margin-top: 0;
@@ -144,8 +147,13 @@ p#site-intro {
   gap: 8px;
 }
 
-.upload-label ion-icon { font-size: 24px; }
-#resumeInput { display: none; }
+.upload-label ion-icon {
+  font-size: 24px;
+}
+
+#resumeInput {
+  display: none;
+}
 
 #upload-status {
   font-size: 14px;
@@ -153,17 +161,13 @@ p#site-intro {
   margin-top: 5px;
 }
 
-/* -----------------------------
-   JOB RECOMMENDATIONS OVERLAY
-   (Optional — keep for functionality)
------------------------------ */
 .job-recommendations {
   text-align: center;
   padding: 20px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   width: 90%;
-  position: fixed;         /* as in your version */
+  position: fixed;
   top: 80px;
   left: 50%;
   transform: translateX(-50%);
@@ -179,9 +183,6 @@ p#site-intro {
   color: white;
 }
 
-/* -----------------------------
-   CHATBOT ICON
------------------------------ */
 .chatbot-icon {
   position: fixed;
   bottom: 20px;

@@ -10,12 +10,11 @@ const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
-const bcrypt = require("bcrypt");
+
 
 // ✅ node-fetch dynamic import fix for Node.js v20+
 const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
-const User = require("./models/user.js");
 const Contact = require("./models/contact.js");
 const Job = require("./models/job.js");
 const authRouter = require("./routes/auth.routes.js");

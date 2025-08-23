@@ -465,9 +465,9 @@
       transition: transform 0.3s ease;
     }
 
-    .btn:hover .btn-icon {
+    /* .btn:hover .btn-icon {
       transform: translateX(5px);
-    }
+    } */
 
     /* Enhanced help section with glassmorphism */
     .help-section {
@@ -1226,8 +1226,8 @@
         const tl = gsap.timeline({ paused: true });
 
         tl.to(btn, {
-          scale: 1.08,
-          y: -8,
+          scale: 1,
+          y: -4,
           duration: 0.3,
           ease: "power2.out"
         });

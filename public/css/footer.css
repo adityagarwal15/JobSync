@@ -1,4 +1,4 @@
-footer {
+section#contact {
   position: relative;
   width: 100%;
   display: flex;
@@ -81,11 +81,17 @@ footer {
   color: #ff6b00;
 }
 
+.site-footer {
+  padding: 2em 1.5em;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .footer-copyright {
   width: 100%;
-  padding: 0.5em 1.5em 2em 1.5em;
   display: flex;
   justify-content: space-between;
+  max-width: 1600px; /* Constrain width on large screens */
+  margin: 0 auto; /* Center the content */
 }
 
 .footer-copyright p {

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>404 - Page Not Found | JOBSYNC</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --primary-red: #fc002d;
@@ -40,8 +43,20 @@
       justify-content: center;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      position: relative;
     }
-
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('../assets/grad.png') center/cover no-repeat;
+      opacity: 0.4;
+      z-index: 0;
+      pointer-events: none;
+    }
     /* Advanced background system with particle effects */
     .background-system {
       position: fixed;
@@ -53,42 +68,6 @@
       overflow: hidden;
     }
 
-    .gradient-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.4;
-      animation: orbFloat 25s ease-in-out infinite;
-    }
-
-    .orb-1 {
-      width: 800px;
-      height: 800px;
-      background: radial-gradient(circle, var(--primary-red) 0%, transparent 70%);
-      top: -30%;
-      right: -20%;
-      animation-delay: 0s;
-    }
-
-    .orb-2 {
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, var(--primary-orange) 0%, transparent 70%);
-      bottom: -20%;
-      left: -15%;
-      animation-delay: -5s;
-      animation-direction: reverse;
-    }
-
-    .orb-3 {
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, var(--accent-orange) 0%, transparent 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      animation-delay: -10s;
-    }
 
     .mesh-gradient {
       position: absolute;
@@ -96,7 +75,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: 
+      background:
         radial-gradient(circle at 20% 20%, rgba(252, 0, 45, 0.15) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(255, 107, 0, 0.12) 0%, transparent 50%),
         radial-gradient(circle at 40% 70%, rgba(255, 133, 52, 0.08) 0%, transparent 50%);
@@ -123,22 +102,57 @@
     }
 
     @keyframes orbFloat {
-      0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-      25% { transform: translate(60px, -40px) scale(1.1) rotate(90deg); }
-      50% { transform: translate(-40px, 60px) scale(0.9) rotate(180deg); }
-      75% { transform: translate(30px, 30px) scale(1.05) rotate(270deg); }
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+      }
+
+      25% {
+        transform: translate(60px, -40px) scale(1.1) rotate(90deg);
+      }
+
+      50% {
+        transform: translate(-40px, 60px) scale(0.9) rotate(180deg);
+      }
+
+      75% {
+        transform: translate(30px, 30px) scale(1.05) rotate(270deg);
+      }
     }
 
     @keyframes meshMove {
-      0%, 100% { opacity: 0.3; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.05); }
+
+      0%,
+      100% {
+        opacity: 0.3;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+      }
     }
 
     @keyframes particleFloat {
-      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-      10% { opacity: 0.6; }
-      90% { opacity: 0.6; }
-      100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.6;
+      }
+
+      90% {
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateY(-100px) translateX(100px);
+        opacity: 0;
+      }
     }
 
     /* Main container with advanced grid */
@@ -156,6 +170,8 @@
 
     /* Visual section with 3D effects */
     .visual-section {
+      margin-bottom: 10px;
+      margin-left: 100px;
       display: flex;
       flex-direction: column;
       align-items: first baseline;
@@ -174,11 +190,11 @@
       font-size: clamp(10rem, 15vw, 20rem);
       font-weight: 800;
       line-height: 0.75;
-      background: linear-gradient(135deg, 
-        var(--primary-red) 0%, 
-        var(--primary-orange) 30%, 
-        var(--accent-orange) 60%, 
-        var(--primary-red) 100%);
+      background: linear-gradient(135deg,
+          var(--primary-red) 0%,
+          var(--primary-orange) 30%,
+          var(--accent-orange) 60%,
+          var(--primary-red) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -209,12 +225,12 @@
       left: 0;
       width: 100%;
       height: 6px;
-      background: linear-gradient(90deg, 
-        transparent, 
-        var(--primary-red), 
-        var(--primary-orange), 
-        var(--accent-orange), 
-        transparent);
+      background: linear-gradient(90deg,
+          transparent,
+          var(--primary-red),
+          var(--primary-orange),
+          var(--accent-orange),
+          transparent);
       border-radius: 3px;
       animation: underlineFlow 2s ease-in-out infinite;
     }
@@ -242,61 +258,60 @@
       transform: translateY(-50%);
     }
 
-    .floating-elements {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
-    .floating-card {
-      position: absolute;
-      background: var(--glass-bg);
-      backdrop-filter: blur(30px);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      padding: 1.5rem;
-      box-shadow: var(--glass-shadow);
-      animation: floatCard 12s ease-in-out infinite;
-    }
-
-    .floating-card-1 {
-      top: 20%;
-      right: -10%;
-      width: 120px;
-      height: 80px;
-      animation-delay: 0s;
-    }
-
-    .floating-card-2 {
-      bottom: 30%;
-      left: -15%;
-      width: 100px;
-      height: 100px;
-      animation-delay: -4s;
-    }
-
     @keyframes numberPulse {
-      0%, 100% { transform: scale(1) rotateX(0deg); }
-      50% { transform: scale(1.02) rotateX(5deg); }
+
+      0%,
+      100% {
+        transform: scale(1) rotateX(0deg);
+      }
+
+      50% {
+        transform: scale(1.02) rotateX(5deg);
+      }
     }
 
     @keyframes glowPulse {
-      0%, 100% { opacity: 0.3; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.05); }
+
+      0%,
+      100% {
+        opacity: 0.3;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+      }
     }
 
     @keyframes underlineFlow {
-      0%, 100% { transform: translateX(-100%); opacity: 0; }
-      50% { transform: translateX(0); opacity: 1; }
+
+      0%,
+      100% {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+
+      50% {
+        transform: translateX(0);
+        opacity: 1;
+      }
     }
 
     @keyframes floatCard {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      25% { transform: translateY(-20px) rotate(5deg); }
-      75% { transform: translateY(20px) rotate(-5deg); }
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      25% {
+        transform: translateY(-20px) rotate(5deg);
+      }
+
+      75% {
+        transform: translateY(20px) rotate(-5deg);
+      }
     }
 
     /* Content section with advanced glassmorphism */
@@ -313,7 +328,7 @@
       border: 1px solid var(--glass-border);
       border-radius: 32px;
       padding: 4rem;
-      box-shadow: 
+      box-shadow:
         var(--glass-shadow),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
       position: relative;
@@ -327,10 +342,10 @@
       left: 0;
       right: 0;
       height: 1px;
-      background: linear-gradient(90deg, 
-        transparent, 
-        rgba(255, 255, 255, 0.3), 
-        transparent);
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent);
     }
 
     .error-title {
@@ -397,10 +412,10 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, 
-        transparent, 
-        rgba(255, 255, 255, 0.2), 
-        transparent);
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent);
       transition: left 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
@@ -409,12 +424,12 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, 
-        var(--primary-red), 
-        var(--primary-orange), 
-        var(--accent-orange));
+      background: linear-gradient(135deg,
+          var(--primary-red),
+          var(--primary-orange),
+          var(--accent-orange));
       color: white;
-      box-shadow: 
+      box-shadow:
         0 20px 60px rgba(252, 0, 45, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -422,7 +437,7 @@
 
     .btn-primary:hover {
       transform: translateY(-6px) scale(1.05);
-      box-shadow: 
+      box-shadow:
         0 30px 80px rgba(252, 0, 45, 0.6),
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
@@ -431,7 +446,7 @@
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       color: var(--text-primary);
-      box-shadow: 
+      box-shadow:
         0 12px 40px rgba(0, 0, 0, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
@@ -440,7 +455,7 @@
       background: rgba(255, 255, 255, 0.1);
       border-color: rgba(255, 107, 0, 0.4);
       transform: translateY(-4px) scale(1.02);
-      box-shadow: 
+      box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
@@ -520,22 +535,20 @@
       transform: scale(1.1);
     }
 
-      
+
 
     /* Ultra-responsive design */
-    
+
     /* Ultra-wide screens (1920px+) */
-    @media (min-width: 1920px) {
-      .error-container {
-        max-width: 1800px;
-        gap: 10rem;
-        padding: 5rem;
+    @media(min-width: 500px){
+      .error-number{
+        margin-bottom: 30px;
       }
-      
+    }
       .content-card {
         padding: 5rem;
       }
-      
+
       .help-card {
         padding: 4rem;
       }
@@ -563,7 +576,7 @@
         gap: 4rem;
         padding: 2.5rem;
       }
-      
+
       .content-card {
         padding: 3rem;
       }
@@ -741,7 +754,7 @@
         gap: 1rem;
       }
 
-      .help-link{
+      .help-link {
         padding: 2rem;
         border-radius: 16px;
       }
@@ -950,13 +963,21 @@
       }
     }
 
+    /* Custom styles for width less than 500px */
+    @media (max-width: 500px) {
+      .error-container {
+        margin-top: 30vh;
+        display: block;
+      }
+    }
 
-.help-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-top: 20px;
-}
+
+    .help-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 20px;
+    }
 
 
     /* Landscape orientation optimizations */
@@ -1006,7 +1027,9 @@
     }
 
     /* High DPI displays optimizations */
-    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    @media (-webkit-min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi) {
+
       .error-number,
       .btn,
       .help-link {
@@ -1017,7 +1040,10 @@
 
     /* Accessibility improvements */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+
+      *,
+      *::before,
+      *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
@@ -1041,17 +1067,18 @@
 
     /* Print styles */
     @media print {
+
       .background-system,
       .floating-elements,
       .particle-system {
         display: none;
       }
-      
+
       body {
         background: white;
         color: black;
       }
-      
+
       .error-number {
         color: black;
         -webkit-text-fill-color: black;
@@ -1059,33 +1086,27 @@
     }
   </style>
 </head>
+
 <body>
   <div class="background-system">
     <div class="mesh-gradient"></div>
-    <div class="gradient-orb orb-1"></div>
-    <div class="gradient-orb orb-2"></div>
-    <div class="gradient-orb orb-3"></div>
     <div class="particle-system" id="particleSystem"></div>
   </div>
 
   <main class="error-container">
     <section class="visual-section">
-      <div class="floating-elements">
-        <div class="floating-card floating-card-1"></div>
-        <div class="floating-card floating-card-2"></div>
-      </div>
-      
+
       <div class="error-number-container">
         <div class="error-number" id="errorNumber">404</div>
       </div>
-      <div class="visual-subtitle" id="visualSubtitle">Connection Lost</div>
+      <div class="visual-subtitle" id="visualSubtitle">Page not FOund!!</div>
     </section>
 
     <section class="content-section">
       <div class="content-card" id="contentCard">
         <h1 class="error-title" id="errorTitle">Page Not Found</h1>
         <p class="error-description" id="errorDescription">
-          The page you're looking for has been moved, deleted, or doesn't exist. 
+          The page you're looking for has been moved, deleted, or doesn't exist.
           This might happen when URLs change or when you follow an outdated link.
           <br><br>
           Error code: <span class="error-code">404_NOT_FOUND</span>
@@ -1093,49 +1114,19 @@
 
         <div class="action-group">
           <a href="/" class="btn btn-primary" id="homeButton">
-            Return to Dashboard
-            <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-              <polyline points="9,22 9,12 15,12 15,22"/>
-            </svg>
-          </a>
-          <a href="/search" class="btn btn-secondary" id="searchButton">
-            Search Jobs
-            <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"/>
-              <path d="m21 21-4.35-4.35"/>
+            Return to Home
+            <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9,22 9,12 15,12 15,22" />
             </svg>
           </a>
         </div>
       </div>
     </section>
 
-     <section class="help-section">
-      <div class="help-card" id="helpCard">
-        <h2 class="help-title">Need assistance?</h2>
-        <div class="help-links">
-          <a href="/contact" class="help-link" data-help="contact">
-            <svg class="help-icon" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
-            </svg>
-            Contact Support
-          </a>
-          <a href="/sitemap" class="help-link" data-help="sitemap">
-            <svg class="help-icon" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M9 3L5 6.99h3V14h2V6.99h3L9 3zm7 14.01V10h-2v7.01h-3L15 21l4-3.99h-3z"/>
-            </svg>
-            Browse Sitemap
-          </a>
-          <a href="/jobs" class="help-link" data-help="jobs">
-            <svg class="help-icon" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M20 6h-2.5l-1.5-1.5h-5L9.5 6H7c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/>
-            </svg>
-            Latest Jobs
-          </a>
-        </div>
-      </div>
-    </section>
-    
+
+
 
   </main>
 
@@ -1149,7 +1140,7 @@
     function createParticles() {
       const particleSystem = document.getElementById('particleSystem');
       const particleCount = window.innerWidth > 768 ? 50 : 25;
-      
+
       for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
@@ -1170,8 +1161,8 @@
         '.content-card',
         '.help-card',
         '.help-item'
-      ], { 
-        opacity: 0, 
+      ], {
+        opacity: 0,
         y: 100,
         scale: 0.8
       });
@@ -1233,7 +1224,7 @@
       // Advanced hover effects
       document.querySelectorAll('.btn').forEach(btn => {
         const tl = gsap.timeline({ paused: true });
-        
+
         tl.to(btn, {
           scale: 1.08,
           y: -8,
@@ -1243,7 +1234,7 @@
 
         btn.addEventListener('mouseenter', () => tl.play());
         btn.addEventListener('mouseleave', () => tl.reverse());
-        
+
         // Click effect
         btn.addEventListener('click', () => {
           gsap.to(btn, {
@@ -1259,7 +1250,7 @@
       // Help items hover effects
       document.querySelectorAll('.help-link').forEach(item => {
         const tl = gsap.timeline({ paused: true });
-        
+
         tl.to(link, {
           scale: 1.05,
           y: -10,
@@ -1364,5 +1355,6 @@
       createParticles();
     });
   </script>
-  </body>
+</body>
+
 </html>

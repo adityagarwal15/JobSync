@@ -233,9 +233,45 @@ nav {
     display: none;
   }
 
+
+.user-auth .button:hover {
+  cursor: pointer;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+}
+
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.language-switcher .lang-icon {
+  font-size: 16px;
+}
+
+#languageSwitcher {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Optional: style dropdown */
+#languageSwitcher option {
+  padding: 6px;
+}
+
   .logo,
   .clock,
   .ctas {
     flex: 1.2;
   }
 }
+

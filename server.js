@@ -1,6 +1,23 @@
+const i18next = require("i18next");
+const Backend = require("i18next-fs-backend");
+const i18nextMiddleware = require("i18next-http-middleware");
+const path = require("path");
+
+// i18next setup
+i18next
+  .use(Backend)
+  .use(i18nextMiddleware.LanguageDetector)
+  .init({
+    fallbackLng: "en",
+    preload: ["en", "hi", "ta"],
+    backend: {
+      loadPath: path.join(__dirname, "/locales/{{lng}}/translation.json")
+    }
+  });
+
 const express = require("express");
 const nodemailer = require("nodemailer");
-const path = require("path");
+//const path = require("path");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 
@@ -150,6 +167,9 @@ app.use(exposeCsrfToken);
 
 // Apply CSRF error handler
 app.use(csrfErrorHandler);
+// i18next middleware
+app.use(i18nextMiddleware.handle(i18next));
+app.use("/locales", express.static(path.join(__dirname, "locales")));
 
 // === CSRF TOKEN ENDPOINTS ===
 // Generate new CSRF token (for explicit requests)
@@ -431,6 +451,11 @@ app.post("/send-email", emailRateLimit, async (req, res) => {
     console.error("❌ Error sending email or saving to DB:", error);
     res.status(500).json({ success: false, message: "Failed to send email." });
   }
+});
+// Example route to test i18n
+app.get("/greet", (req, res) => {
+  // This will use the current detected language (from query/header/cookie)
+  res.send(req.t("welcome"));
 });
 
 // === START SERVER ===

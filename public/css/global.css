@@ -48,10 +48,10 @@ html.lenis body {
   pointer-events: none;
 }
 
+/* ✅ merged difference: allow styling <a>, <p>, and <span> together */
 a,
-body p,
+p,
 span {
-
   text-decoration: none;
   font-size: 13px;
   color: var(--color-text);
@@ -89,7 +89,6 @@ img {
 }
 
 /* scrollbar styling */
-
 ::-webkit-scrollbar {
   width: 7px;
 }

@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap');
+
+
 .hero {
   position: relative;
   width: 100vw;
@@ -8,7 +12,7 @@
   overflow: hidden;
   margin: 0;
   padding: 0;
-  padding-top: 40px; /* reduced from 160px */
+  padding-top: 40px;
 }
 
 .hero-img {
@@ -59,15 +63,42 @@ p#site-intro {
 }
 
 @media (max-width: 900px) {
+  .hero {
+    
+    justify-content: center;
+    align-items: center;
+    margin-top: 120px;
+  }
+
   .hero-header {
-    position: absolute;
-    bottom: 20%;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2em;
+    height: 100%;
+  }
+
+  .hero-col:nth-child(1),
+  .hero-col:nth-child(2) {
+    flex: unset;
+    padding: 0.5em 0;
+  }
+
+  .hero-header h1 {
+    font-family: "Manrope", sans-serif;
+    font-style: normal;
+    font-size: 15vw;
   }
 
   p#site-intro {
-    margin-top: 0;
+    font-family: "Inter", sans-serif;
+    font-style: italic;
+    margin-top: 1em;
     text-indent: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 600px;
   }
 
   .hero-img {
@@ -80,11 +111,14 @@ p#site-intro {
 
   .job-recommendations {
     width: 95%;
-    top: 60px; /* Adjust for smaller navbar on mobile */
+    top: 60px;
   }
-    
-  .hero {
-    padding-top: 120px; /* Adjust for smaller job recommendations height on mobile */
+}
+
+@media (max-width: 600px) {
+  .hero-header {
+    position: absolute;
+    bottom: 20%;
   }
 }
 
@@ -127,7 +161,6 @@ p#site-intro {
   margin-top: 5px;
 }
 
-/* REMOVE or COMMENT OUT this block */
 .job-recommendations {
   text-align: center;
   padding: 20px;
@@ -162,4 +195,3 @@ p#site-intro {
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
 }
-

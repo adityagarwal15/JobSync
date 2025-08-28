@@ -198,41 +198,23 @@
 <body>
   <!-- Flash Messages -->
   <div class="flash-messages">
-    <% if (typeof success !=='undefined' && success && success.length> 0) { %>
-      <% success.forEach(function(msg) { %>
-        <div class="flash-message flash-success">
-          <i class="fas fa-check-circle"></i>
-          <%= msg %>
-        </div>
+    <% const messageTypes = {
+         success: { icon: 'fa-check-circle', messages: typeof success !== 'undefined' ? success : [] },
+         error:   { icon: 'fa-exclamation-circle', messages: typeof error !== 'undefined' ? error : [] },
+         warning: { icon: 'fa-exclamation-triangle', messages: typeof warning !== 'undefined' ? warning : [] },
+         info:    { icon: 'fa-info-circle', messages: typeof info !== 'undefined' ? info : [] }
+       };
+    %>
+    <% Object.entries(messageTypes).forEach(([type, data]) => { %>
+      <% if (data.messages && data.messages.length > 0) { %>
+        <% data.messages.forEach(function(msg) { %>
+          <div class="flash-message flash-<%= type %>">
+            <i class="fas <%= data.icon %>"></i>
+            <%= msg %>
+          </div>
         <% }); %>
-          <% } %>
-
-            <% if (typeof error !=='undefined' && error && error.length> 0) { %>
-              <% error.forEach(function(msg) { %>
-                <div class="flash-message flash-error">
-                  <i class="fas fa-exclamation-circle"></i>
-                  <%= msg %>
-                </div>
-                <% }); %>
-                  <% } %>
-
-                    <% if (typeof warning !=='undefined' && warning && warning.length> 0) { %>
-                      <% warning.forEach(function(msg) { %>
-                        <div class="flash-message flash-warning">
-                          <i class="fas fa-exclamation-triangle"></i>
-                          <%= msg %>
-                        </div>
-                        <% }); %>
-                          <% } %>
-
-                            <% if (typeof info !=='undefined' && info && info.length> 0) { %>
-                              <% info.forEach(function(msg) { %>
-                                <div class="flash-message flash-info">
-                                  <i class="fas fa-info-circle"></i>
-                                  <%= msg %>
-                                </div>
-                                <% }); %>
-                                  <% } %>
+      <% } %>
+    <% }); %>
   </div>
 
 
@@ -282,6 +264,14 @@
         </div>
         <div id="strength-text" style="font-size: 12px;" aria-live="polite"></div>
 
+        <label for="confirm-password">Confirm Password</label>
+        <div class="password-wrapper">
+          <input type="password" name="confirmPassword" id="confirm-password" aria-describedby="confirm-password-error"
+            placeholder="Confirm your password" required>
+          <i class="fas fa-eye-slash toggle-password"></i>
+        </div>
+        <div id="confirm-password-error" class="error-message"></div>
+
         <input type="hidden" name="role" id="role-input" value="user">
         <label for="role">Role</label>
         <div class="custom-dropdown" role="listbox" aria-expanded="false" tabindex="0">
@@ -316,7 +306,6 @@
       <p class="signin-link">Already have an account? <a href="/login">Sign In</a></p>
     </div>
   </div>
-  </div>
 
   <script>
     (() => {
@@ -341,9 +330,11 @@
       const nameInput = document.getElementById('name');
       const emailInput = document.getElementById('email');
       const passwordInput = document.getElementById('password');
+      const confirmPasswordInput = document.getElementById('confirm-password');
       const nameError = document.getElementById('name-error');
       const emailError = document.getElementById('email-error');
       const passwordError = document.getElementById('password-error');
+      const confirmPasswordError = document.getElementById('confirm-password-error');
       const strengthMeterFill = document.querySelector('.strength-meter-fill');
       const strengthText = document.getElementById('strength-text');
       const submitBtn = document.getElementById('submit-btn');
@@ -441,6 +432,19 @@
         setAriaInvalid(emailInput, ok);
       });
 
+      function validateConfirmPassword() {
+        const ok = confirmPasswordInput.value === passwordInput.value;
+        if (confirmPasswordInput.value) {
+          confirmPasswordError.textContent = ok ? '' : 'Passwords do not match.';
+          setAriaInvalid(confirmPasswordInput, ok);
+        } else {
+          confirmPasswordError.textContent = '';
+          // If the field is empty, don't show an error state.
+          // The final submit validation will catch it if it's left empty.
+          setAriaInvalid(confirmPasswordInput, true);
+        }
+      }
+
       function handlePasswordInput() {
         const value = passwordInput.value;
         const currentCheck = passwordChecks.find(check => !check.regex.test(value));
@@ -464,23 +468,26 @@
           strengthText.innerHTML = "Password Strength: <b>Strong</b>";
           strengthText.style.color = "#28a745";
         }
+        validateConfirmPassword();
       }
       
       passwordInput.addEventListener('input', handlePasswordInput);
+      confirmPasswordInput.addEventListener('input', validateConfirmPassword);
 
-      const toggle = document.querySelector('.toggle-password');
-      if (toggle) {
+      const passwordToggles = document.querySelectorAll('.toggle-password');
+      passwordToggles.forEach(toggle => {
         toggle.addEventListener('click', function () {
+          const input = this.previousElementSibling;
           const icon = this;
-          if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
+          if (input.type === 'password') {
+            input.type = 'text';
             icon.classList.replace('fa-eye-slash', 'fa-eye');
           } else {
-            passwordInput.type = 'password';
+            input.type = 'password';
             icon.classList.replace('fa-eye', 'fa-eye-slash');
           }
         });
-      }
+      });
 
       form.addEventListener('submit', function (e) {
         let hasError = false;
@@ -495,10 +502,16 @@
           setAriaInvalid(emailInput, false);
           hasError = true;
         }
-        const currentCheck = passwordChecks.find(check => !check.regex.test(passwordInput.value));
-        if (currentCheck) {
-          passwordError.textContent = currentCheck.message;
+        const passwordCheck = passwordChecks.find(check => !check.regex.test(passwordInput.value));
+        if (passwordCheck) {
+          passwordError.textContent = passwordCheck.message;
           setAriaInvalid(passwordInput, false);
+          hasError = true;
+        }
+
+        if (passwordInput.value !== confirmPasswordInput.value) {
+          confirmPasswordError.textContent = "Passwords do not match.";
+          setAriaInvalid(confirmPasswordInput, false);
           hasError = true;
         }
 

@@ -2,16 +2,19 @@
   width: 100%;
   height: max-content;
   background: var(--color-bg-secondary);
-  padding-bottom: 12em;
+  padding-bottom: 3em;
   border-radius: 12px;
 }
 
 .prices-header {
   position: relative;
   width: 100%;
-  padding: 20em 0 10em 0;
   display: flex;
   z-index: 2;
+}
+
+.prices-header {
+  padding: 1em 0 10em 0;
 }
 
 .prices-col {
@@ -34,8 +37,16 @@
 
 .prices-copy {
   width: 50%;
-  padding: 10em 1em 2em 1em;
   text-transform: uppercase;
+}
+
+/* Default (small padding) */
+.prices-copy {
+  padding: 2em 1em 2em 1em;
+}
+/* Variant (large padding) */
+.prices-copy.large-padding {
+  padding: 10em 1em 2em 1em;
 }
 
 .prices-cta {
@@ -65,6 +76,7 @@
 @media (max-width: 900px) {
   .prices-copy {
     width: 100%;
+    padding: 5em 1em 10em 1em;
   }
 
   .prices-header {
@@ -79,9 +91,5 @@
   .prices-col h2 {
     width: 100%;
     font-size: 64px;
-  }
-
-  .prices-copy {
-    padding: 5em 1em 10em 1em;
   }
 }

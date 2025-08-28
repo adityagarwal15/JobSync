@@ -93,7 +93,7 @@ footer {
   color: rgba(255, 255, 255, 0.5);
 }
 
-  .footer-form {
+.footer-form {
   width: 100%;
   padding: 0 1.5em;
   display: flex;
@@ -261,14 +261,13 @@ textarea:focus {
 /* Form Validation Styles */
 .form-row input.error-field,
 .form-row textarea.error-field {
-  outline: 1.5px solid #dc3545;
+  outline: var(--error-border-width) solid var(--error-color);
 }
 
 .form-row input.success-field,
 .form-row textarea.success-field {
-  outline: 1.5px solid #28a745;
+  outline: var(--error-border-width) solid var(--success-color);
 }
-
 
 .error-container {
   min-height: 20px; /* Reserve space to prevent layout shift */
@@ -284,19 +283,15 @@ textarea:focus {
 }
 
 #contact-form .error-message span {
-  color: #dc3545;
+  color: var(--error-color);
 }
 
 #contact-form .error-message i {
-  color: #dc3545;
+  color: var(--error-color);
   margin-right: 5px;
 }
 
-
-
-
 /* Responsive */
-
 @media (max-width: 900px) {
   .footer-sub-header h2 {
     font-size: 3vw;
@@ -332,7 +327,7 @@ textarea:focus {
   }
 
   .footer-copyright {
-    padding: 0.5em 1.5em 15em 1.5em;
+    padding: 0.5em 1.5em 1.5em 1.5em;
   }
 }
 

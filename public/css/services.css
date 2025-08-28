@@ -24,7 +24,7 @@
 
 .service-item {
   position: relative;
-  z-index: 10;   /*the menu-container was overlapping on the div and hence z-index was given... Bug resolved*/
+  z-index: 10;
   width: 100%;
   aspect-ratio: 1;
   display: flex;
@@ -36,6 +36,7 @@
   border-radius: 8px;
   transition: all 0.7s ease;
 }
+
 .service-item:hover {
   transform: scale(1.05);
   background: linear-gradient(to right, #fc002d, #ff6b00);
@@ -56,9 +57,30 @@
 
 @media (max-width: 900px) {
   .services {
-    flex-direction: column;
+    flex-direction: column; /* stack items vertically */
+    align-items: center;    /* center content */
   }
+
+  .services-col:nth-child(1) {
+    order: 1;               /* heading comes first */
+    text-align: center;
+    margin-bottom: 1.5em;
+  }
+
+  .services-col:nth-child(2) {
+    order: 2;               /* services grid below */
+    width: 100%;
+  }
+
   .services-row {
     width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+  }
+
+  .service-item {
+    flex: 1 1 calc(45% - 1em); /* 2 items per row */
+    max-width: 200px;
   }
 }

@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="/css/prices.css" />
   <link rel="stylesheet" href="/css/features.css" />
   <link rel="stylesheet" href="/css/footer.css" />
- 
+
 
 
   <!-- Favicon & Web Manifest -->
@@ -858,9 +858,9 @@
               </div>
             </div>
           </div>
-          
-          <form id="contact-form" method="POST" action="/contact" novalidate>
-  
+
+          <form id="contact-form" novalidate>
+
             <div class="footer-form">
               <div class="form-col">
                 <div class="form-row">
@@ -884,8 +884,8 @@
                 </div>
                 <div class="form-row">
                   <div class="form-field-wrapper">
-                    <input type="text" name="portfolio_link" placeholder="Portfolio Link" aria-describedby="portfolio_link_error" />
-                    <div class="error-container" id="portfolio_link_error"></div>
+                    <input type="text" name="portfolio_link" placeholder="Portfolio Link(Optional)"
+                      aria-describedby="portfolio_link_error" />
                   </div>
 
                 </div>
@@ -937,6 +937,9 @@
       <script src="./js/prices.js"></script>
 
       <script>
+        // Make CSRF token available globally
+        window.csrfToken = '<%= csrfToken %>';
+
         // Auto-hide flash messages after 5 seconds
         setTimeout(() => {
           const flashMessages = document.querySelectorAll('.flash-message');

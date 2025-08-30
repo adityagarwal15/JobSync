@@ -36,10 +36,13 @@ jobs:
       - name: Run Tests
         run: npm test --if-present
 
+      - name: Lint YAML
+        run: npm run lint:yaml --if-present
+
       # Deploy to Vercel only on push to main
       - name: Deploy to Vercel
+        if: github.ref == 'refs/heads/main'
         run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_ORG_ID }} --confirm --yes
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap');
+
 .about {
   width: 100%;
   height: max-content;
@@ -23,33 +26,42 @@
 }
 
 .about-col h2 {
+  font-weight: 400;
+  font-style: normal;
   width: 85%;
   color: rgba(255, 255, 255, 0.125);
   transition: color 0.3s;
+  font-size: 4rem;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+  word-break: normal;
+  letter-spacing: 2px;
 }
 
 .about-copy {
   width: 50%;
-  padding: 10em 1em 5em 1em;
+  padding: 5em 1em 5em 1em;
   text-transform: uppercase;
 }
 
 @media (max-width: 900px) {
-  .about-copy {
-    width: 100%;
-  }
-
   .about-header {
-    padding: 5em 0 5em 0;
+    padding: 5em 0;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
   .about-col h2 {
     width: 100%;
-    font-size: 64px;
+    font-size: 1.5rem;
+    overflow-wrap: break-word;
+    word-break: normal;
   }
 
   .about-copy {
-    padding: 5em 1em 10em 1em;
+    width: 100%;
+    padding: 5em 1em 4em 1em;
   }
 }

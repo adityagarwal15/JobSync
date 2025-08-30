@@ -80,11 +80,44 @@ section.card {
 }
 
 @media (max-width: 900px) {
+  section.card {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
   .project {
+    position: static;
+    transform: none;
+    width: 100%;
+    height: auto;
     flex-direction: column;
+    padding: 1rem;
+    gap: 1em;
+  }
+
+  .project-copy {
+    flex: none;
+    width: 100%;
+    height: auto;
+    padding-bottom: 4em;
+  }
+
+  .project-img {
+    flex: none;
+    width: 100%;
+    height: auto;
   }
 
   .project-header h3 {
     font-size: 24px;
+  }
+
+  .project-cta {
+    padding: 1em 0 0 0;
+  }
+
+  .project-cta p {
+    text-align: center;
   }
 }

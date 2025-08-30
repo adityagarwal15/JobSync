@@ -16,11 +16,11 @@ document.addEventListener("DOMContentLoaded", function () {
         trigger: section,
         start: "top top",
         end:
-          index === sections.length
+          index === sections.length - 1
             ? `+=${lastCard.offsetHeight / 2}`
             : footer.offsetTop - window.innerHeight,
         pin: true,
-        pinSpacing: false,
+        pinSpacing: false, // ✅ prevents big gaps between cards
         scrub: 1,
       },
     });
@@ -31,7 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
       {
         scale: 0.5,
         filter: "blur(10px)",
-        // top: "40%",
         ease: "none",
         scrollTrigger: {
           trigger: section,
@@ -41,5 +40,16 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       }
     );
+  });
+
+  ScrollTrigger.create({
+    trigger: lastCard,
+    start: "bottom bottom",
+    onEnter: () => {
+      lastCard.style.marginBottom = "20vh";
+    },
+    onLeaveBack: () => {
+      lastCard.style.marginBottom = "0";
+    },
   });
 });

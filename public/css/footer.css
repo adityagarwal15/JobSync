@@ -5,6 +5,12 @@ footer {
   flex-direction: column;
 }
 
+:root {
+  --error-color: #dc3545;
+  --success-color: #28a745;
+  --error-border-width: 1.5px;
+}
+
 .footer-bg {
   position: absolute;
   top: -20%;
@@ -87,7 +93,7 @@ footer {
   color: rgba(255, 255, 255, 0.5);
 }
 
-  .footer-form {
+.footer-form {
   width: 100%;
   padding: 0 1.5em;
   display: flex;
@@ -252,6 +258,39 @@ textarea:focus {
   background: #fff;
 }
 
+/* Form Validation Styles */
+.form-row input.error-field,
+.form-row textarea.error-field {
+  outline: var(--error-border-width) solid var(--error-color);
+}
+
+.form-row input.success-field,
+.form-row textarea.success-field {
+  outline: var(--error-border-width) solid var(--success-color);
+}
+
+.error-container {
+  min-height: 20px; /* Reserve space to prevent layout shift */
+}
+
+#contact-form .error-message {
+  margin-top: 5px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  text-transform: none;
+}
+
+#contact-form .error-message span {
+  color: var(--error-color);
+}
+
+#contact-form .error-message i {
+  color: var(--error-color);
+  margin-right: 5px;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .footer-sub-header h2 {
@@ -288,6 +327,12 @@ textarea:focus {
   }
 
   .footer-copyright {
-    padding: 0.5em 1.5em 15em 1.5em;
+    padding: 0.5em 1.5em 1.5em 1.5em;
   }
+}
+
+.form-field-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }

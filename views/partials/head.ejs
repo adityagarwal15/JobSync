@@ -1,46 +1,65 @@
-<!-- views/partials/head.ejs -->
 <head>
-  <!-- Metadata -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= title || "JobSync" %></title>
-  <meta name="author" content="JobSync" />
-  <meta name="description" content="AI-powered job search and real-time mentorship platform for daily wage workers and job seekers." />
-  <meta name="keywords" content="JobSync, job portal, AI job finder, mentorship, job matching, daily wage work, employment, smart job search" />
-  <meta name="theme-color" content="#000000" />
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/svg+xml" href="/assets/favicon-32x32.svg" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180x180.png" />
-  <link rel="shortcut icon" href="/assets/favicon.ico" />
-  <link rel="manifest" href="/assets/site.webmanifest" />
-  <meta name="msapplication-TileImage" content="/assets/favicon-192x192.png" />
-  <meta name="msapplication-config" content="/assets/browserconfig.xml" />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Druk+Wide+Trial&family=PP+Object+Sans&display=swap" rel="stylesheet" />
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnH1zC+XrJDbGoQ+9jwuyTvwNUxHd2Z7CplDChFJ0vP4Uc3UOAl9W+7dhTT4GAVM3Qn4m5ytg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <!-- Global Styles -->
-  <link rel="stylesheet" href="/css/global.css" />
-
-  <!-- Page-specific Stylesheet (optional) -->
-  <% if (typeof pageStyles !== 'undefined') { %>
-    <link rel="stylesheet" href="/css/<%= pageStyles %>.css" />
-  <% } %>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C5PM5VQR28"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-C5PM5VQR28');
+  <!-- SEO Meta Tags -->
+  <title><%= pageTitle || "JobSync - Find Your Dream Job" %></title>
+  <meta
+    name="description"
+    content="JobSync is an eco-friendly job search platform that helps you find jobs efficiently while saving energy."
+  />
+  <meta
+    name="keywords"
+    content="jobs, job search, eco-friendly jobs, green careers, JobSync"
+  />
+  <meta name="author" content="JobSync Team" />
+  <meta name="robots" content="index, follow" />
+  <!-- Canonical URL to prevent duplicate content -->
+  <link rel="canonical" href="https://jobsync-new.onrender.com" />
+  <!-- Eco-Friendly Theme Color for Browsers -->
+  <meta name="theme-color" content="#2E7D32" />
+  <!-- Open Graph for Social Sharing -->
+  <meta property="og:title" content="JobSync - Eco-Friendly Job Search" />
+  <meta
+    property="og:description"
+    content="Search and apply for jobs while promoting sustainability."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://jobsync-new.onrender.com" />
+  <meta
+    property="og:image"
+    content="https://res.cloudinary.com/dcf0cpuqf/image/upload/v1755343176/Screenshot_2025-08-16_164505_wtzh7x.png"
+  />
+  <meta property="og:site_name" content="JobSync" />
+  <meta property="og:locale" content="en_US" />
+  <!-- Twitter Card tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="JobSync - Eco-Friendly Job Search" />
+  <meta
+    name="twitter:description"
+    content="Search and apply for jobs while promoting sustainability."
+  />
+  <meta
+    name="twitter:image"
+    content="https://res.cloudinary.com/dcf0cpuqf/image/upload/v1755343176/Screenshot_2025-08-16_164505_wtzh7x.png"
+  />
+  <!-- Google Custom Search Engine (Async Load) -->
+  <script
+    async
+    src="https://cse.google.com/cse.js?cx=73c55d547f88f40ed"
+  ></script>
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- Structured Data for SEO (Job Posting Example) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "JobSync",
+      "url": "https://jobsync-new.onrender.com",
+      "logo": "https://jobsync-new.onrender.com/assets/site-logo.png",
+      "sameAs": [
+        "https://www.instagram.com/jobsync_in?igsh=MWxnMGJsNjV4bWsxdw=="
+      ]
+    }
   </script>
 </head>

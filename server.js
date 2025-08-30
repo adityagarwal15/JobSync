@@ -1,9 +1,11 @@
+require('dotenv').config();
+
 const express = require('express');
 const nodemailer = require('nodemailer');
 const path = require('path');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
-require('dotenv').config();
+
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const cookieParser = require('cookie-parser');

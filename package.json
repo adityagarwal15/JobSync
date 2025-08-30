@@ -11,7 +11,8 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint:yaml": "yaml-lint ci.yml"
+    "lint:yaml": "npx yaml-lint \"**/*.{yml,yaml}\"",
+    "test": "echo \"No tests specified\" && exit 0"
   },
   "keywords": [
     "nodejs",
@@ -52,8 +53,7 @@
     "eslint": "^9.32.0",
     "globals": "^16.3.0",
     "nodemon": "^3.1.10",
-    "prettier": "^3.6.2",
-    "lint:yaml": "npx yaml-lint ci.yml"
+    "prettier": "^3.6.2"
   },
   "engines": {
     "node": ">=14.0.0"

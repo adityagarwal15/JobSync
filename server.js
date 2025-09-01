@@ -11,7 +11,6 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
-
 // ✅ node-fetch dynamic import fix for Node.js v20+
 const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
@@ -305,14 +304,145 @@ const generalRateLimit = rateLimit({
 
 app.use(generalRateLimit);
 
+// Create rate limiter for chat endpoint
+const chatLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20, // limit each IP to 20 requests per windowMs
+  message: { error: "Too many chat requests, please try again later" },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // ========== ROUTES ==========
 app.get("/", optionalAuth, (req, res) => {
   res.render("index.ejs");
 });
 
+// app.get("/chatbot", (req, res) => {
+//   res.render("chatbot.ejs");
+// });
+
 app.use("/", authRouter);
 app.use("/api/jobs", jobRouter);
 app.use("/api/search", searchRouter);
+
+app.post("/api/chat", chatLimiter, async (req, res) => {
+  try {
+    const { message } = req.body;
+    const API_KEY = process.env.GEMINI_API_KEY;
+
+    if (!message || typeof message !== "string") {
+      return res.status(400).json({ error: "Message is required and must be a string" });
+    }
+
+    if (message.length > 2000) {
+      return res
+        .status(400)
+        .json({ error: "Message too long. Please keep it under 2000 characters." });
+    }
+
+    if (message.trim().length === 0) {
+      return res.status(400).json({ error: "Message cannot be empty" });
+    }
+
+    // Sanitize input (basic XSS prevention)
+    const sanitizedMessage = message.replace(
+      /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+      ""
+    );
+
+    if (!API_KEY) {
+      return res.status(500).json({ error: "API key not configured" });
+    }
+
+    // Updated URL and request structure to match working example
+    const MODEL_NAME = "gemini-2.5-flash";
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+
+    const response = await fetch(GEMINI_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            role: "model",
+            parts: [
+              {
+                text: `You are JobSync AI, a helpful career assistant for the JobSync platform. 
+Always provide clear, practical, and encouraging guidance to users.
+
+### Strict Formatting Rules:
+- Always answer as a **numbered list**.  
+- Each point must start on a **new line**.  
+- Do NOT combine multiple points into one paragraph.  
+- Do NOT use bold, italics, or sub-bullets.  
+- Keep each point short and professional.
+
+Your main goals are: 
+1. Help users explore job opportunities, career paths, and internship advice. 
+2. Guide them on how to use the JobSync dashboard to find and track job listings (only available to logged-in users). 
+3. Offer mentorship-style support, such as resume tips, interview preparation, and skill-building advice. 
+4. Be professional, concise, and supportive in tone. 
+5. If a user asks something unrelated to jobs or career growth, politely redirect them back to relevant topics.`,
+              },
+            ],
+          },
+          {
+            role: "user",
+            parts: [{ text: sanitizedMessage }],
+          },
+        ],
+      }),
+    });
+
+    // Add request logging
+    console.log(
+      `[${new Date().toISOString()}] Chat request from IP: ${req.ip}, Message length: ${message.length}`
+    );
+
+    // Enhanced error responses
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`[${new Date().toISOString()}] Gemini API Error:`, {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText,
+        userMessage: message.substring(0, 100) + "...", // Log first 100 chars for debugging
+      });
+
+      // Return user-friendly error based on status
+      if (response.status === 429) {
+        return res.status(429).json({ error: "AI service is busy. Please try again in a moment." });
+      } else if (response.status >= 500) {
+        return res
+          .status(503)
+          .json({ error: "AI service is temporarily unavailable. Please try again later." });
+      } else {
+        return res.status(500).json({ error: "Unable to process your request. Please try again." });
+      }
+    }
+
+    const data = await response.json();
+    // console.log("API Response:", data); // Debug log
+
+    var aiResponse = data.candidates[0].content.parts[0].text;
+    aiResponse = aiResponse
+      .split(/\d+\.\s+/) // split where "1. ", "2. " etc. appear
+      .filter(Boolean) // remove empty entries
+      .map((point, idx) => `${idx + 1}. ${point.trim()}`)
+      .join("\n");
+    // console.log("response: ",aiResponse)
+    res.json({ response: aiResponse });
+  } catch (error) {
+    console.error("Chat API error:", error);
+    res.status(500).json({
+      error: "Failed to get response from AI",
+      details: error.message,
+    });
+  }
+});
 
 // === PROXY EXTERNAL API TO BYPASS CORS ===
 app.get("/api/totalusers", async (req, res) => {

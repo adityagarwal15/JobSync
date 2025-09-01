@@ -304,6 +304,15 @@ const generalRateLimit = rateLimit({
 
 app.use(generalRateLimit);
 
+// Create rate limiter for chat endpoint
+const chatLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20, // limit each IP to 20 requests per windowMs
+  message: { error: "Too many chat requests, please try again later" },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // ========== ROUTES ==========
 app.get("/", optionalAuth, (req, res) => {
   res.render("index.ejs");
@@ -317,10 +326,30 @@ app.use("/", authRouter);
 app.use("/api/jobs", jobRouter);
 app.use("/api/search", searchRouter);
 
-app.post("/api/chat", async (req, res) => {
+app.post("/api/chat", chatLimiter, async (req, res) => {
   try {
     const { message } = req.body;
     const API_KEY = process.env.GEMINI_API_KEY;
+
+    if (!message || typeof message !== "string") {
+      return res.status(400).json({ error: "Message is required and must be a string" });
+    }
+
+    if (message.length > 2000) {
+      return res
+        .status(400)
+        .json({ error: "Message too long. Please keep it under 2000 characters." });
+    }
+
+    if (message.trim().length === 0) {
+      return res.status(400).json({ error: "Message cannot be empty" });
+    }
+
+    // Sanitize input (basic XSS prevention)
+    const sanitizedMessage = message.replace(
+      /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+      ""
+    );
 
     if (!API_KEY) {
       return res.status(500).json({ error: "API key not configured" });
@@ -362,16 +391,37 @@ Your main goals are:
           },
           {
             role: "user",
-            parts: [{ text: message }],
+            parts: [{ text: sanitizedMessage }],
           },
         ],
       }),
     });
 
+    // Add request logging
+    console.log(
+      `[${new Date().toISOString()}] Chat request from IP: ${req.ip}, Message length: ${message.length}`
+    );
+
+    // Enhanced error responses
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("API Error:", errorText);
-      throw new Error(`Gemini API error: ${response.status}`);
+      console.error(`[${new Date().toISOString()}] Gemini API Error:`, {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText,
+        userMessage: message.substring(0, 100) + "...", // Log first 100 chars for debugging
+      });
+
+      // Return user-friendly error based on status
+      if (response.status === 429) {
+        return res.status(429).json({ error: "AI service is busy. Please try again in a moment." });
+      } else if (response.status >= 500) {
+        return res
+          .status(503)
+          .json({ error: "AI service is temporarily unavailable. Please try again later." });
+      } else {
+        return res.status(500).json({ error: "Unable to process your request. Please try again." });
+      }
     }
 
     const data = await response.json();
@@ -383,7 +433,7 @@ Your main goals are:
       .filter(Boolean) // remove empty entries
       .map((point, idx) => `${idx + 1}. ${point.trim()}`)
       .join("\n");
-    // console.log("response: ",aiResponse)  
+    // console.log("response: ",aiResponse)
     res.json({ response: aiResponse });
   } catch (error) {
     console.error("Chat API error:", error);

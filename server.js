@@ -11,7 +11,6 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
-
 // ✅ node-fetch dynamic import fix for Node.js v20+
 const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
@@ -310,9 +309,90 @@ app.get("/", optionalAuth, (req, res) => {
   res.render("index.ejs");
 });
 
+// app.get("/chatbot", (req, res) => {
+//   res.render("chatbot.ejs");
+// });
+
 app.use("/", authRouter);
 app.use("/api/jobs", jobRouter);
 app.use("/api/search", searchRouter);
+
+app.post("/api/chat", async (req, res) => {
+  try {
+    const { message } = req.body;
+    const API_KEY = process.env.GEMINI_API_KEY;
+
+    if (!API_KEY) {
+      return res.status(500).json({ error: "API key not configured" });
+    }
+
+    // Updated URL and request structure to match working example
+    const MODEL_NAME = "gemini-2.5-flash";
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+
+    const response = await fetch(GEMINI_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            role: "model",
+            parts: [
+              {
+                text: `You are JobSync AI, a helpful career assistant for the JobSync platform. 
+Always provide clear, practical, and encouraging guidance to users.
+
+### Strict Formatting Rules:
+- Always answer as a **numbered list**.  
+- Each point must start on a **new line**.  
+- Do NOT combine multiple points into one paragraph.  
+- Do NOT use bold, italics, or sub-bullets.  
+- Keep each point short and professional.
+
+Your main goals are: 
+1. Help users explore job opportunities, career paths, and internship advice. 
+2. Guide them on how to use the JobSync dashboard to find and track job listings (only available to logged-in users). 
+3. Offer mentorship-style support, such as resume tips, interview preparation, and skill-building advice. 
+4. Be professional, concise, and supportive in tone. 
+5. If a user asks something unrelated to jobs or career growth, politely redirect them back to relevant topics.`,
+              },
+            ],
+          },
+          {
+            role: "user",
+            parts: [{ text: message }],
+          },
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("API Error:", errorText);
+      throw new Error(`Gemini API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    // console.log("API Response:", data); // Debug log
+
+    var aiResponse = data.candidates[0].content.parts[0].text;
+    aiResponse = aiResponse
+      .split(/\d+\.\s+/) // split where "1. ", "2. " etc. appear
+      .filter(Boolean) // remove empty entries
+      .map((point, idx) => `${idx + 1}. ${point.trim()}`)
+      .join("\n");
+    // console.log("response: ",aiResponse)  
+    res.json({ response: aiResponse });
+  } catch (error) {
+    console.error("Chat API error:", error);
+    res.status(500).json({
+      error: "Failed to get response from AI",
+      details: error.message,
+    });
+  }
+});
 
 // === PROXY EXTERNAL API TO BYPASS CORS ===
 app.get("/api/totalusers", async (req, res) => {

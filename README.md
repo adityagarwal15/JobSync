@@ -1,4 +1,6 @@
 <a id="top"></a>
+![CI](https://github.com/adityagarwal15/JobSync/actions/workflows/ci.yml/badge.svg)
+
 # 🚀 JOBSYNC – AI-Powered Job Opportunity Finder
 
 ## 🏆 Built at a Hackathon | **Top 5 out of 30+ Teams!**

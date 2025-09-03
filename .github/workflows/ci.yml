@@ -26,8 +26,10 @@ jobs:
         run: npm ci
 
       - name: Lint code
-        run: npm run lint
+        run: npx eslint . --no-cache
         continue-on-error: true
+
+
 
       - name: Build project
         run: npm run build --if-present

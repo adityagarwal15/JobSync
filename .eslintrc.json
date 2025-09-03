@@ -1,20 +1,21 @@
 {
   "env": {
     "browser": true,
-    "node": true,
     "es2021": true,
-    "jest": true
+    "node": true
   },
-  "extends": ["eslint:recommended"],
-  "parserOptions": {
-    "ecmaVersion": 12,
-    "sourceType": "module"
-  },
-  "globals": {
-    "formValidator": "readonly"
-  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["prettier"],
   "rules": {
+    "prettier/prettier": "error",
     "no-unused-vars": "warn",
     "no-console": "off"
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   }
 }

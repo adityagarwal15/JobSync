@@ -1,5 +1,5 @@
 <a id="top"></a>
-![CI](https://github.com/adityagarwal15/JobSync/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/SHREYASHIKLS28/JobSync/actions/workflows/ci.yml/badge.svg?branch=feature/ci-pipeline)
 
 # 🚀 JOBSYNC – AI-Powered Job Opportunity Finder
 

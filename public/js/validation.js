@@ -25,30 +25,25 @@ class FormValidator {
 
   // Validation logic for each field
   _getErrorMessage(name, value) {
-  switch (name) {
-    case 'user_name':
-      if (!value.trim()) return 'Please fill out your name.';
-      break;
-    case 'user_role':
-      if (!value.trim()) return 'Please fill out your role.';
-      break;
-    case 'user_email':
-      if (!value.trim()) return 'Please fill out your email.';
-      if (!this._isValidEmail(value)) return 'Please enter a valid email address.';
-      break;
-    case 'message':
-      if (!value.trim()) return 'Please fill out a message.';
-      break;
-    case 'portfolio_link':
-      if (!value.trim()) return 'Please provide your portfolio link.';
-      if (!this._isValidUrl(value)) return 'Please enter a valid URL (e.g., https://example.com).';
-      break;
-    default:
-      return null;
+    switch (name) {
+      case 'user_name':
+        if (!value.trim()) return 'Please fill out your name.';
+        break;
+      case 'user_role':
+        if (!value.trim()) return 'Please fill out your role.';
+        break;
+      case 'user_email':
+        if (!value.trim()) return 'Please fill out your email.';
+        if (!this._isValidEmail(value)) return 'Please enter a valid email address.';
+        break;
+      case 'message':
+        if (!value.trim()) return 'Please fill out a message.';
+        break;
+      default:
+        return null;
+    }
+    return null; // No error
   }
-  return null; // No error
-}
-
 
   _showError(inputElement, message) {
     inputElement.classList.remove('success-field');

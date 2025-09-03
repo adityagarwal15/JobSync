@@ -9,6 +9,13 @@
   --color-bg-secondary: #000000;
 
   --color-callout: #24262a;
+
+  /* === Added tokens for interaction/accessibility === */
+  --focus-ring-color: #3b82f6;   /* accessible blue; change to brand if needed */
+  --focus-ring-width: 2px;
+  --focus-ring-radius: 6px;
+  --ease-standard: cubic-bezier(.2,.6,.2,1);
+  --dur-quick: .2s;
 }
 
 * {
@@ -100,4 +107,102 @@ img {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.6);
+}
+
+/* =======================================================
+   Added: Interaction & Hover Normalization (accessible)
+   ======================================================= */
+
+/* Inherit font for form controls for consistent sizing */
+button, input, select, textarea { font: inherit; }
+
+/* Smooth transitions on common interactive elements */
+button, .btn, [role="button"], a, input[type="submit"], input[type="button"] {
+  transition:
+    background-color var(--dur-quick) var(--ease-standard),
+    color           var(--dur-quick) var(--ease-standard),
+    border-color    var(--dur-quick) var(--ease-standard),
+    box-shadow      var(--dur-quick) var(--ease-standard),
+    transform       var(--dur-quick) var(--ease-standard);
+}
+
+/* Visible focus styles for keyboard users */
+button:focus-visible,
+.btn:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: 2px;
+  border-radius: var(--focus-ring-radius);
+}
+
+/* Links: provide a non-color cue on hover (accessibility) */
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: from-font;
+    text-underline-offset: 2px;
+  }
+}
+
+/* Buttons (and elements acting like buttons): subtle hover feedback */
+@media (hover: hover) and (pointer: fine) {
+  button:not(:disabled):hover,
+  .btn:not(:disabled):hover,
+  [role="button"]:not([aria-disabled="true"]):hover,
+  input[type="submit"]:hover,
+  input[type="button"]:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* Disabled should not react on hover */
+button:disabled,
+.btn[aria-disabled="true"],
+[aria-disabled="true"],
+input[disabled] {
+  cursor: not-allowed;
+  opacity: .6;
+}
+@media (hover: hover) and (pointer: fine) {
+  button:disabled:hover,
+  .btn[aria-disabled="true"]:hover,
+  [aria-disabled="true"]:hover,
+  input[disabled]:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* Avoid “sticky” hover on touch devices */
+@media (hover: none) {
+  a:hover,
+  button:hover,
+  .btn:hover,
+  [role="button"]:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* Optional helper for clickable cards (opt-in) */
+.card--link {
+  position: relative;
+  transition: box-shadow var(--dur-quick) var(--ease-standard),
+              transform var(--dur-quick) var(--ease-standard);
+}
+@media (hover: hover) and (pointer: fine) {
+  .card--link:hover { transform: translateY(-2px); }
+}
+.card--link:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: 4px;
 }

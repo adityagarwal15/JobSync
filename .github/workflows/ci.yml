@@ -1,48 +1,56 @@
-name: CI/CD Pipeline
+name: CI Pipeline
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main, develop ]
   pull_request:
+    branches: [ main ]
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x]
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: Run Lint
-        run: npm run lint --if-present
-
-      - name: Run Tests
-        run: npm test --if-present
-
-      - name: Lint YAML
-        run: npm run lint:yaml --if-present
-
-      # Deploy to Vercel only on push to main
-      - name: Deploy to Vercel
-        if: github.ref == 'refs/heads/main'
-        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_ORG_ID }} --confirm --yes
+      - name: Validate environment variables
+        run: |
+          missing_vars=0
+          for var in MONGODB_URI SESSION_SECRET; do
+            if [ -z "${!var}" ]; then
+              echo "❌ Missing required environment variable: $var"
+              missing_vars=$((missing_vars+1))
+            else
+              echo "Found $var"
+            fi
+          done
+          if [ $missing_vars -gt 0 ]; then
+            exit 1
+          fi
         env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+
+      - name: Lint code
+        run: npm run lint
+
+      - name: Build project
+        run: npm run build --if-present
+
+      - name: Run tests
+        run: npm test
+
+      - name: Dependency vulnerability scan
+        run: npm audit --audit-level=moderate

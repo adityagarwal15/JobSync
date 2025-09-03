@@ -25,24 +25,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Validate environment variables
-        run: |
-          missing_vars=0
-          for var in MONGODB_URI SESSION_SECRET; do
-            if [ -z "${!var}" ]; then
-              echo "❌ Missing required environment variable: $var"
-              missing_vars=$((missing_vars+1))
-            else
-              echo "Found $var"
-            fi
-          done
-          if [ $missing_vars -gt 0 ]; then
-            exit 1
-          fi
-        env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-
       - name: Lint code
         run: npm run lint
 

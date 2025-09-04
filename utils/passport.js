@@ -25,6 +25,7 @@ passport.use(
             await user.save();
           } else {
             // Create new user
+            // console.log("profile: ",profile);
             user = await User.create({
               name: profile.displayName,
               email: profile.emails[0].value,

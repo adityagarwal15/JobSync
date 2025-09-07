@@ -108,7 +108,7 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 0.75em;
-  background: #fff;
+  background: #1a1a1a;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
@@ -248,28 +248,28 @@ input,
 textarea {
   flex: 1;
   border: none;
-  outline: none;
+  outline: 1.5px solid #444 ;
   text-transform: uppercase;
   padding: 1em 1em;
   border-radius: 6px;
   transition: border 0.3s, background 0.3s;
   outline: 1.5px solid var(--color-text-secondary);
-  background: var(--color-text-secondary);
+  background: #222;
   font-size: 1rem;
   font-family: inherit;
-  color: #222;
+  color: #fff;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #666;
+  color: #888;
   text-transform: none;
 }
 
 input:focus,
 textarea:focus {
   outline: 2px solid #ff6b00;
-  background: #fff;
+  background: #333;
 }
 
 /* Form Validation Styles */

@@ -1,3 +1,4 @@
+![CI](https://github.com/SHREYASHIKLS28/JobSync/actions/workflows/ci.yml/badge.svg)
 <a id="top"></a>
 # 🚀 JOBSYNC – AI-Powered Job Opportunity Finder
 

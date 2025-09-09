@@ -35,33 +35,64 @@
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   padding: 1em;
   z-index: 1;
 }
 
+/* Added: hero title + description wrapper */
+.hero-title {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  text-align: center;
+}
+
+.hero-description {
+  margin-left: 1rem;
+  font-size: 14px;
+  color: white;
+}
+
 .hero-col:nth-child(1) {
-  flex: 6;
+  flex: none;
+  display: flex;
+  align-items: flex-end;
 }
 
 .hero-col:nth-child(2) {
-  flex: 2;
-  padding: 0.5em;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 1.5em;
 }
 
 .hero-header h1 {
   text-transform: uppercase;
   font-family: var(--font-secondary);
-  font-size: 13vw;
-  color: var(--color-text);
+  font-size: 15vw;
+  color: white;
+  margin: 0;
+  line-height: 1;
 }
 
 p#site-intro {
-  text-indent: 10em;
-  margin-top: 2em;
-  text-transform: uppercase;
+  margin: 0 0 0 20px;
+  align-self: flex-end;
+  max-width: 500px; 
 }
 
+/* Default: tagline hidden (desktop) */
+.hero-tagline {
+  display: none;
+  font-size: 1.5vw;
+  color: #fff;
+  margin-top: 0.5em;
+  font-family: var(--font-primary);
+  opacity: 0.8;
+}
+
+/* Mobile adjustments */
 @media (max-width: 900px) {
   .hero {
     
@@ -71,6 +102,17 @@ p#site-intro {
   }
 
   .hero-header {
+fix-homepage-description
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -89,9 +131,28 @@ p#site-intro {
     font-family: "Manrope", sans-serif;
     font-style: normal;
     font-size: 15vw;
+ 
   }
 
+  /* Hide description on mobile */
+  .hero-description,
   p#site-intro {
+ fix-homepage-description
+    display: none;
+  }
+
+  /* Center JOBSYNC */
+  .hero-title {
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  /* ✅ Show tagline only in mobile */
+  .hero-tagline {
+    display: block;
+    font-size: 4vw;
+
     font-family: "Inter", sans-serif;
     font-style: italic;
     margin-top: 1em;
@@ -99,6 +160,7 @@ p#site-intro {
     font-size: 0.95rem;
     line-height: 1.6;
     max-width: 600px;
+ 
   }
 
   .hero-img {
@@ -113,12 +175,18 @@ p#site-intro {
     width: 95%;
     top: 60px;
   }
+ fix-homepage-description
+    
+  .hero {
+    padding-top: 0;
+
 }
 
 @media (max-width: 600px) {
   .hero-header {
     position: absolute;
     bottom: 20%;
+ 
   }
 }
 
@@ -194,4 +262,8 @@ p#site-intro {
   font-size: 24px;
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5);
+ fix-homepage-description
 }
+
+}
+

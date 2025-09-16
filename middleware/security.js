@@ -3,8 +3,7 @@ const hpp = require('hpp');
 
 
 exports.securityMiddleware = (app) => {
-
-
+    
     app.use(helemt({
         contentSecurityPolicy: false,
         noSniff: true,

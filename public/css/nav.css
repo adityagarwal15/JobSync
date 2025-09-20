@@ -239,3 +239,94 @@ nav {
     flex: 1.2;
   }
 }
+/* === Navbar Responsive (CSS-only, no JS) === */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  background: #fff; /* adjust if navbar has a different background */
+  border-bottom: 1px solid #ddd;
+}
+
+.navbar .logo {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navbar a:hover {
+  color: #007bff; /* adjust highlight color */
+}
+
+/* --- Breakpoints for responsiveness --- */
+
+/* Small phones (≤480px) */
+@media (max-width: 480px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid #ddd;
+    padding-top: 0.5rem;
+  }
+
+  .navbar a {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0;
+  }
+}
+
+/* Medium phones & small tablets (481px–768px) */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid #ddd;
+    padding-top: 0.5rem;
+  }
+
+  .navbar a {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0;
+  }
+}
+
+/* Tablets (769px–1024px) */
+@media (max-width: 1024px) {
+  .navbar ul {
+    gap: 1rem;
+  }
+}
+

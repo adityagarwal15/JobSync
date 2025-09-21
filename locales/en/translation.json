@@ -1,0 +1,98 @@
+{
+  "navbar": {
+    "login": "Login",
+    "dashboard": "Dashboard",
+    "signin": "Sign In",
+    "signup": "Sign Up",
+    "menu": "Menu",
+    "profile": "Profile",
+    "features": "Features",
+    "subscription": "Subscription",
+    "logout": "Logout"
+  },
+
+  "hero": {
+    "title": "JobSync",
+    "intro": "Since 2025, JobSync has been revolutionizing the job search experience, leveraging AI-driven matching, real-time mentorship, and smart career insights to connect job seekers with their ideal opportunities effortlessly."
+  },
+
+  "about": {
+    "callout": "How can we help",
+    "heading": "Revolutionizing job searching with AI-driven matching, real-time mentorship, and career insights, seamlessly connecting job seekers with their ideal opportunities.",
+    "copy": "Our team leverages cutting-edge AI technology and expert mentorship to empower job seekers with personalized recommendations and real-time alerts, driving success in their job search."
+  },
+
+  "services": {
+    "callout": "We work with",
+    "ai": "AI Matching",
+    "mentorship": "Mentorship",
+    "resume": "Resume Analysis",
+    "training": "Training",
+    "insights": "Insights",
+    "messaging": "Messaging",
+    "cloud": "Cloud",
+    "security": "Security"
+  },
+
+  "promo": {
+    "explore": "Explore",
+    "our": "Our Latest",
+    "features": "Features"
+  },
+
+  "projects": {
+    "jobmatch_title": "JobMatch AI",
+    "jobmatch_desc": "JobMatch AI leverages cutting-edge machine learning algorithms to match job seekers with personalized job opportunities, ensuring higher placement success rates.",
+
+    "mentorship_title": "Mentorship Hub",
+    "mentorship_desc": "Mentorship Hub connects job seekers with industry experts, providing real-time mentorship and career guidance to elevate career growth.",
+
+    "resume_title": "Smart Resume",
+    "resume_desc": "Smart Resume offers an AI-powered resume analyzer, providing instant feedback and recommendations to optimize resumes for specific job opportunities.",
+
+    "insights_title": "Career Insights",
+    "insights_desc": "Career Insights analyzes market trends, providing job seekers with valuable data-driven insights to make informed decisions about their career paths.",
+
+    "cloud_title": "JobSync Cloud",
+    "cloud_desc": "JobSync Cloud offers secure cloud storage and management for all job application materials, including resumes, cover letters, and portfolio files.",
+
+    "security_title": "JobSync Security",
+    "security_desc": "JobSync Security ensures data protection for both job seekers and employers, utilizing encryption and multi-factor authentication to safeguard sensitive information.",
+
+    "learn_more": "Learn More",
+    "webapp": "Web App",
+    "mobileapp": "Mobile App"
+  },
+
+  "prices": {
+    "title": "Pricing",
+    "subtitle": "Flexible Plans",
+    "heading": "Choose from our flexible subscription plans designed to streamline your hiring process and optimize talent acquisition.",
+    "copy": "Whether you're a startup, enterprise, or recruiter, our plans offer continuous access to AI-driven hiring tools and expert support.",
+    "cta": "Plans Starting From",
+    "price": "INR 199 / Month"
+  },
+
+  "features": {
+    "transparent_title": "TRANSPARENT WEEKLY UPDATES",
+    "transparent_desc": "Our projects are managed in sprints. We collaborate with you to define objectives, break down the development process into manageable tasks, and deliver weekly progress reports.",
+
+    "mentorship_title": "REAL-TIME MENTORSHIP",
+    "mentorship_desc": "Get instant guidance from industry experts and hiring managers. Receive resume reviews, career advice, and mock interviews tailored to your profile.",
+
+    "insights_title": "SMART CAREER INSIGHTS",
+    "insights_desc": "Gain valuable data-driven insights on salary trends, skill demand, and industry growth to make informed career decisions.",
+
+    "tracking_title": "WEEKLY PROGRESS TRACKING",
+    "tracking_desc": "Stay on top of your job search with structured weekly progress reports, application tracking, and personalized goal setting."
+  },
+
+  "footer": {
+    "lets": "Let's",
+    "talk": "Talk",
+    "form1": "Fill the form",
+    "form2": "and",
+    "form3": "Get in touch",
+    "privacy": "Privacy Policy"
+  }
+}

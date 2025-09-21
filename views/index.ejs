@@ -899,7 +899,7 @@
           <% if (typeof user !=='undefined' && user) { %>
             <div style="display: flex; gap: 0.5rem;">
               <% if (user.isVerified) { %>
-                <a href="/dashboard" class="auth-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                <a href="/dashboard" data-i18n="navbar.dashboard" class="auth-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
                   <i class="fa-solid fa-tachometer-alt"></i>&nbsp;&nbsp;
                   Dashboard
                 </a>
@@ -908,18 +908,19 @@
             <% } else { %>
               <!-- User is not logged in -->
               <div class="button">
-                <a href="/login" class="auth-button">
+                <a href="/login" data-i18n="navbar.login" class="auth-button">
                   <i class="fa-solid fa-right-to-bracket"></i>&nbsp;&nbsp;
                   Sign In
                 </a>
               </div>
               <div class="button">
-                <a href="/signup" class="auth-button auth-button-signup">
+                <a href="/signup" data-i18n="navbar.signup" class="auth-button auth-button-signup">
                   <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;
                   Sign Up
                 </a>
               </div>
               <% } %>
+
         </div>
 
         <div class="ctas">
@@ -930,6 +931,17 @@
             <p>Menu</p>
           </div>
         </div>
+        <!-- Language Switcher -->
+        <div class="language-switcher">
+          <span class="lang-icon">🌍</span>
+          <select id="languageSwitcher">
+            <option value="en">🇬🇧 English</option>
+            <option value="hi">🇮🇳 हिन्दी</option>
+            <option value="ta">🇮🇳 தமிழ்</option>
+          </select>
+        </div>
+
+
       </nav>
 
       <!-- menu links -->
@@ -981,10 +993,10 @@
 
           <div class="hero-header">
             <div class="hero-col">
-              <h1>JobSync</h1>
+              <h1 data-i18n="hero.title" >JobSync</h1>
             </div>
             <div class="hero-col">
-              <p id="site-intro">
+              <p id="site-intro" data-i18n="hero.intro">
                 Since 2025, JobSync has been revolutionizing the job search experience, leveraging AI-driven matching,
                 real-time mentorship, and smart career insights to connect job seekers with their ideal opportunities
                 effortlessly.
@@ -997,17 +1009,17 @@
         <section class="about" id="about">
           <div class="about-header">
             <div class="about-col">
-              <p class="callout">How can we help</p>
+              <p class="callout" data-i18n="about.callout" >How can we help</p>
             </div>
             <div class="about-col">
-              <h2>
+              <h2 data-i18n="about.heading">
                 Revolutionizing job searching with AI-driven matching, real-time mentorship, and career insights,
                 seamlessly
                 connecting job seekers with their ideal opportunities.
                 <span style="opacity: 0">.</span>
               </h2>
 
-              <p class="about-copy">
+              <p class="about-copy" data-i18n="about.copy">
                 Our team leverages cutting-edge AI technology and expert mentorship to empower job seekers with
                 personalized
                 recommendations and real-time alerts, driving success in their job search.
@@ -1020,7 +1032,7 @@
         <!-- services -->
         <section class="services" id="services">
           <div class="services-col">
-            <p class="callout">We work with</p>
+            <p class="callout" data-i18n="services.callout">We work with</p>
           </div>
           <div class="services-col">
             <div class="services-row">
@@ -1030,7 +1042,7 @@
                   <!-- Updated AI Matching Icon -->
                 </div>
                 <div class="service-title">
-                  <p>AI Matching</p>
+                  <p data-i18n="services.ai">AI Matching</p>
                 </div>
               </div>
               <div class="service-item">
@@ -1039,7 +1051,7 @@
                   <!-- Updated Mentorship Icon -->
                 </div>
                 <div class="service-title">
-                  <p>Mentorship</p>
+                  <p data-i18n="services.mentorship">Mentorship</p>
                 </div>
               </div>
               <div class="service-item">
@@ -1048,7 +1060,7 @@
                   <!-- Updated Resume Analysis Icon -->
                 </div>
                 <div class="service-title">
-                  <p>Resume Analysis</p>
+                  <p data-i18n="services.resume">Resume Analysis</p>
                 </div>
               </div>
               <div class="service-item">
@@ -1057,7 +1069,7 @@
                   <!-- Updated Training Icon -->
                 </div>
                 <div class="service-title">
-                  <p>Training</p>
+                  <p data-i18n="services.training">Training</p>
                 </div>
               </div>
             </div>
@@ -1068,7 +1080,7 @@
                   <!-- Updated Insights Icon -->
                 </div>
                 <div class="service-title">
-                  <p>Insights</p>
+                  <p data-i18n="services.insights">Insights</p>
                 </div>
               </div>
               <div class="service-item">
@@ -1077,7 +1089,7 @@
                   <!-- Updated Messaging Icon -->
                 </div>
                 <div class="service-title">
-                  <p>Messaging</p>
+                  <p data-i18n="services.messaging">Messaging</p>
                 </div>
               </div>
               <div class="service-item">
@@ -1086,7 +1098,7 @@
                   <!-- Updated Cloud Icon -->
                 </div>
                 <div class="service-title">
-                  <p>Cloud</p>
+                  <p data-i18n="services.cloud">Cloud</p>
                 </div>
               </div>
               <div class="service-item">
@@ -1095,7 +1107,7 @@
                   <!-- Updated Security Icon -->
                 </div>
                 <div class="service-title">
-                  <p>Security</p>
+                  <p data-i18n="services.security">Security</p>
                 </div>
               </div>
             </div>
@@ -1108,9 +1120,9 @@
             <img src="./assets/grad.png" alt="" />
           </div>
           <div class="promo-header">
-            <h2>Explore</h2>
-            <h2>Our Latest</h2>
-            <h1>Features</h1>
+            <h2 data-i18n="promo.explore">Explore</h2>
+            <h2 data-i18n="promo.our">Our Latest</h2>
+            <h1 data-i18n="promo.features">Features</h1>
 
           </div>
         </section>
@@ -1123,11 +1135,11 @@
             <div class="project">
               <div class="project-copy">
                 <div class="project-header">
-                  <h3>JobMatch AI</h3>
+                  <h3 data-i18n="projects.jobmatch_title">JobMatch AI</h3>
                   <p>01 - 01</p>
                 </div>
 
-                <p>
+                <p data-i18n="projects.jobmatch_desc">
                   JobMatch AI leverages cutting-edge machine learning algorithms to match job seekers with
                   personalized
                   job
@@ -1135,7 +1147,7 @@
                 </p>
 
                 <div class="project-cta">
-                  <p>Learn More</p>
+                  <p data-i18n="projects.learn_more">Learn More</p>
                   <div class="project-cta-row">
                     <div class="cta"><span>Web App</span></div>
                     <div class="cta"><span>Mobile App</span></div>
@@ -1152,16 +1164,16 @@
             <div class="project">
               <div class="project-copy">
                 <div class="project-header">
-                  <h3>Mentorship Hub</h3>
+                  <h3 data-i18n="projects.mentorship_title">Mentorship Hub</h3>
                   <p>01 - 02</p>
                 </div>
-                <p>
+                <p data-i18n="projects.mentorship_desc">
                   Mentorship Hub connects job seekers with industry experts, providing real-time mentorship and career
                   guidance to elevate career growth.
                 </p>
 
                 <div class="project-cta">
-                  <p>Learn More</p>
+                  <p data-i18n="projects.learn_more">Learn More</p>
                   <div class="project-cta-row">
                     <div class="cta"><span>Web App</span></div>
                     <div class="cta"><span>Mobile App</span></div>
@@ -1178,16 +1190,16 @@
             <div class="project">
               <div class="project-copy">
                 <div class="project-header">
-                  <h3>Smart Resume</h3>
+                  <h3 data-i18n="projects.resume_title">Smart Resume</h3>
                   <p>01 - 03</p>
                 </div>
-                <p>
+                <p data-i18n="projects.resume_desc">
                   Smart Resume offers an AI-powered resume analyzer, providing instant feedback and recommendations to
                   optimize resumes for specific job opportunities.
                 </p>
 
                 <div class="project-cta">
-                  <p>Learn More</p>
+                  <p data-i18n="projects.learn_more">Learn More</p>
                   <div class="project-cta-row">
                     <div class="cta"><span>Web App</span></div>
                     <div class="cta"><span>Mobile App</span></div>
@@ -1204,17 +1216,17 @@
             <div class="project">
               <div class="project-copy">
                 <div class="project-header">
-                  <h3>Career Insights</h3>
+                  <h3 data-i18n="projects.insights_title">Career Insights</h3>
                   <p>01 - 04</p>
                 </div>
-                <p>
+                <p data-i18n="projects.insights_desc">
                   Career Insights analyzes market trends, providing job seekers with valuable data-driven insights to
                   make
                   informed decisions about their career paths.
                 </p>
 
                 <div class="project-cta">
-                  <p>Learn More</p>
+                  <p data-i18n="projects.learn_more">Learn More</p>
                   <div class="project-cta-row">
                     <div class="cta"><span>Web App</span></div>
                     <div class="cta"><span>Mobile App</span></div>
@@ -1231,17 +1243,17 @@
             <div class="project">
               <div class="project-copy">
                 <div class="project-header">
-                  <h3>JobSync Cloud</h3>
+                  <h3 data-i18n="projects.cloud_title">JobSync Cloud</h3>
                   <p>01 - 05</p>
                 </div>
-                <p>
+                <p data-i18n="projects.cloud_desc">
                   JobSync Cloud offers secure cloud storage and management for all job application materials,
                   including
                   resumes, cover letters, and portfolio files.
                 </p>
 
                 <div class="project-cta">
-                  <p>Learn More</p>
+                  <p data-i18n="projects.learn_more">Learn More</p>
                   <div class="project-cta-row">
                     <div class="cta"><span>Web App</span></div>
                     <div class="cta"><span>Mobile App</span></div>
@@ -1258,17 +1270,17 @@
             <div class="project">
               <div class="project-copy">
                 <div class="project-header">
-                  <h3>JobSync Security</h3>
+                  <h3 data-i18n="projects.security_title">JobSync Security</h3>
                   <p>01 - 06</p>
                 </div>
-                <p>
+                <p data-i18n="projects.security_desc">
                   JobSync Security ensures data protection for both job seekers and employers, utilizing encryption
                   and
                   multi-factor authentication to safeguard sensitive information.
                 </p>
 
                 <div class="project-cta">
-                  <p>Learn More</p>
+                  <p data-i18n="projects.learn_more">Learn More</p>
                   <div class="project-cta-row">
                     <div class="cta"><span>Web App</span></div>
                     <div class="cta"><span>Mobile App</span></div>
@@ -1290,8 +1302,8 @@
             <img src="./assets/grad.png" alt="" />
           </div>
           <div class="prices-hero-header">
-            <h1>Pricing</h1>
-            <h3>Flexible Plans</h3>
+            <h1 data-i18n="prices.title">Pricing</h1>
+            <h3 data-i18n="prices.subtitle">Flexible Plans</h3>
           </div>
         </section>
 
@@ -1300,14 +1312,14 @@
           <div class="prices-header">
             <div class="prices-col"></div>
             <div class="prices-col">
-              <h2>
+              <h2 data-i18n="prices.heading">
                 Choose from our flexible subscription plans designed to streamline your hiring process and optimize
                 talent
                 acquisition.
                 <span style="opacity: 0">.</span>
               </h2>
 
-              <p class="prices-copy">
+              <p class="prices-copy" data-i18n="prices.copy">
                 Whether you're a startup, enterprise, or recruiter, our plans offer continuous access to AI-driven
                 hiring
                 tools and expert support.
@@ -1317,8 +1329,8 @@
 
           <div class="prices-cta">
             <a href="#">
-              <h1>Plans Starting From</h1>
-              <h1>INR 199 / Month</h1>
+              <h1 data-i18n="prices.cta">Plans Starting From</h1>
+              <h1 data-i18n="prices.price">INR 199 / Month</h1>
             </a>
           </div>
         </section>
@@ -1332,8 +1344,8 @@
                   <img src="./assets/feature-1.png" alt="" />
                 </div>
                 <div class="features-title">
-                  <h2>TRANSPARENT WEEKLY UPDATES</h2>
-                  <p>
+                  <h2 data-i18n="features.transparent_title">TRANSPARENT WEEKLY UPDATES</h2>
+                  <p data-i18n="features.transparent_desc">
                     Our projects are managed in sprints. We collaborate with you
                     to define objectives, break down the development process into
                     manageable tasks, and deliver weekly progress reports.
@@ -1345,8 +1357,8 @@
                   <img src="./assets/feature-2.png" alt="" />
                 </div>
                 <div class="features-title">
-                  <h2>REAL-TIME MENTORSHIP</h2>
-                  <p>
+                  <h2 data-i18n="features.mentorship_title">REAL-TIME MENTORSHIP</h2>
+                  <p data-i18n="features.mentorship_desc">
                     Get instant guidance from industry experts and hiring managers. Receive resume reviews, career
                     advice,
                     and mock interviews tailored to your profile.
@@ -1360,8 +1372,8 @@
                   <img src="./assets/feature-3.png" alt="" />
                 </div>
                 <div class="features-title">
-                  <h2>SMART CAREER INSIGHTS</h2>
-                  <p>
+                  <h2 data-i18n="features.insights_title">SMART CAREER INSIGHTS</h2>
+                  <p data-i18n="features.insights_desc">
                     Gain valuable data-driven insights on salary trends, skill demand, and industry growth to make
                     informed
                     career decisions.
@@ -1373,8 +1385,8 @@
                   <img src="./assets/feature-4.png" alt="" />
                 </div>
                 <div class="features-title">
-                  <h2>WEEKLY PROGRESS TRACKING</h2>
-                  <p>
+                  <h2 data-i18n="features.tracking_title">WEEKLY PROGRESS TRACKING</h2>
+                  <p data-i18n="features.tracking_desc">
                     Stay on top of your job search with structured weekly progress reports, application tracking, and
                     personalized goal setting.
                   </p>
@@ -1390,13 +1402,13 @@
             <img src="./assets/grad.png" alt="" />
           </div>
           <div class="footer-header">
-            <h1>Let's</h1>
-            <h1>Talk</h1>
+            <h1 data-i18n="footer.lets">Let's</h1>
+            <h1 data-i18n="footer.talk">Talk</h1>
           </div>
           <div class="footer-sub-header">
-            <h2>Fill the form</h2>
-            <h2>and</h2>
-            <h2>Get in touch</h2>
+            <h2 data-i18n="footer.form1">Fill the form</h2>
+            <h2 data-i18n="footer.form2">and</h2>
+            <h2 data-i18n="footer.form3">Get in touch</h2>
           </div>
 
           <div class="footer-ctas">
@@ -1471,7 +1483,7 @@
 
           <div class="footer-copyright">
             <p>JOBSYNC Web</p>
-            <p>Privacy Policy</p>
+            <p data-i18n="footer.privacy">Privacy Policy</p>
           </div>
         </footer>
       </div>
@@ -1856,6 +1868,17 @@
           }
         });
       </script>
+      <!-- i18next libraries (self-hosted UMD builds) -->
+      <script src="/vendor/i18next.min.js"></script>
+      <script src="/vendor/i18nextBrowserLanguageDetector.min.js"></script>
+      <script src="/vendor/i18nextHttpBackend.min.js"></script>
+
+    <!-- your frontend i18n initialization -->
+    <script src="/js/i18n.js"></script>
+
+
+
+
 </body>
 
 </html>

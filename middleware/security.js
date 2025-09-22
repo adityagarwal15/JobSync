@@ -5,7 +5,7 @@ const hpp = require('hpp');
 exports.securityMiddleware = (app) => {
 
 
-    app.use(helemt({
+    app.use(helmet({
         contentSecurityPolicy: false,
         noSniff: true,
         frameguard: { action: 'sameorigin' },

@@ -1,4 +1,5 @@
 <a id="top"></a>
+![Banner](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDL2Zoe07JbvAUK9H3SwHSDDy6Hm2LM-9cg&s)
 # 🚀 JOBSYNC – AI-Powered Job Opportunity Finder
 
 ## 🏆 Built at a Hackathon | **Top 5 out of 30+ Teams!**

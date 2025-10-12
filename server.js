@@ -42,10 +42,18 @@ if (process.env.NODE_ENV === "production") {
 // ========== MONGO DB SETUP ==========
 async function main() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log("✅ Connected to MongoDB");
+    console.log('Connecting to MongoDB at:', process.env.MONGODB_URI);
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
+    console.log("✅ Successfully connected to MongoDB");
   } catch (err) {
-    console.error("❌ MongoDB connection error:", err);
+    console.error("❌ MongoDB connection error:", err.message);
+    console.log('Please check if MongoDB is running and the connection string is correct');
+    process.exit(1);
   }
 }
 main();

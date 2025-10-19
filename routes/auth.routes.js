@@ -45,18 +45,18 @@ authRouter.get('/signup', redirectIfAuthenticated, (req, res) => {
 // Auth actions
 
 // authRouter.post('/signup', csrfProtection, registerUserController);
-authRouter.post('/signup', csrfProtection, sanitizeBody['email', 'password'], registerUserController);
+authRouter.post('/signup', csrfProtection, sanitizeBody(['email', 'password']), registerUserController);
 
 
 // authRouter.post('/login', csrfProtection, loginController);
-authRouter.post('/login', csrfProtection, sanitizeBody['email', 'passwrod'], loginController);
+authRouter.post('/login', csrfProtection, sanitizeBody(['email', 'password']), loginController);
 
 
 authRouter.get('/auth/verify/:token', verificationController);
 
 
 // authRouter.post('/forgot-password', csrfProtection, forgetPasswordController);
-authRouter.post('/forgot-password', csrfProtection, sanitizeBody['email'], forgetPasswordController);
+authRouter.post('/forgot-password', csrfProtection, sanitizeBody(['email']), forgetPasswordController);
 
 
 // Reset password routes
@@ -67,7 +67,7 @@ authRouter.get('/reset-password/:resetKey', (req, res) => {
 
 
 // authRouter.post('/reset-password/:resetKey', csrfProtection, resetPasswordController);
-authRouter.post('/reset-password/:resetKey', csrfProtection, sanitizeBody['password'], resetPasswordController);
+authRouter.post('/reset-password/:resetKey', csrfProtection, sanitizeBody(['password']), resetPasswordController);
 
 
 
@@ -76,7 +76,7 @@ authRouter.get('/dashboard', authenticateToken, dashboardController);
 authRouter.get('/profile', authenticateToken, profileController);
 authRouter.post('/logout', authenticateToken, csrfProtection, logoutController);
 // authRouter.post('/resend-verification', csrfProtection, authenticateToken,resendVerificationController);
-authRouter.post('/resend-verification', csrfProtection, authenticateToken, sanitizeBody['token'], resendVerificationController);
+authRouter.post('/resend-verification', csrfProtection, authenticateToken, sanitizeBody(['token']), resendVerificationController);
 
 
 module.exports = authRouter;

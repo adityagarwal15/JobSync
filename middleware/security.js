@@ -1,20 +1,17 @@
-const helemt = require('helmet');
+const helmet = require('helmet');
 const hpp = require('hpp');
 
-
 exports.securityMiddleware = (app) => {
+  app.use(
+    helmet({
+      contentSecurityPolicy: false, 
+      crossOriginEmbedderPolicy: false, 
+      crossOriginOpenerPolicy: false,
+      crossOriginResourcePolicy: false, 
+      hidePoweredBy: true,
+      referrerPolicy: { policy: 'no-referrer' },
+    })
+  );
 
-
-    app.use(helemt({
-        contentSecurityPolicy: false,
-        noSniff: true,
-        frameguard: { action: 'sameorigin' },
-        hidePoweredBy: true,
-        referrerPolicy: { policy: "no-referrer" },
-        crossOriginEmbedderPolicy: false,
-        crossOriginResourcePolicy: { policy: "cross-origin" },
-        crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
-    }))
-
-    app.use(hpp());
-}
+  app.use(hpp());
+};

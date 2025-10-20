@@ -38,7 +38,7 @@
     "mongoose": "^8.16.5",
     "node-cron": "^4.2.1",
     "node-fetch": "^3.3.2",
-    "nodemailer": "^6.9.7",
+    "nodemailer": "^7.0.9",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "rate-limit-mongo": "^2.3.2"

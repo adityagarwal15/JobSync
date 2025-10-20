@@ -1,53 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const tl = gsap.timeline({ paused: true });
   const currentTime = document.querySelector("#currentTime");
   const menuToggleBtn = document.querySelector(".menu");
   const menuItemsContainer = document.querySelector(".menu-container");
   const menuItems = document.querySelectorAll(".menu-item");
   let isMenuOpen = false;
 
-  // Initial state
+  // GSAP initial setup
   gsap.set(menuItemsContainer, { y: 50, opacity: 0 });
-  gsap.set(menuItems, { y: 50, opacity: 0 });
+  gsap.set(menuItems, { y: 50, opacity: 0, pointerEvents: "none" });
 
-  // Update clock
+  // --- Clock update ---
   function time() {
     const d = new Date();
     const s = d.getSeconds();
     const m = d.getMinutes();
     const h = d.getHours();
     currentTime.textContent =
-      ("0" + h).substr(-2) +
-      ":" +
-      ("0" + m).substr(-2) +
-      ":" +
-      ("0" + s).substr(-2);
+      ("0" + h).slice(-2) + ":" + ("0" + m).slice(-2) + ":" + ("0" + s).slice(-2);
   }
   setInterval(time, 1000);
 
-  // Toggle Menu (open/close)
-  function toggleMenu() {
-    if (!isMenuOpen) {
+  // --- Toggle menu function ---
+  function toggleMenu(open) {
+    if (open === undefined) open = !isMenuOpen;
+
+    if (open) {
       menuToggleBtn.classList.add("active");
 
-      gsap.to(menuItemsContainer, {
-        y: 0,
-        opacity: 1,
-        duration: 0.5,
-        ease: "power2.out",
-      });
+      gsap.to(menuItemsContainer, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" });
+      gsap.to(menuItems, { pointerEvents: "all", y: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: "power2.out" });
 
-      gsap.to(menuItems, {
-        pointerEvents: "all",
-        y: 0,
-        opacity: 1,
-        duration: 0.5,
-        stagger: 0.05,
-        ease: "power2.out",
-        onComplete: () => {
-          isMenuOpen = true;
-        },
-      });
+      isMenuOpen = true;
     } else {
       menuToggleBtn.classList.remove("active");
 
@@ -59,32 +42,30 @@ document.addEventListener("DOMContentLoaded", function () {
         onComplete: () => {
           gsap.set(menuItemsContainer, { y: 50, opacity: 0 });
           gsap.set(menuItems, { y: 50, opacity: 0, pointerEvents: "none" });
-          isMenuOpen = false;
         },
       });
+
+      isMenuOpen = false;
     }
   }
 
-  // --- Prevent instant close when clicking the menu toggle itself ---
+  // --- Menu toggle button click ---
   menuToggleBtn.addEventListener("click", function (e) {
-    e.stopPropagation(); // prevent triggering outside-click handler
+    e.stopPropagation(); // prevent document click from immediately closing
     toggleMenu();
   });
 
-  // --- Close menu when clicking a menu item ---
-  menuItems.forEach((menuItem) => {
-    menuItem.addEventListener("click", toggleMenu);
+  // --- Menu item click ---
+  menuItems.forEach(item => {
+    item.addEventListener("click", function () {
+      toggleMenu(false); // close menu on item click
+    });
   });
 
-  // --- Close menu when clicking anywhere outside ---
+  // --- Anywhere click closes the menu ---
   document.addEventListener("click", function (e) {
-    if (isMenuOpen) {
-      if (
-        !menuItemsContainer.contains(e.target) &&
-        !menuToggleBtn.contains(e.target)
-      ) {
-        toggleMenu(); // close menu
-      }
+    if (isMenuOpen && !menuToggleBtn.contains(e.target)) {
+      toggleMenu(false); // clicking anywhere else closes the menu
     }
   });
 });

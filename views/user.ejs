@@ -11,7 +11,7 @@
 
   <!-- global styles -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/global.css" / >
   <link rel="stylesheet" href="/css/loader.css" />
 
   <!-- menu -->
@@ -641,6 +641,23 @@
           behavior: "smooth",
         });
       });
+    });
+
+    // ================================
+    // MENU AUTO-CLOSE ON OUTSIDE CLICK
+    // ================================
+    const menuContainer = document.querySelector('.menu-container');
+    const menuToggle = document.querySelector('.menu'); // existing menu div
+
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent immediate close
+      menuContainer.classList.toggle('active'); // toggle menu
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!menuContainer.contains(e.target) && !menuToggle.contains(e.target)) {
+        menuContainer.classList.remove('active'); // hide menu if clicked outside
+      }
     });
 
   </script>

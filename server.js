@@ -43,7 +43,7 @@ if (process.env.NODE_ENV === "production") {
 async function main() {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log("✅ Connected to MongoDB");
+    console.log("✅ Connected to Mon  goDB");
   } catch (err) {
     console.error("❌ MongoDB connection error:", err);
   }

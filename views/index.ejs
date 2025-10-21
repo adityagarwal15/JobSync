@@ -960,6 +960,12 @@
                 </span>
                 <span>Subscription</span>
               </a>
+               <a href="/faq" class="menu-item">
+                <span>
+                  <%= (typeof user !=='undefined' && user) ? '05' : '04' %>
+                </span>
+                <span>Support / FAQ</span>
+              </a>
               <% if (typeof user !=='undefined' && user) { %>
                 <!-- Logout - Only for logged in users -->
                 <form action="/logout" method="post">

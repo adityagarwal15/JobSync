@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - JobSync</title>
+    <link rel="stylesheet" href="/css/faq.css">
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #f9fafb;
+            color: #222;
+            padding: 2rem;
+        }
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+        
+        .faq-question {
+            padding:1rem;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-question span {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .faq-answer {
+            display: none;
+            padding: 1rem;
+            border-top: 1px solid #eee;
+            line-height: 1.6;
+        }
+        .voice-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.4rem;
+        }
+        .faq-search {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .faq-search input {
+            width: 70%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 1rem;
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .back-btn:hover{
+            background: #1e40af;
+        }
+        .faq-illustration {
+            width: 32px;
+            height: 32px;
+        }
+    </style>
+</head>
+<body>
+    <main class="faq-container">
+        <a href="/" class="back-btn">Back to Home</a>
+        <h1>Support / FAQ</h1>
+
+        <div class="faq-search">
+            <input type="text" id="faqSearch" placeholder="Search for help...">
+        </div>
+        <% faqs.forEach(function(faq,index) { %>
+        <div class="faq-card">
+            <div class="faq-question">
+                <span>
+                    <!-- <img src="/assets/icons/<%=faq.icon %>" alt="" class="faq-illustration"> -->
+                    <%= faq.question %>
+                </span>
+                    <button class="speak-btn" data-answer="<%= faq.answer %>"> 🔊 </button>
+            </div>
+            <div class="faq-answer"><%= faq.answer %></div>
+        </div>
+        <% }) %>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="/js/faq.js"></script>
+</body>
+</html>

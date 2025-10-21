@@ -28,6 +28,7 @@ const app = express();
 const PORT = process.env.PORT || 10000;
 
 app.set("trust proxy", 1); // Important for Render
+app.set("views",path.join(__dirname, "views"));
 
 // === Force HTTPS Redirect (for Render) ===
 if (process.env.NODE_ENV === "production") {
@@ -587,7 +588,43 @@ app.listen(PORT, async () => {
   }
 });
 
+//FAQ page route
+app.get("/faq", (req,res) => {
+  const faqs = [
+    {
+      question: "How to apply for a job?", 
+      answer: "Not Implemented right now",
+    },
+    {
+      question: "What if I don't have a resume?", 
+      answer: "Not Implemented right now ",
+    },
+    {
+      question: "How to delete my account?", 
+      answer: "Not Implemented right now",
+    },
+    {
+      question: "How to reset my password?", 
+      answer: "Click 'Forget password?' on the login page... ",
+    },
+    {
+      question: "Can I use this site in Hindi/Kannada?", 
+      answer: "Not Implemented right now",
+    },
+    {
+      question: "How does voice search work?", 
+      answer: "Not Implemented right now",
+    },
+
+  ];
+  res.render("faq", { faqs });
+});
+
 // 404 handler
 app.use((req, res, next) => {
   res.status(404).render("404");
 });
+
+// app.use(express.static(path.join(__dirname, "public")));
+
+

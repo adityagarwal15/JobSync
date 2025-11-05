@@ -74,4 +74,12 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   menuToggleBtn.addEventListener("click", toggleMenu);
+  document.addEventListener("click",(e)=>{
+    if(e.target===document.body || e.target==document.documentElement){
+      if(isMenuOpen){
+        toggleMenu();
+      }
+      
+    }
+  })
 });

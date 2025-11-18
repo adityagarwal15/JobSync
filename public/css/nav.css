@@ -8,7 +8,7 @@ nav {
   display: flex;
   align-items: center;
   text-transform: uppercase;
-  z-index: 10;
+  z-index: 1000;
 }
 
 .logo,
